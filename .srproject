@@ -1,0 +1,11 @@
+sra format
+use tabs: true
+use numeric depth: false
+-r:Root
+	-o:asset
+		-v:type
+			-s:ProjectSettings
+		-o:ptr
+			-v:projectName
+				-s:DeathLovers
+			-a:packages

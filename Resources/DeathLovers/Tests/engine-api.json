@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "text": "Кириллица: ё, й; составной символ: ё.\nВторая строка.",
+  "state": {
+    "score": 7,
+    "enabled": true,
+    "fraction": 0.25,
+    "empty": null,
+    "items": [1, "два", {"nested": [true, false]}]
+  }
+}
