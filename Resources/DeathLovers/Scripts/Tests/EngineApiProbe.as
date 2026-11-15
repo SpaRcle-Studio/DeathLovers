@@ -19,6 +19,8 @@ class EngineApiProbe : ScriptBehaviour
     bool narrow = false;
     bool printing = true;
     float elapsed = 0;
+    bool monitorAudio = false;
+    float audioStatusTimer = 0;
 
     void Start()
     {
@@ -119,6 +121,19 @@ class EngineApiProbe : ScriptBehaviour
 
     void Update(float dt)
     {
+        if (monitorAudio)
+        {
+            audioStatusTimer += dt;
+            if (audioStatusTimer >= 1.0f)
+            {
+                audioStatusTimer = 0;
+                //String state = audio.IsPaused() ? "paused" : audio.IsPlaying() ? "playing" : "stopped";
+                //status.SetText("AUDIO: " + state + "; position=" + audio.GetPlaybackPosition()
+                //    + "; source=" + audio.GetVolume() + "; master=" + AudioMixer::Instance().GetMasterVolume()
+                //    + "; group=" + AudioMixer::Instance().GetGain("Interface")
+                //    + (AudioMixer::Instance().IsMuted() ? "; MUTED" : "; unmuted"));
+            }
+        }
         elapsed += dt;
         if (printing)
         {
@@ -163,6 +178,8 @@ class EngineApiProbe : ScriptBehaviour
     {
         ++toggleChanges;
         AudioMixer::Instance().SetMuted(toggle.GetValue());
+        TextMesh@ label = cast<TextMesh@>(gameObject.GetOrCreateChild("Mute").GetOrCreateChild("MuteLabel").GetComponent("TextMesh"));
+        label.SetText(toggle.GetValue() ? "[X] Master mute: ON" : "[ ] Master mute: OFF");
         status.SetText("TOGGLE: master mute changed");
     }
 
@@ -183,22 +200,40 @@ class EngineApiProbe : ScriptBehaviour
         printing = false;
     }
 
-    void PlayWav()
+    void PrepareAudioTest()
     {
         audio.Stop();
+        toggle.SetValue(false);
+        slider.SetValue(0.75f);
+        AudioMixer::Instance().SetMuted(false);
+        AudioMixer::Instance().SetMasterVolume(1.0f);
+        AudioMixer::Instance().SetGroupVolume("Effects", 1.0f);
+        AudioMixer::Instance().SetGroupVolume("Interface", 1.0f);
+        AudioMixer::Instance().SetGroupMuted("Effects", false);
+        AudioMixer::Instance().SetGroupMuted("Interface", false);
+        audio.SetVolume(0.75f);
+        monitorAudio = false;
+        audioStatusTimer = 0;
+    }
+
+    void PlayWav()
+    {
+        PrepareAudioTest();
         audio.SetSpatialize(SpatializeMode::Off);
         audio.SetPath("DeathLovers/Audio/Tests/Door.wav");
         audio.SetLoop(true);
-        audio.Play();
+        monitorAudio = audio.Play();
+        status.SetText(monitorAudio ? "WAV: mix reset; starting playback" : "WAV: Play failed; see log");
     }
 
     void PlayOgg()
     {
-        audio.Stop();
+        PrepareAudioTest();
         audio.SetSpatialize(SpatializeMode::Off);
         audio.SetPath("DeathLovers/Audio/Tests/main_menu.ogg");
         audio.SetLoop(true);
-        audio.Play();
+        monitorAudio = audio.Play();
+        status.SetText(monitorAudio ? "OGG: mix reset; starting playback" : "OGG: Play failed; see log");
     }
 
     void PauseAudio()
@@ -213,13 +248,14 @@ class EngineApiProbe : ScriptBehaviour
 
     void SeekAudio()
     {
-        audio.Seek(1.0f);
-        status.SetText("SEEK: playback position must be near one second");
+        status.SetText(audio.Seek(1.0f) ? "SEEK: moved to one second" : "SEEK: failed; start playback first");
     }
 
     void StopAudio()
     {
+        monitorAudio = false;
         audio.Stop();
+        status.SetText("AUDIO: stopped");
     }
 
     void MixAudio()

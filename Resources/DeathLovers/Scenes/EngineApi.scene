@@ -16,8 +16,6 @@ use numeric depth: false
 				-o:ptr
 					-v:entityId
 						-i:703000106
-					-v:name
-						-s:Camera
 					-a:components
 						-k:i
 							-o:d
@@ -26,6 +24,9 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000107
+									-o:renderParameters
+										-a:includeLayers
+										-a:excludeLayers
 						-k:i
 							-o:d
 								-v:type
@@ -33,6 +34,8 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000109
+					-v:name
+						-s:Camera
 					-o:transform
 						-v:type
 							-s:Transform3D
@@ -44,8 +47,6 @@ use numeric depth: false
 				-o:ptr
 					-v:entityId
 						-i:703000105
-					-v:name
-						-s:Canvas
 					-a:components
 						-k:i
 							-o:d
@@ -79,6 +80,86 @@ use numeric depth: false
 										-i:703000012
 									-v:behaviourName
 										-s:EngineApiProbe
+									-o:data
+										-o:clicks
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:valueChanges
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:toggleChanges
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:rawAdvanceCount
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:jsonChecks
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:failures
+											-v:type
+												-s:Arithmetic.uint32
+											-v:scriptType
+												-s:uint
+											-v:value
+												-i:0
+										-o:narrow
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:false
+										-o:printing
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:true
+										-o:elapsed
+											-v:type
+												-s:Arithmetic.float
+											-v:scriptType
+												-s:float
+											-v:value
+												-f:0
+										-o:monitorAudio
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:false
+										-o:audioStatusTimer
+											-v:type
+												-s:Arithmetic.float
+											-v:scriptType
+												-s:float
+											-v:value
+												-f:0
+					-v:name
+						-s:Canvas
 					-a:children
 						-k:i
 							-o:d
@@ -87,8 +168,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000003
-									-v:name
-										-s:Text
 									-a:components
 										-k:i
 											-o:d
@@ -110,20 +189,13 @@ use numeric depth: false
 																		-v:shaderPath
 																			-s:Engine/Shaders/UI/text-mesh.srsl
 																		-a:uniforms
+																		-a:samplers
 																			-k:i
 																				-o:d
 																					-v:id
-																						-s:color
+																						-s:diffuse
 																					-v:type
-																						-s:Vec3
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																		-a:samplers
+																						-s:Sampler2D
 													-o:font
 														-v:id
 															-s:DeathLovers/Fonts/Pangolin.font
@@ -131,8 +203,6 @@ use numeric depth: false
 														-s:Загрузка стенда...
 													-v:fontSize
 														-f:35
-													-v:verticalAlignment
-														-s:Top
 										-k:i
 											-o:d
 												-v:type
@@ -142,39 +212,44 @@ use numeric depth: false
 														-i:703000002
 													-v:verticalFit
 														-s:PreferredSize
-									-a:children
+									-v:name
+										-s:Text
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:850
-												-v:y
-													-f:230
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:40
 												-v:y
 													-f:-80
-											-v:localPriority
-												-i:0
-											-o:pivot
+											-o:size
 												-v:x
-													-f:0
+													-f:850
+												-v:y
+													-f:43.5465
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-123.547
+											-o:offsetMax
+												-v:x
+													-f:890
+												-v:y
+													-f:-80
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
+											-o:pivot
 												-v:y
 													-f:1
+											-v:localPriority
+												-i:0
 						-k:i
 							-o:d
 								-v:type
@@ -182,8 +257,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000005
-									-v:name
-										-s:Instructions
 									-a:components
 										-k:i
 											-o:d
@@ -205,20 +278,13 @@ use numeric depth: false
 																		-v:shaderPath
 																			-s:Engine/Shaders/UI/text-mesh.srsl
 																		-a:uniforms
+																		-a:samplers
 																			-k:i
 																				-o:d
 																					-v:id
-																						-s:color
+																						-s:diffuse
 																					-v:type
-																						-s:Vec3
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																		-a:samplers
+																						-s:Sampler2D
 													-o:font
 														-v:id
 															-s:DeathLovers/Fonts/Pangolin.font
@@ -226,34 +292,39 @@ use numeric depth: false
 														-s:Tab / Shift+Tab: фокус; стрелки: значения; Enter / Space: submit; Escape: modal cancel.
 													-v:fontSize
 														-f:27
-													-v:verticalAlignment
-														-s:Top
-									-a:children
+									-v:name
+										-s:Instructions
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:1800
-												-v:y
-													-f:50
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:940
 												-v:y
 													-f:-45
+											-o:size
+												-v:x
+													-f:1800
+												-v:y
+													-f:50
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-70
+											-o:offsetMax
+												-v:x
+													-f:1840
+												-v:y
+													-f:-20
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -263,8 +334,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000007
-									-v:name
-										-s:Status
 									-a:components
 										-k:i
 											-o:d
@@ -286,20 +355,13 @@ use numeric depth: false
 																		-v:shaderPath
 																			-s:Engine/Shaders/UI/text-mesh.srsl
 																		-a:uniforms
+																		-a:samplers
 																			-k:i
 																				-o:d
 																					-v:id
-																						-s:color
+																						-s:diffuse
 																					-v:type
-																						-s:Vec3
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																		-a:samplers
+																						-s:Sampler2D
 													-o:font
 														-v:id
 															-s:DeathLovers/Fonts/Pangolin.font
@@ -307,34 +369,39 @@ use numeric depth: false
 														-s:Ожидание Start()
 													-v:fontSize
 														-f:25
-													-v:verticalAlignment
-														-s:Top
-									-a:children
+									-v:name
+										-s:Status
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:1800
-												-v:y
-													-f:70
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:940
 												-v:y
 													-f:-1025
+											-o:size
+												-v:x
+													-f:1800
+												-v:y
+													-f:70
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-1060
+											-o:offsetMax
+												-v:x
+													-f:1840
+												-v:y
+													-f:-990
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -344,8 +411,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000009
-									-v:name
-										-s:Audio
 									-a:components
 										-k:i
 											-o:d
@@ -354,36 +419,41 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000008
-													-v:playOnEnable
-														-b:false
 													-v:group
 														-s:Interface
-									-a:children
+													-v:playOnEnable
+														-b:false
+													-v:pitch
+														-f:1
+									-v:name
+										-s:Audio
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:1
-												-v:y
-													-f:1
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:0.5
 												-v:y
 													-f:-0.5
+											-o:size
+												-v:x
+													-f:1
+												-v:y
+													-f:1
+											-o:offsetMin
+												-v:y
+													-f:-1
+											-o:offsetMax
+												-v:x
+													-f:1
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -393,8 +463,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000011
-									-v:name
-										-s:Receiver
 									-a:components
 										-k:i
 											-o:d
@@ -405,32 +473,43 @@ use numeric depth: false
 														-i:703000010
 													-v:behaviourName
 														-s:EngineApiReceiver
-									-a:children
+													-o:data
+														-o:received
+															-v:type
+																-s:Arithmetic.uint32
+															-v:scriptType
+																-s:uint
+															-v:value
+																-i:0
+									-v:name
+										-s:Receiver
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:1
-												-v:y
-													-f:1
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:0.5
 												-v:y
 													-f:-0.5
+											-o:size
+												-v:x
+													-f:1
+												-v:y
+													-f:1
+											-o:offsetMin
+												-v:y
+													-f:-1
+											-o:offsetMax
+												-v:x
+													-f:1
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -440,8 +519,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000016
-									-v:name
-										-s:Click
 									-a:components
 										-k:i
 											-o:d
@@ -458,6 +535,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:OnClick
+									-v:name
+										-s:Click
 									-a:children
 										-k:i
 											-o:d
@@ -466,8 +545,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000015
-													-v:name
-														-s:ClickLabel
 													-a:components
 														-k:i
 															-o:d
@@ -489,20 +566,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -510,61 +580,68 @@ use numeric depth: false
 																		-s:Click release
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ClickLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:165
 												-v:y
 													-f:-468
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-496
+											-o:offsetMax
+												-v:x
+													-f:290
+												-v:y
+													-f:-440
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -574,8 +651,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000020
-									-v:name
-										-s:ModalOpen
 									-a:components
 										-k:i
 											-o:d
@@ -592,6 +667,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:OpenModal
+									-v:name
+										-s:ModalOpen
 									-a:children
 										-k:i
 											-o:d
@@ -600,8 +677,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000019
-													-v:name
-														-s:ModalOpenLabel
 													-a:components
 														-k:i
 															-o:d
@@ -623,20 +698,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -644,61 +712,68 @@ use numeric depth: false
 																		-s:Открыть modal
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ModalOpenLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:455
 												-v:y
 													-f:-468
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:330
+												-v:y
+													-f:-496
+											-o:offsetMax
+												-v:x
+													-f:580
+												-v:y
+													-f:-440
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -708,8 +783,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000024
-									-v:name
-										-s:Resize
 									-a:components
 										-k:i
 											-o:d
@@ -726,6 +799,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:ResizeText
+									-v:name
+										-s:Resize
 									-a:children
 										-k:i
 											-o:d
@@ -734,8 +809,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000023
-													-v:name
-														-s:ResizeLabel
 													-a:components
 														-k:i
 															-o:d
@@ -757,20 +830,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -778,61 +844,68 @@ use numeric depth: false
 																		-s:Text reflow
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ResizeLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:745
 												-v:y
 													-f:-468
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:620
+												-v:y
+													-f:-496
+											-o:offsetMax
+												-v:x
+													-f:870
+												-v:y
+													-f:-440
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -842,8 +915,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000028
-									-v:name
-										-s:Plain
 									-a:components
 										-k:i
 											-o:d
@@ -860,6 +931,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:PlainText
+									-v:name
+										-s:Plain
 									-a:children
 										-k:i
 											-o:d
@@ -868,8 +941,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000027
-													-v:name
-														-s:PlainLabel
 													-a:components
 														-k:i
 															-o:d
@@ -891,20 +962,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -912,61 +976,68 @@ use numeric depth: false
 																		-s:Сброс стилей
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:PlainLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:165
 												-v:y
 													-f:-558
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-586
+											-o:offsetMax
+												-v:x
+													-f:290
+												-v:y
+													-f:-530
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -976,8 +1047,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000032
-									-v:name
-										-s:PlayWav
 									-a:components
 										-k:i
 											-o:d
@@ -994,6 +1063,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:PlayWav
+									-v:name
+										-s:PlayWav
 									-a:children
 										-k:i
 											-o:d
@@ -1002,8 +1073,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000031
-													-v:name
-														-s:PlayWavLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1025,82 +1094,82 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
 																	-v:text
-																		-s:Play WAV
+																		-s:Play WAV (reset mix)
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:PlayWavLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:455
 												-v:y
 													-f:-558
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:330
+												-v:y
+													-f:-586
+											-o:offsetMax
+												-v:x
+													-f:580
+												-v:y
+													-f:-530
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1110,8 +1179,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000036
-									-v:name
-										-s:PlayOgg
 									-a:components
 										-k:i
 											-o:d
@@ -1128,6 +1195,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:PlayOgg
+									-v:name
+										-s:PlayOgg
 									-a:children
 										-k:i
 											-o:d
@@ -1136,8 +1205,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000035
-													-v:name
-														-s:PlayOggLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1159,82 +1226,82 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
 																	-v:text
-																		-s:Play OGG
+																		-s:Play OGG (reset mix)
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:PlayOggLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:745
 												-v:y
 													-f:-558
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:620
+												-v:y
+													-f:-586
+											-o:offsetMax
+												-v:x
+													-f:870
+												-v:y
+													-f:-530
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1244,8 +1311,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000040
-									-v:name
-										-s:Pause
 									-a:components
 										-k:i
 											-o:d
@@ -1262,6 +1327,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:PauseAudio
+									-v:name
+										-s:Pause
 									-a:children
 										-k:i
 											-o:d
@@ -1270,8 +1337,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000039
-													-v:name
-														-s:PauseLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1293,20 +1358,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1314,61 +1372,68 @@ use numeric depth: false
 																		-s:Pause
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:PauseLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:165
 												-v:y
 													-f:-648
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-676
+											-o:offsetMax
+												-v:x
+													-f:290
+												-v:y
+													-f:-620
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1378,8 +1443,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000044
-									-v:name
-										-s:Resume
 									-a:components
 										-k:i
 											-o:d
@@ -1396,6 +1459,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:ResumeAudio
+									-v:name
+										-s:Resume
 									-a:children
 										-k:i
 											-o:d
@@ -1404,8 +1469,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000043
-													-v:name
-														-s:ResumeLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1427,20 +1490,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1448,61 +1504,68 @@ use numeric depth: false
 																		-s:Resume
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ResumeLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:455
 												-v:y
 													-f:-648
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:330
+												-v:y
+													-f:-676
+											-o:offsetMax
+												-v:x
+													-f:580
+												-v:y
+													-f:-620
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1512,8 +1575,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000048
-									-v:name
-										-s:Seek
 									-a:components
 										-k:i
 											-o:d
@@ -1530,6 +1591,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:SeekAudio
+									-v:name
+										-s:Seek
 									-a:children
 										-k:i
 											-o:d
@@ -1538,8 +1601,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000047
-													-v:name
-														-s:SeekLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1561,20 +1622,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1582,61 +1636,68 @@ use numeric depth: false
 																		-s:Seek 1 sec
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:SeekLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:745
 												-v:y
 													-f:-648
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:620
+												-v:y
+													-f:-676
+											-o:offsetMax
+												-v:x
+													-f:870
+												-v:y
+													-f:-620
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1646,8 +1707,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000052
-									-v:name
-										-s:Stop
 									-a:components
 										-k:i
 											-o:d
@@ -1664,6 +1723,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:StopAudio
+									-v:name
+										-s:Stop
 									-a:children
 										-k:i
 											-o:d
@@ -1672,8 +1733,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000051
-													-v:name
-														-s:StopLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1695,20 +1754,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1716,61 +1768,68 @@ use numeric depth: false
 																		-s:Stop
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:StopLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:165
 												-v:y
 													-f:-738
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-766
+											-o:offsetMax
+												-v:x
+													-f:290
+												-v:y
+													-f:-710
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1780,8 +1839,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000056
-									-v:name
-										-s:Mix
 									-a:components
 										-k:i
 											-o:d
@@ -1798,6 +1855,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:MixAudio
+									-v:name
+										-s:Mix
 									-a:children
 										-k:i
 											-o:d
@@ -1806,8 +1865,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000055
-													-v:name
-														-s:MixLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1829,20 +1886,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1850,61 +1900,68 @@ use numeric depth: false
 																		-s:Mix 0.15
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:MixLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:455
 												-v:y
 													-f:-738
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:330
+												-v:y
+													-f:-766
+											-o:offsetMax
+												-v:x
+													-f:580
+												-v:y
+													-f:-710
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -1914,8 +1971,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000060
-									-v:name
-										-s:DestroyReceiver
 									-a:components
 										-k:i
 											-o:d
@@ -1932,6 +1987,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:DestroyReceiver
+									-v:name
+										-s:DestroyReceiver
 									-a:children
 										-k:i
 											-o:d
@@ -1940,8 +1997,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000059
-													-v:name
-														-s:DestroyReceiverLabel
 													-a:components
 														-k:i
 															-o:d
@@ -1963,20 +2018,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -1984,61 +2032,68 @@ use numeric depth: false
 																		-s:Destroy target
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:DestroyReceiverLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:745
 												-v:y
 													-f:-738
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:620
+												-v:y
+													-f:-766
+											-o:offsetMax
+												-v:x
+													-f:870
+												-v:y
+													-f:-710
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2048,8 +2103,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000064
-									-v:name
-										-s:TestTarget
 									-a:components
 										-k:i
 											-o:d
@@ -2066,6 +2119,8 @@ use numeric depth: false
 																		-i:703000010
 																-v:method
 																	-s:Receive
+									-v:name
+										-s:TestTarget
 									-a:children
 										-k:i
 											-o:d
@@ -2074,8 +2129,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000063
-													-v:name
-														-s:TestTargetLabel
 													-a:components
 														-k:i
 															-o:d
@@ -2097,20 +2150,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -2118,61 +2164,68 @@ use numeric depth: false
 																		-s:Test target
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:TestTargetLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:165
 												-v:y
 													-f:-828
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:40
+												-v:y
+													-f:-856
+											-o:offsetMax
+												-v:x
+													-f:290
+												-v:y
+													-f:-800
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2182,8 +2235,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000068
-									-v:name
-										-s:BadSignature
 									-a:components
 										-k:i
 											-o:d
@@ -2200,6 +2251,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:WrongSignature
+									-v:name
+										-s:BadSignature
 									-a:children
 										-k:i
 											-o:d
@@ -2208,8 +2261,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000067
-													-v:name
-														-s:BadSignatureLabel
 													-a:components
 														-k:i
 															-o:d
@@ -2231,20 +2282,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -2252,61 +2296,68 @@ use numeric depth: false
 																		-s:Bad signature
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:BadSignatureLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:455
 												-v:y
 													-f:-828
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:330
+												-v:y
+													-f:-856
+											-o:offsetMax
+												-v:x
+													-f:580
+												-v:y
+													-f:-800
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2316,8 +2367,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000072
-									-v:name
-										-s:ReplayText
 									-a:components
 										-k:i
 											-o:d
@@ -2334,6 +2383,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:SetFormattedText
+									-v:name
+										-s:ReplayText
 									-a:children
 										-k:i
 											-o:d
@@ -2342,8 +2393,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000071
-													-v:name
-														-s:ReplayTextLabel
 													-a:components
 														-k:i
 															-o:d
@@ -2365,20 +2414,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -2386,61 +2428,68 @@ use numeric depth: false
 																		-s:Repeat text
 																	-v:fontSize
 																		-f:27
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ReplayTextLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:125
 																-v:y
 																	-f:-28
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:y
+																	-f:-56
+															-o:offsetMax
+																-v:x
+																	-f:250
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:250
-												-v:y
-													-f:56
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:745
 												-v:y
 													-f:-828
+											-o:size
+												-v:x
+													-f:250
+												-v:y
+													-f:56
+											-o:offsetMin
+												-v:x
+													-f:620
+												-v:y
+													-f:-856
+											-o:offsetMax
+												-v:x
+													-f:870
+												-v:y
+													-f:-800
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2450,9 +2499,49 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000076
-									-v:name
-										-s:Volume
 									-a:components
+										-k:i
+											-o:d
+												-v:type
+													-s:Sprite
+												-o:ptr
+													-v:entityId
+														-i:703000200
+													-o:material
+														-v:type
+															-s:UniqueMaterial
+														-o:ptr
+															-o:data
+																-v:type
+																	-s:MaterialData
+																-o:ptr
+																	-a:shaderDefines
+																	-o:defaultShader
+																		-v:shaderPath
+																			-s:Engine/Shaders/UI/sliced.srsl
+																		-a:uniforms
+																			-k:i
+																				-o:d
+																					-v:id
+																						-s:color
+																					-v:type
+																						-s:Vec4
+																					-o:value
+																						-v:x
+																							-f:0.2
+																						-v:y
+																							-f:0.2
+																						-v:z
+																							-f:0.2
+																						-v:w
+																							-f:1
+																		-a:samplers
+																			-k:i
+																				-o:d
+																					-v:id
+																						-s:diffuse
+																					-v:type
+																						-s:Sampler2D
 										-k:i
 											-o:d
 												-v:type
@@ -2462,6 +2551,9 @@ use numeric depth: false
 														-i:703000074
 													-v:value
 														-f:0.75
+													-o:handle
+														-v:entityId
+															-i:703000073
 													-a:onValueChanged
 														-k:i
 															-o:d
@@ -2470,9 +2562,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:OnSlider
-													-o:handle
-														-v:entityId
-															-i:703000073
+									-v:name
+										-s:Volume
 									-a:children
 										-k:i
 											-o:d
@@ -2481,8 +2572,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000073
-													-v:name
-														-s:SliderHandle
 													-a:components
 														-k:i
 															-o:d
@@ -2504,82 +2593,86 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
 																	-v:text
-																		-s:●
+																		-s:O
 																	-v:fontSize
 																		-f:40
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:SliderHandle
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
+															-o:translation
+																-v:y
+																	-f:-30
 															-o:size
 																-v:x
 																	-f:40
 																-v:y
 																	-f:60
+															-o:offsetMin
+																-v:x
+																	-f:-20
+																-v:y
+																	-f:-60
+															-o:offsetMax
+																-v:x
+																	-f:20
 															-o:anchors
 																-o:min
 																	-v:x
-																		-f:0
+																		-f:0.75
 																	-v:y
 																		-f:1
 																-o:max
 																	-v:x
-																		-f:0
+																		-f:0.75
 																	-v:y
 																		-f:1
-															-o:translation
-																-v:x
-																	-f:20
-																-v:y
-																	-f:-30
 															-v:localPriority
-																-i:0
+																-i:2
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:600
-												-v:y
-													-f:60
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:1430
 												-v:y
 													-f:-600
+											-o:size
+												-v:x
+													-f:600
+												-v:y
+													-f:60
+											-o:offsetMin
+												-v:x
+													-f:1130
+												-v:y
+													-f:-630
+											-o:offsetMax
+												-v:x
+													-f:1730
+												-v:y
+													-f:-570
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2589,8 +2682,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000078
-									-v:name
-										-s:VolumeLabel
 									-a:components
 										-k:i
 											-o:d
@@ -2612,20 +2703,13 @@ use numeric depth: false
 																		-v:shaderPath
 																			-s:Engine/Shaders/UI/text-mesh.srsl
 																		-a:uniforms
+																		-a:samplers
 																			-k:i
 																				-o:d
 																					-v:id
-																						-s:color
+																						-s:diffuse
 																					-v:type
-																						-s:Vec3
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																		-a:samplers
+																						-s:Sampler2D
 													-o:font
 														-v:id
 															-s:DeathLovers/Fonts/Pangolin.font
@@ -2633,34 +2717,39 @@ use numeric depth: false
 														-s:Slider: мышь и стрелки (громкость)
 													-v:fontSize
 														-f:28
-													-v:verticalAlignment
-														-s:Top
-									-a:children
+									-v:name
+										-s:VolumeLabel
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:650
-												-v:y
-													-f:48
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:1455
 												-v:y
 													-f:-544
+											-o:size
+												-v:x
+													-f:650
+												-v:y
+													-f:48
+											-o:offsetMin
+												-v:x
+													-f:1130
+												-v:y
+													-f:-568
+											-o:offsetMax
+												-v:x
+													-f:1780
+												-v:y
+													-f:-520
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2670,8 +2759,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000084
-									-v:name
-										-s:Mute
 									-a:components
 										-k:i
 											-o:d
@@ -2680,6 +2767,9 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000080
+													-o:checkmark
+														-v:entityId
+															-i:703000079
 													-a:onValueChanged
 														-k:i
 															-o:d
@@ -2688,9 +2778,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:OnToggle
-													-o:checkmark
-														-v:entityId
-															-i:703000079
+									-v:name
+										-s:Mute
 									-a:children
 										-k:i
 											-o:d
@@ -2699,8 +2788,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000082
-													-v:name
-														-s:MuteLabel
 													-a:components
 														-k:i
 															-o:d
@@ -2722,55 +2809,49 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
 																	-v:text
-																		-s:Toggle: master mute
+																		-s:[ ] Master mute: OFF
 																	-v:fontSize
 																		-f:28
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:MuteLabel
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:500
-																-v:y
-																	-f:60
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:250
 																-v:y
 																	-f:-30
+															-o:size
+																-v:x
+																	-f:500
+																-v:y
+																	-f:60
+															-o:offsetMin
+																-v:y
+																	-f:-60
+															-o:offsetMax
+																-v:x
+																	-f:500
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 										-k:i
@@ -2780,8 +2861,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000079
-													-v:name
-														-s:Checkmark
 													-a:components
 														-k:i
 															-o:d
@@ -2803,82 +2882,86 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
 																	-v:text
-																		-s:✓
+																		-s:X
 																	-v:fontSize
 																		-f:28
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:Checkmark
+													-v:isEnabled
+														-b:false
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:60
-																-v:y
-																	-f:60
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:550
 																-v:y
 																	-f:-30
+															-o:size
+																-v:x
+																	-f:60
+																-v:y
+																	-f:60
+															-o:offsetMin
+																-v:x
+																	-f:520
+																-v:y
+																	-f:-60
+															-o:offsetMax
+																-v:x
+																	-f:580
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:600
-												-v:y
-													-f:60
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:1430
 												-v:y
 													-f:-710
+											-o:size
+												-v:x
+													-f:600
+												-v:y
+													-f:60
+											-o:offsetMin
+												-v:x
+													-f:1130
+												-v:y
+													-f:-740
+											-o:offsetMax
+												-v:x
+													-f:1730
+												-v:y
+													-f:-680
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -2888,8 +2971,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000086
-									-v:name
-										-s:Scroll
 									-a:components
 										-k:i
 											-o:d
@@ -2898,6 +2979,8 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000088
+													-v:horizontal
+														-b:false
 													-o:content
 														-v:entityId
 															-i:703000085
@@ -2907,8 +2990,6 @@ use numeric depth: false
 													-o:verticalScrollBar
 														-v:entityId
 															-i:703000087
-													-v:horizontal
-														-b:false
 										-k:i
 											-o:d
 												-v:type
@@ -2916,6 +2997,8 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000089
+									-v:name
+										-s:Scroll
 									-a:children
 										-k:i
 											-o:d
@@ -2924,8 +3007,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000085
-													-v:name
-														-s:ScrollContent
 													-a:components
 														-k:i
 															-o:d
@@ -2947,20 +3028,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -2968,8 +3042,6 @@ use numeric depth: false
 																		-s:Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. Прокрутка: содержимое ограничено маской. 
 																	-v:fontSize
 																		-f:28
-																	-v:verticalAlignment
-																		-s:Top
 														-k:i
 															-o:d
 																-v:type
@@ -2979,7 +3051,8 @@ use numeric depth: false
 																		-i:703000091
 																	-v:verticalFit
 																		-s:PreferredSize
-													-a:children
+													-v:name
+														-s:ScrollContent
 													-o:transform
 														-v:type
 															-s:TransformRect
@@ -2988,55 +3061,56 @@ use numeric depth: false
 																-v:x
 																	-f:640
 																-v:y
-																	-f:900
+																	-f:3135.35
+															-o:offsetMin
+																-v:y
+																	-f:-3135.35
+															-o:offsetMax
+																-v:x
+																	-f:640
 															-o:anchors
 																-o:min
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
 																-o:max
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
-															-o:translation
-																-v:x
-																	-f:0
-																-v:y
-																	-f:0
-															-v:localPriority
-																-i:0
 															-o:pivot
-																-v:x
-																	-f:0
 																-v:y
 																	-f:1
+															-v:localPriority
+																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:660
-												-v:y
-													-f:330
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:1440
 												-v:y
 													-f:-265
+											-o:size
+												-v:x
+													-f:660
+												-v:y
+													-f:330
+											-o:offsetMin
+												-v:x
+													-f:1110
+												-v:y
+													-f:-430
+											-o:offsetMax
+												-v:x
+													-f:1770
+												-v:y
+													-f:-100
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -3046,8 +3120,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000094
-									-v:name
-										-s:Scrollbar
 									-a:components
 										-k:i
 											-o:d
@@ -3061,6 +3133,8 @@ use numeric depth: false
 													-o:handle
 														-v:entityId
 															-i:703000092
+									-v:name
+										-s:Scrollbar
 									-a:children
 										-k:i
 											-o:d
@@ -3069,8 +3143,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000092
-													-v:name
-														-s:ScrollHandle
 													-a:components
 														-k:i
 															-o:d
@@ -3092,20 +3164,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -3113,61 +3178,68 @@ use numeric depth: false
 																		-s:▌
 																	-v:fontSize
 																		-f:28
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ScrollHandle
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:60
-																-v:y
-																	-f:90
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:30
 																-v:y
 																	-f:-45
+															-o:size
+																-v:x
+																	-f:60
+																-v:y
+																	-f:90
+															-o:offsetMin
+																-v:y
+																	-f:-90
+															-o:offsetMax
+																-v:x
+																	-f:60
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:60
-												-v:y
-													-f:330
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:1810
 												-v:y
 													-f:-265
+											-o:size
+												-v:x
+													-f:60
+												-v:y
+													-f:330
+											-o:offsetMin
+												-v:x
+													-f:1780
+												-v:y
+													-f:-430
+											-o:offsetMax
+												-v:x
+													-f:1840
+												-v:y
+													-f:-100
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:0
 						-k:i
@@ -3177,8 +3249,6 @@ use numeric depth: false
 								-o:ptr
 									-v:entityId
 										-i:703000102
-									-v:name
-										-s:Modal
 									-a:components
 										-k:i
 											-o:d
@@ -3187,10 +3257,10 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000095
-													-v:modal
-														-b:true
 													-v:focusable
 														-b:false
+													-v:modal
+														-b:true
 													-a:onCancelEvents
 														-k:i
 															-o:d
@@ -3199,6 +3269,8 @@ use numeric depth: false
 																		-i:703000012
 																-v:method
 																	-s:CloseModal
+									-v:name
+										-s:Modal
 									-a:children
 										-k:i
 											-o:d
@@ -3207,8 +3279,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000097
-													-v:name
-														-s:ModalTitle
 													-a:components
 														-k:i
 															-o:d
@@ -3230,20 +3300,13 @@ use numeric depth: false
 																						-v:shaderPath
 																							-s:Engine/Shaders/UI/text-mesh.srsl
 																						-a:uniforms
+																						-a:samplers
 																							-k:i
 																								-o:d
 																									-v:id
-																										-s:color
+																										-s:diffuse
 																									-v:type
-																										-s:Vec3
-																									-o:value
-																										-v:x
-																											-f:1
-																										-v:y
-																											-f:1
-																										-v:z
-																											-f:1
-																						-a:samplers
+																										-s:Sampler2D
 																	-o:font
 																		-v:id
 																			-s:DeathLovers/Fonts/Pangolin.font
@@ -3251,34 +3314,39 @@ use numeric depth: false
 																		-s:MODAL: нижние контролы и Space не должны получать ввод. Escape / Close.
 																	-v:fontSize
 																		-f:33
-																	-v:verticalAlignment
-																		-s:Top
-													-a:children
+													-v:name
+														-s:ModalTitle
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:1450
-																-v:y
-																	-f:80
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:985
 																-v:y
 																	-f:-240
+															-o:size
+																-v:x
+																	-f:1450
+																-v:y
+																	-f:80
+															-o:offsetMin
+																-v:x
+																	-f:260
+																-v:y
+																	-f:-280
+															-o:offsetMax
+																-v:x
+																	-f:1710
+																-v:y
+																	-f:-200
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
 										-k:i
@@ -3288,8 +3356,6 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:703000101
-													-v:name
-														-s:ModalClose
 													-a:components
 														-k:i
 															-o:d
@@ -3306,6 +3372,8 @@ use numeric depth: false
 																						-i:703000012
 																				-v:method
 																					-s:CloseModal
+													-v:name
+														-s:ModalClose
 													-a:children
 														-k:i
 															-o:d
@@ -3314,8 +3382,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:703000100
-																	-v:name
-																		-s:ModalCloseLabel
 																	-a:components
 																		-k:i
 																			-o:d
@@ -3337,20 +3403,13 @@ use numeric depth: false
 																										-v:shaderPath
 																											-s:Engine/Shaders/UI/text-mesh.srsl
 																										-a:uniforms
+																										-a:samplers
 																											-k:i
 																												-o:d
 																													-v:id
-																														-s:color
+																														-s:diffuse
 																													-v:type
-																														-s:Vec3
-																													-o:value
-																														-v:x
-																															-f:1
-																														-v:y
-																															-f:1
-																														-v:z
-																															-f:1
-																										-a:samplers
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -3358,116 +3417,134 @@ use numeric depth: false
 																						-s:Close modal
 																					-v:fontSize
 																						-f:27
-																					-v:verticalAlignment
-																						-s:Top
-																	-a:children
+																	-v:name
+																		-s:ModalCloseLabel
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
 																		-o:ptr
-																			-o:size
-																				-v:x
-																					-f:250
-																				-v:y
-																					-f:56
-																			-o:anchors
-																				-o:min
-																					-v:x
-																						-f:0
-																					-v:y
-																						-f:1
-																				-o:max
-																					-v:x
-																						-f:0
-																					-v:y
-																						-f:1
 																			-o:translation
 																				-v:x
 																					-f:125
 																				-v:y
 																					-f:-28
+																			-o:size
+																				-v:x
+																					-f:250
+																				-v:y
+																					-f:56
+																			-o:offsetMin
+																				-v:y
+																					-f:-56
+																			-o:offsetMax
+																				-v:x
+																					-f:250
+																			-o:anchors
+																				-o:min
+																					-v:y
+																						-f:1
+																				-o:max
+																					-v:y
+																						-f:1
 																			-v:localPriority
 																				-i:0
 													-o:transform
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:size
-																-v:x
-																	-f:250
-																-v:y
-																	-f:56
-															-o:anchors
-																-o:min
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
-																-o:max
-																	-v:x
-																		-f:0
-																	-v:y
-																		-f:1
 															-o:translation
 																-v:x
 																	-f:925
 																-v:y
 																	-f:-478
+															-o:size
+																-v:x
+																	-f:250
+																-v:y
+																	-f:56
+															-o:offsetMin
+																-v:x
+																	-f:800
+																-v:y
+																	-f:-506
+															-o:offsetMax
+																-v:x
+																	-f:1050
+																-v:y
+																	-f:-450
+															-o:anchors
+																-o:min
+																	-v:y
+																		-f:1
+																-o:max
+																	-v:y
+																		-f:1
 															-v:localPriority
 																-i:0
+									-v:isEnabled
+										-b:false
 									-o:transform
 										-v:type
 											-s:TransformRect
 										-o:ptr
-											-o:size
-												-v:x
-													-f:1920
-												-v:y
-													-f:1080
-											-o:anchors
-												-o:min
-													-v:x
-														-f:0
-													-v:y
-														-f:1
-												-o:max
-													-v:x
-														-f:0
-													-v:y
-														-f:1
 											-o:translation
 												-v:x
 													-f:960
 												-v:y
 													-f:-540
+											-o:size
+												-v:x
+													-f:1920
+												-v:y
+													-f:1080
+											-o:offsetMin
+												-v:y
+													-f:-1080
+											-o:offsetMax
+												-v:x
+													-f:1920
+											-o:anchors
+												-o:min
+													-v:y
+														-f:1
+												-o:max
+													-v:y
+														-f:1
 											-v:localPriority
 												-i:100
-									-v:isEnabled
-										-b:false
 					-o:transform
 						-v:type
 							-s:TransformRect
 						-o:ptr
-							-o:size
-								-v:x
-									-f:1920
-								-v:y
-									-f:1080
-							-o:anchors
-								-o:min
-									-v:x
-										-f:0
-									-v:y
-										-f:1
-								-o:max
-									-v:x
-										-f:0
-									-v:y
-										-f:1
 							-o:translation
 								-v:x
-									-f:960
+									-f:878.5
 								-v:y
-									-f:-540
+									-f:580
+							-o:size
+								-v:x
+									-f:1772.23
+								-v:y
+									-f:1170.05
+							-o:offsetMin
+								-v:x
+									-f:-7.61359
+								-v:y
+									-f:-5.02661
+							-o:offsetMax
+								-v:x
+									-f:1764.61
+								-v:y
+									-f:1165.03
+							-o:anchors
+								-o:min
+								-o:max
+							-o:scale
+								-v:x
+									-f:0.991408
+								-v:y
+									-f:0.991408
+								-v:z
+									-f:0.991408
 							-v:localPriority
 								-i:0
