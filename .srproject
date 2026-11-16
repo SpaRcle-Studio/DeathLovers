@@ -8,4 +8,13 @@ use numeric depth: false
 		-o:ptr
 			-v:projectName
 				-s:DeathLovers
+			-v:mainScene
+				-s:DeathLovers/Scenes/EngineApi.scene
 			-a:packages
+			-a:buildProfiles
+				-k:i
+					-o:d
+						-v:name
+							-s:DeathLovers
+			-v:enableCppScripts
+				-b:false
