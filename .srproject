@@ -9,7 +9,7 @@ use numeric depth: false
 			-v:projectName
 				-s:DeathLovers
 			-v:mainScene
-				-s:DeathLovers/Scenes/EngineApi.scene
+				-s:DeathLovers/Scenes/MainMenu.scene
 			-a:packages
 			-a:buildProfiles
 				-k:i

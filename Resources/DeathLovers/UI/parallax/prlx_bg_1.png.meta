@@ -1,0 +1,10 @@
+sra format
+use tabs: true
+use numeric depth: false
+-r:Root
+	-v:filter
+		-s:NEAREST
+	-v:mipLevels
+		-i:1
+	-v:addressMode
+		-s:ClampToEdge

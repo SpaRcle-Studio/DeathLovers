@@ -1,0 +1,480 @@
+{
+  "status": "STATIC_CHECKS_PASSED_RUNTIME_UNTESTED",
+  "sra": [
+    {
+      "path": "Scenes/MainMenu.scene",
+      "definitions": 377,
+      "references": 44,
+      "duplicateDefinitions": [],
+      "danglingReferences": [],
+      "resources": [
+        "DeathLovers/Fonts/Pangolin.font",
+        "DeathLovers/UI/cursor.png",
+        "DeathLovers/UI/frame.png",
+        "DeathLovers/UI/main_menu.png",
+        "DeathLovers/UI/parallax/prlx_bg.png",
+        "DeathLovers/UI/parallax/prlx_bg_1.png",
+        "DeathLovers/UI/parallax/prlx_bg_2.png",
+        "DeathLovers/UI/parallax/prlx_fg.png",
+        "DeathLovers/UI/parallax/prlx_mid.png",
+        "DeathLovers/UI/parallax/prlx_mid_1.png",
+        "DeathLovers/UI/parallax/prlx_mid_2.png",
+        "DeathLovers/UI/slider/horizontal_idle_bar.png",
+        "DeathLovers/UI/slider/horizontal_idle_thumb.png",
+        "Engine/Shaders/UI/sliced.srsl",
+        "Engine/Shaders/UI/text-mesh.srsl",
+        "Engine/Textures/default.png"
+      ],
+      "methods": [
+        "Back",
+        "ChangeSliders",
+        "ConfirmYes",
+        "Fullscreen",
+        "OpenAbout",
+        "OpenHelp",
+        "OpenLoad",
+        "OpenPreferences",
+        "Quit",
+        "StartSession",
+        "ToggleMute",
+        "TogglePixelVoice",
+        "ToggleSkipChoices",
+        "ToggleSkipTransitions",
+        "ToggleSkipUnseen",
+        "Windowed"
+      ],
+      "types": [
+        {
+          "Name": "SceneAssetLogic",
+          "Count": 1
+        },
+        {
+          "Name": "GameObject",
+          "Count": 122
+        },
+        {
+          "Name": "Camera",
+          "Count": 1
+        },
+        {
+          "Name": "AudioListener",
+          "Count": 1
+        },
+        {
+          "Name": "Transform3D",
+          "Count": 1
+        },
+        {
+          "Name": "Canvas",
+          "Count": 1
+        },
+        {
+          "Name": "CanvasScaler",
+          "Count": 1
+        },
+        {
+          "Name": "Behaviour",
+          "Count": 18
+        },
+        {
+          "Name": "Sprite",
+          "Count": 28
+        },
+        {
+          "Name": "UniqueMaterial",
+          "Count": 89
+        },
+        {
+          "Name": "MaterialData",
+          "Count": 89
+        },
+        {
+          "Name": "Vec4",
+          "Count": 28
+        },
+        {
+          "Name": "Sampler2D",
+          "Count": 89
+        },
+        {
+          "Name": "TransformRect",
+          "Count": 121
+        },
+        {
+          "Name": "AspectRatioFitter",
+          "Count": 8
+        },
+        {
+          "Name": "RectMask2D",
+          "Count": 7
+        },
+        {
+          "Name": "LayoutGroup",
+          "Count": 11
+        },
+        {
+          "Name": "ContentSizeFitter",
+          "Count": 49
+        },
+        {
+          "Name": "TextMesh",
+          "Count": 61
+        },
+        {
+          "Name": "Vec3",
+          "Count": 61
+        },
+        {
+          "Name": "Float",
+          "Count": 61
+        },
+        {
+          "Name": "UIButton",
+          "Count": 21
+        },
+        {
+          "Name": "LayoutElement",
+          "Count": 27
+        },
+        {
+          "Name": "UIControl",
+          "Count": 7
+        },
+        {
+          "Name": "UIScrollRect",
+          "Count": 3
+        },
+        {
+          "Name": "GridLayoutGroup",
+          "Count": 2
+        },
+        {
+          "Name": "UISlider",
+          "Count": 5
+        },
+        {
+          "Name": "AudioSource",
+          "Count": 1
+        },
+        {
+          "Name": "UICursor",
+          "Count": 1
+        }
+      ]
+    },
+    {
+      "path": "Prefabs/UI/MenuButton.prefab",
+      "definitions": 7,
+      "references": 0,
+      "duplicateDefinitions": [],
+      "danglingReferences": [],
+      "resources": [
+        "DeathLovers/Fonts/Pangolin.font",
+        "Engine/Shaders/UI/text-mesh.srsl"
+      ],
+      "methods": [],
+      "types": [
+        {
+          "Name": "ScenePrefabLogic",
+          "Count": 1
+        },
+        {
+          "Name": "GameObject",
+          "Count": 1
+        },
+        {
+          "Name": "UIButton",
+          "Count": 1
+        },
+        {
+          "Name": "TextMesh",
+          "Count": 1
+        },
+        {
+          "Name": "UniqueMaterial",
+          "Count": 1
+        },
+        {
+          "Name": "MaterialData",
+          "Count": 1
+        },
+        {
+          "Name": "Vec3",
+          "Count": 1
+        },
+        {
+          "Name": "Float",
+          "Count": 1
+        },
+        {
+          "Name": "Sampler2D",
+          "Count": 1
+        },
+        {
+          "Name": "LayoutElement",
+          "Count": 1
+        },
+        {
+          "Name": "Behaviour",
+          "Count": 1
+        },
+        {
+          "Name": "TransformRect",
+          "Count": 1
+        }
+      ]
+    },
+    {
+      "path": "Prefabs/UI/ModalFrame.prefab",
+      "definitions": 16,
+      "references": 0,
+      "duplicateDefinitions": [],
+      "danglingReferences": [],
+      "resources": [
+        "DeathLovers/Fonts/Pangolin.font",
+        "DeathLovers/UI/frame.png",
+        "Engine/Shaders/UI/sliced.srsl",
+        "Engine/Shaders/UI/text-mesh.srsl"
+      ],
+      "methods": [],
+      "types": [
+        {
+          "Name": "ScenePrefabLogic",
+          "Count": 1
+        },
+        {
+          "Name": "GameObject",
+          "Count": 4
+        },
+        {
+          "Name": "UIControl",
+          "Count": 1
+        },
+        {
+          "Name": "Sprite",
+          "Count": 1
+        },
+        {
+          "Name": "UniqueMaterial",
+          "Count": 3
+        },
+        {
+          "Name": "MaterialData",
+          "Count": 3
+        },
+        {
+          "Name": "Vec4",
+          "Count": 1
+        },
+        {
+          "Name": "Sampler2D",
+          "Count": 3
+        },
+        {
+          "Name": "LayoutGroup",
+          "Count": 1
+        },
+        {
+          "Name": "ContentSizeFitter",
+          "Count": 2
+        },
+        {
+          "Name": "TextMesh",
+          "Count": 2
+        },
+        {
+          "Name": "Vec3",
+          "Count": 2
+        },
+        {
+          "Name": "Float",
+          "Count": 2
+        },
+        {
+          "Name": "TransformRect",
+          "Count": 4
+        },
+        {
+          "Name": "UIButton",
+          "Count": 1
+        },
+        {
+          "Name": "LayoutElement",
+          "Count": 1
+        },
+        {
+          "Name": "Behaviour",
+          "Count": 1
+        }
+      ]
+    },
+    {
+      "path": "Prefabs/UI/ParallaxBackdrop.prefab",
+      "definitions": 31,
+      "references": 0,
+      "duplicateDefinitions": [],
+      "danglingReferences": [],
+      "resources": [
+        "DeathLovers/UI/parallax/prlx_bg.png",
+        "DeathLovers/UI/parallax/prlx_bg_1.png",
+        "DeathLovers/UI/parallax/prlx_bg_2.png",
+        "DeathLovers/UI/parallax/prlx_fg.png",
+        "DeathLovers/UI/parallax/prlx_mid.png",
+        "DeathLovers/UI/parallax/prlx_mid_1.png",
+        "DeathLovers/UI/parallax/prlx_mid_2.png",
+        "Engine/Shaders/UI/sliced.srsl"
+      ],
+      "methods": [],
+      "types": [
+        {
+          "Name": "ScenePrefabLogic",
+          "Count": 1
+        },
+        {
+          "Name": "GameObject",
+          "Count": 15
+        },
+        {
+          "Name": "AspectRatioFitter",
+          "Count": 7
+        },
+        {
+          "Name": "Sprite",
+          "Count": 7
+        },
+        {
+          "Name": "UniqueMaterial",
+          "Count": 7
+        },
+        {
+          "Name": "MaterialData",
+          "Count": 7
+        },
+        {
+          "Name": "Vec4",
+          "Count": 7
+        },
+        {
+          "Name": "Sampler2D",
+          "Count": 7
+        },
+        {
+          "Name": "TransformRect",
+          "Count": 15
+        }
+      ]
+    }
+  ],
+  "runtime": {
+    "engineBuild": "NOT_RUN",
+    "angelScriptCompile": "NOT_RUN",
+    "screenshots": "NOT_RUN",
+    "audio": "NOT_RUN",
+    "cycles20": "NOT_RUN",
+    "fullscreen": "NOT_RUN"
+  },
+  "resourcePathsChecked": 18,
+  "eventMethodsChecked": 16,
+  "date": "2026-11-16",
+  "checkType": "Read-only structural and source checks; not engine execution",
+  "arithmeticOnlyViewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "canvasScale": 1,
+      "novelPhysicalRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "canvasScale": 0.6666666666666666,
+      "novelPhysicalRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "canvasScale": 0.711284701034632,
+      "novelPhysicalRect": {
+        "x": 0.33333333333325754,
+        "y": 0,
+        "width": 1365.3333333333335,
+        "height": 768
+      }
+    },
+    {
+      "width": 2560,
+      "height": 1440,
+      "canvasScale": 1.3333333333333333,
+      "novelPhysicalRect": {
+        "x": 0,
+        "y": 0,
+        "width": 2560,
+        "height": 1440
+      }
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "canvasScale": 0.6158402871356008,
+      "novelPhysicalRect": {
+        "x": 0,
+        "y": 96,
+        "width": 1024,
+        "height": 576
+      }
+    },
+    {
+      "width": 2560,
+      "height": 1080,
+      "canvasScale": 1.1547005383792515,
+      "novelPhysicalRect": {
+        "x": 320,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  ],
+  "arithmeticOnlyParallax": {
+    "center": {
+      "x": 0,
+      "y": 0
+    },
+    "maximumNormalized": {
+      "x": 0.024,
+      "y": 0.006
+    },
+    "maximumAt1920x1080": {
+      "x": 46.08,
+      "y": 6.48
+    },
+    "prescaleArguments": [
+      1.1,
+      1,
+      1.1,
+      1.1,
+      1.1,
+      1.1,
+      1.1
+    ],
+    "effectivePrescale": [
+      1,
+      1,
+      1.1,
+      1.1,
+      1.1,
+      1.1,
+      1.1
+    ]
+  }
+}
