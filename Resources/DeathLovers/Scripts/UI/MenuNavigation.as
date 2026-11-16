@@ -65,6 +65,7 @@ class MenuNavigation : ScriptBehaviour
         notify.SetEnabled(false);
         @music = cast<AudioSource@>(Child(gameObject, "MenuMusic").GetComponent("AudioSource"));
         music.SetSpatialize(SpatializeMode::Off);
+        music.SetPitch(1.0f);
         music.SetPath("DeathLovers/Audio/music/main_menu.ogg");
         music.SetLoop(true);
         EnsureGroup("Music");
@@ -89,14 +90,19 @@ class MenuNavigation : ScriptBehaviour
 
     void Open(GameObject@ screen, const String &in origin)
     {
-        if (!CanNavigate() || modal !is null || submenu !is null)
+        if (!CanNavigate() || modal !is null)
         {
             return;
+        }
+        if (submenu !is null)
+        {
+            submenu.SetEnabled(false);
         }
         @submenuOrigin = Button(Child(main, "Navigation"), origin);
         @submenu = screen;
         main.SetEnabled(false);
         screen.SetEnabled(true);
+        MenuSession::activeScreen = screen.GetName();
         Button(screen, "Back").Focus();
         inputBarrier = 0.1f;
     }
@@ -127,7 +133,7 @@ class MenuNavigation : ScriptBehaviour
 
     void StartSession()
     {
-        if (!CanNavigate() || modal !is null || submenu !is null)
+        if (!CanNavigate() || modal !is null)
         {
             return;
         }
@@ -165,6 +171,7 @@ class MenuNavigation : ScriptBehaviour
             submenu.SetEnabled(false);
             @submenu = null;
             main.SetEnabled(true);
+            MenuSession::activeScreen = "MainMenu";
             if (submenuOrigin !is null)
             {
                 submenuOrigin.Focus();
@@ -214,6 +221,7 @@ class MenuNavigation : ScriptBehaviour
         }
         pendingQuit = false;
         inGame = false;
+        MenuSession::activeScreen = "MainMenu";
         main.SetEnabled(true);
         if (!music.IsPlaying())
         {
@@ -278,7 +286,6 @@ class MenuNavigation : ScriptBehaviour
         cast<UISlider@>(Child(PreferenceGroup("Voice"), "Voice").GetComponent("UISlider")).SetValue(MenuSession::profile.settings.voice_volume);
         cast<UISlider@>(Child(PreferenceGroup("TextSpeed"), "TextSpeed").GetComponent("UISlider")).SetValue(MenuSession::profile.settings.text_cps);
         cast<UISlider@>(Child(PreferenceGroup("AutoSpeed"), "AutoSpeed").GetComponent("UISlider")).SetValue(MenuSession::profile.settings.afm_time);
-        RefreshChecks();
         syncing = false;
     }
 
@@ -293,15 +300,6 @@ class MenuNavigation : ScriptBehaviour
             return Child(Child(Settings(), "General"), "Skip");
         }
         return Child(Child(Settings(), "Sliders"), "Audio");
-    }
-
-    void RefreshChecks()
-    {
-        Text(PreferenceGroup("PixelVoice"), "PixelVoice", MenuSession::profile.settings.pixel_voice ? "[X] Пиксель-войс" : "[ ] Пиксель-войс");
-        Text(PreferenceGroup("Mute"), "Mute", MenuSession::profile.settings.mute ? "[X] Без звука" : "[ ] Без звука");
-        Text(PreferenceGroup("SkipUnseen"), "SkipUnseen", MenuSession::profile.settings.skip_unseen ? "[X] Всего текста" : "[ ] Всего текста");
-        Text(PreferenceGroup("SkipChoices"), "SkipChoices", MenuSession::profile.settings.skip_after_choices ? "[X] После выборов" : "[ ] После выборов");
-        Text(PreferenceGroup("SkipTransitions"), "SkipTransitions", MenuSession::profile.settings.skip_transitions ? "[X] Переходов" : "[ ] Переходов");
     }
 
     void ChangeSliders()
@@ -321,32 +319,27 @@ class MenuNavigation : ScriptBehaviour
     void TogglePixelVoice()
     {
         MenuSession::profile.settings.pixel_voice = !MenuSession::profile.settings.pixel_voice;
-        RefreshChecks();
     }
 
     void ToggleMute()
     {
         MenuSession::profile.settings.mute = !MenuSession::profile.settings.mute;
         ApplyAudio();
-        RefreshChecks();
     }
 
     void ToggleSkipUnseen()
     {
         MenuSession::profile.settings.skip_unseen = !MenuSession::profile.settings.skip_unseen;
-        RefreshChecks();
     }
 
     void ToggleSkipChoices()
     {
         MenuSession::profile.settings.skip_after_choices = !MenuSession::profile.settings.skip_after_choices;
-        RefreshChecks();
     }
 
     void ToggleSkipTransitions()
     {
         MenuSession::profile.settings.skip_transitions = !MenuSession::profile.settings.skip_transitions;
-        RefreshChecks();
     }
 
     void Windowed()

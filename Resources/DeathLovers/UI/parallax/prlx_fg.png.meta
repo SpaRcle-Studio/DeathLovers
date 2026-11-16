@@ -2,6 +2,8 @@ sra format
 use tabs: true
 use numeric depth: false
 -r:Root
+	-v:imageType
+		-s:UI
 	-v:filter
 		-s:NEAREST
 	-v:mipLevels

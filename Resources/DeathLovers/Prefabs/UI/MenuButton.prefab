@@ -44,35 +44,35 @@ use numeric depth: false
 										-o:defaultShader
 											-v:shaderPath
 												-s:Engine/Shaders/UI/text-mesh.srsl
-										-a:uniforms
-											-k:i
-												-o:d
-													-v:id
-														-s:color
-													-v:type
-														-s:Vec3
-													-o:value
-														-v:x
-															-f:1
-														-v:y
-															-f:1
-														-v:z
-															-f:1
-											-k:i
-												-o:d
-													-v:id
-														-s:outlineWidth
-													-v:type
-														-s:Float
-													-v:value
-														-f:3
-										-a:samplers
-											-k:i
-												-o:d
-													-v:id
-														-s:diffuse
-													-v:type
-														-s:Sampler2D
+											-a:uniforms
+												-k:i
+													-o:d
+														-v:id
+															-s:color
+														-v:type
+															-s:Vec3
+														-o:value
+															-v:x
+																-f:1
+															-v:y
+																-f:1
+															-v:z
+																-f:1
+												-k:i
+													-o:d
+														-v:id
+															-s:outlineWidth
+														-v:type
+															-s:Float
+														-v:value
+															-f:3
+											-a:samplers
+												-k:i
+													-o:d
+														-v:id
+															-s:diffuse
+														-v:type
+															-s:Sampler2D
 						-o:font
 							-v:id
 								-s:DeathLovers/Fonts/Pangolin.font
@@ -84,6 +84,8 @@ use numeric depth: false
 							-s:Center
 						-v:verticalAlignment
 							-s:Middle
+						-v:wordWrap
+							-b:false
 			-k:i
 				-o:d
 					-v:type

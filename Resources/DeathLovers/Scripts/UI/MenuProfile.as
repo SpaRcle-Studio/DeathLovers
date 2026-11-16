@@ -33,4 +33,5 @@ class MenuProfile
 namespace MenuSession
 {
     MenuProfile profile;
+    String activeScreen = "MainMenu";
 }

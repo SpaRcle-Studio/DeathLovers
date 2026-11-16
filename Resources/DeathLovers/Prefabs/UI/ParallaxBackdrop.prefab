@@ -73,29 +73,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_bg.png
@@ -255,29 +255,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_bg_1.png
@@ -437,29 +437,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_bg_2.png
@@ -619,29 +619,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_mid.png
@@ -801,29 +801,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_mid_1.png
@@ -983,29 +983,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_mid_2.png
@@ -1165,29 +1165,29 @@ use numeric depth: false
 																		-o:defaultShader
 																			-v:shaderPath
 																				-s:Engine/Shaders/UI/sliced.srsl
-																		-a:uniforms
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:color
-																					-v:type
-																						-s:Vec4
-																					-o:value
-																						-v:x
-																							-f:1
-																						-v:y
-																							-f:1
-																						-v:z
-																							-f:1
-																						-v:w
-																							-f:1
-																		-a:samplers
-																			-k:i
-																				-o:d
-																					-v:id
-																						-s:diffuse
-																					-v:type
-																						-s:Sampler2D
+																			-a:uniforms
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:color
+																						-v:type
+																							-s:Vec4
+																						-o:value
+																							-v:x
+																								-f:1
+																							-v:y
+																								-f:1
+																							-v:z
+																								-f:1
+																							-v:w
+																								-f:1
+																			-a:samplers
+																				-k:i
+																					-o:d
+																						-v:id
+																							-s:diffuse
+																						-v:type
+																							-s:Sampler2D
 														-o:texture
 															-v:id
 																-s:DeathLovers/UI/parallax/prlx_fg.png
