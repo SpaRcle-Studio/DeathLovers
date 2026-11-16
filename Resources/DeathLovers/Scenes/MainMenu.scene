@@ -1318,7 +1318,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -2224,7 +2224,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.05
 																			-v:localPriority
-																				-i:0
+																				-i:1
 													-o:transform
 														-v:type
 															-s:TransformRect
@@ -3194,7 +3194,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.5
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -3302,7 +3302,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -3677,7 +3677,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -3750,7 +3750,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -3831,7 +3831,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -3988,7 +3988,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4061,7 +4061,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4142,7 +4142,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -4436,7 +4436,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4509,7 +4509,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4590,7 +4590,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -4747,7 +4747,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4820,7 +4820,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -4901,7 +4901,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -5058,7 +5058,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -5131,7 +5131,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -5212,7 +5212,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -5618,7 +5618,7 @@ use numeric depth: false
 																																													-v:y
 																																														-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -5889,7 +5889,7 @@ use numeric depth: false
 																																													-v:y
 																																														-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -6205,7 +6205,7 @@ use numeric depth: false
 																																													-v:y
 																																														-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -6472,7 +6472,7 @@ use numeric depth: false
 																																													-v:y
 																																														-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -6739,7 +6739,7 @@ use numeric depth: false
 																																													-v:y
 																																														-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -6903,7 +6903,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -6976,7 +6976,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -7057,7 +7057,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -7214,7 +7214,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -7287,7 +7287,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																						-k:i
 																																							-o:d
 																																								-v:type
@@ -7368,7 +7368,7 @@ use numeric depth: false
 																																												-v:y
 																																													-f:0.5
 																																											-v:localPriority
-																																												-i:0
+																																												-i:1
 																																					-o:transform
 																																						-v:type
 																																							-s:TransformRect
@@ -7490,7 +7490,7 @@ use numeric depth: false
 																					-v:y
 																						-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -7626,7 +7626,7 @@ use numeric depth: false
 																				-o:max
 																			-o:pivot
 																			-v:localPriority
-																				-i:0
+																				-i:10
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -8598,7 +8598,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.5
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -8706,7 +8706,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -8792,7 +8792,7 @@ use numeric depth: false
 																				-v:y
 																					-f:50
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -8928,7 +8928,7 @@ use numeric depth: false
 																				-o:max
 																			-o:pivot
 																			-v:localPriority
-																				-i:0
+																				-i:10
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -9900,7 +9900,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.5
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -10008,7 +10008,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -11300,7 +11300,7 @@ use numeric depth: false
 																					-v:y
 																						-f:0.81
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -11436,7 +11436,7 @@ use numeric depth: false
 																				-o:max
 																			-o:pivot
 																			-v:localPriority
-																				-i:0
+																				-i:10
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -12408,7 +12408,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.5
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -12516,7 +12516,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -13192,7 +13192,7 @@ use numeric depth: false
 																					-v:y
 																						-f:0.81
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -13328,7 +13328,7 @@ use numeric depth: false
 																				-o:max
 																			-o:pivot
 																			-v:localPriority
-																				-i:0
+																				-i:10
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -14300,7 +14300,7 @@ use numeric depth: false
 																				-v:y
 																					-f:0.5
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -14408,7 +14408,7 @@ use numeric depth: false
 																				-v:y
 																					-f:1
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -14492,7 +14492,7 @@ use numeric depth: false
 																				-v:y
 																					-f:90
 																			-v:localPriority
-																				-i:0
+																				-i:10
 														-k:i
 															-o:d
 																-v:type
@@ -14628,7 +14628,7 @@ use numeric depth: false
 																				-o:max
 																			-o:pivot
 																			-v:localPriority
-																				-i:0
+																				-i:10
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -14889,7 +14889,7 @@ use numeric depth: false
 																									-v:y
 																										-f:1
 																							-v:localPriority
-																								-i:0
+																								-i:1
 																		-k:i
 																			-o:d
 																				-v:type
@@ -15009,7 +15009,7 @@ use numeric depth: false
 																									-v:y
 																										-f:1
 																							-v:localPriority
-																								-i:0
+																								-i:1
 																		-k:i
 																			-o:d
 																				-v:type
@@ -15129,7 +15129,7 @@ use numeric depth: false
 																									-v:y
 																										-f:1
 																							-v:localPriority
-																								-i:0
+																								-i:1
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -15150,7 +15150,7 @@ use numeric depth: false
 																				-v:y
 																					-f:150
 																			-v:localPriority
-																				-i:0
+																				-i:1
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -15409,7 +15409,7 @@ use numeric depth: false
 																									-v:y
 																										-f:1
 																							-v:localPriority
-																								-i:0
+																								-i:1
 																		-k:i
 																			-o:d
 																				-v:type
@@ -15529,7 +15529,7 @@ use numeric depth: false
 																									-v:y
 																										-f:1
 																							-v:localPriority
-																								-i:0
+																								-i:1
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -15550,7 +15550,7 @@ use numeric depth: false
 																				-v:y
 																					-f:150
 																			-v:localPriority
-																				-i:0
+																				-i:1
 													-v:isEnabled
 														-b:false
 													-o:transform
@@ -15567,6 +15567,66 @@ use numeric depth: false
 																		-f:1
 															-v:localPriority
 																-i:200
+										-k:i
+											-o:d
+												-v:type
+													-s:GameObject
+												-o:ptr
+													-v:entityId
+														-i:707000001
+													-a:components
+														-k:i
+															-o:d
+																-v:type
+																	-s:UIControl
+																-o:ptr
+																	-v:entityId
+																		-i:707000002
+																	-v:modal
+																		-b:true
+																	-v:focusable
+																		-b:false
+													-v:name
+														-s:TransitionBlocker
+													-v:isEnabled
+														-b:false
+													-o:transform
+														-v:type
+															-s:TransformRect
+														-o:ptr
+															-o:anchors
+																-o:min
+																	-v:x
+																		-f:0
+																	-v:y
+																		-f:0
+																-o:max
+																	-v:x
+																		-f:1
+																	-v:y
+																		-f:1
+															-o:size
+																-v:x
+																	-f:0
+																-v:y
+																	-f:0
+															-o:offsetMin
+																-v:x
+																	-f:0
+																-v:y
+																	-f:0
+															-o:offsetMax
+																-v:x
+																	-f:0
+																-v:y
+																	-f:0
+															-o:pivot
+																-v:x
+																	-f:0.5
+																-v:y
+																	-f:0.5
+															-v:localPriority
+																-i:450
 									-o:transform
 										-v:type
 											-s:TransformRect
@@ -15588,9 +15648,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.970199
+													-f:0.970742
 												-v:y
-													-f:0.970199
+													-f:0.970742
 												-v:z
 													-f:1
 											-v:localPriority
@@ -15717,33 +15777,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:958.5
+									-f:989.5
 								-v:y
-									-f:507.5
+									-f:524.5
 							-o:size
 								-v:x
-									-f:1978.98
+									-f:1977.87
 								-v:y
-									-f:1047.81
+									-f:1048.4
 							-o:offsetMin
 								-v:x
-									-f:-30.988
+									-f:0.565308
 								-v:y
-									-f:-16.4073
+									-f:0.299622
 							-o:offsetMax
 								-v:x
-									-f:1947.99
+									-f:1978.43
 								-v:y
-									-f:1031.41
+									-f:1048.7
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.968683
+									-f:1.00057
 								-v:y
-									-f:0.968683
+									-f:1.00057
 								-v:z
-									-f:0.968683
+									-f:1.00057
 							-v:localPriority
 								-i:0

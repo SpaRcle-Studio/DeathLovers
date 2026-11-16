@@ -18,6 +18,7 @@ class MenuNavigation : ScriptBehaviour
     GameObject@ sessionStart;
     GameObject@ confirm;
     GameObject@ notify;
+    GameObject@ transitionBlocker;
     GameObject@ submenu;
     GameObject@ modal;
     UIButton@ submenuOrigin;
@@ -29,6 +30,10 @@ class MenuNavigation : ScriptBehaviour
     bool syncing = false;
     float inputBarrier = 0;
     float notifyTime = 0;
+    Sprite@ fadingScreen;
+    GameObject@ fadingFrom;
+    float fadeTime = 0;
+    bool fadeClosing = false;
 
     GameObject@ Child(GameObject@ parent, const String &in name)
     {
@@ -56,6 +61,8 @@ class MenuNavigation : ScriptBehaviour
         @sessionStart = Child(novel, "SessionStart");
         @confirm = Child(novel, "Confirm");
         @notify = Child(novel, "Notify");
+        @transitionBlocker = Child(novel, "TransitionBlocker");
+        transitionBlocker.SetEnabled(false);
         preferences.SetEnabled(false);
         load.SetEnabled(false);
         about.SetEnabled(false);
@@ -85,7 +92,7 @@ class MenuNavigation : ScriptBehaviour
 
     bool CanNavigate()
     {
-        return inputBarrier <= 0;
+        return inputBarrier <= 0 && fadingScreen is null;
     }
 
     void Open(GameObject@ screen, const String &in origin)
@@ -94,17 +101,22 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
-        if (submenu !is null)
+        if (submenu is screen)
         {
-            submenu.SetEnabled(false);
+            return;
         }
+        @fadingFrom = submenu is null ? main : submenu;
+        @fadingScreen = cast<Sprite@>(screen.GetComponent("Sprite"));
+        fadeTime = 0;
+        fadeClosing = false;
+        fadingScreen.SetSubtreeOpacity(0.0f);
+        transitionBlocker.SetEnabled(true);
         @submenuOrigin = Button(Child(main, "Navigation"), origin);
         @submenu = screen;
-        main.SetEnabled(false);
         screen.SetEnabled(true);
         MenuSession::activeScreen = screen.GetName();
         Button(screen, "Back").Focus();
-        inputBarrier = 0.1f;
+        inputBarrier = 0.5f;
     }
 
     void OpenLoad()
@@ -168,14 +180,15 @@ class MenuNavigation : ScriptBehaviour
         }
         if (submenu !is null)
         {
-            submenu.SetEnabled(false);
+            @fadingFrom = submenu;
+            @fadingScreen = cast<Sprite@>(submenu.GetComponent("Sprite"));
+            fadeTime = 0;
+            fadeClosing = true;
+            transitionBlocker.SetEnabled(true);
+            inputBarrier = 0.5f;
             @submenu = null;
             main.SetEnabled(true);
             MenuSession::activeScreen = "MainMenu";
-            if (submenuOrigin !is null)
-            {
-                submenuOrigin.Focus();
-            }
         }
     }
 
@@ -209,6 +222,17 @@ class MenuNavigation : ScriptBehaviour
 
     void ReturnToMainMenu()
     {
+        if (fadingScreen !is null)
+        {
+            fadingScreen.SetSubtreeOpacity(1.0f);
+            @fadingScreen = null;
+        }
+        if (fadingFrom !is null && fadingFrom !is main)
+        {
+            fadingFrom.SetEnabled(false);
+        }
+        @fadingFrom = null;
+        transitionBlocker.SetEnabled(false);
         if (modal !is null)
         {
             modal.SetEnabled(false);
@@ -304,7 +328,7 @@ class MenuNavigation : ScriptBehaviour
 
     void ChangeSliders()
     {
-        if (syncing || modal !is null)
+        if (syncing || modal !is null || !CanNavigate())
         {
             return;
         }
@@ -318,44 +342,96 @@ class MenuNavigation : ScriptBehaviour
 
     void TogglePixelVoice()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.pixel_voice = !MenuSession::profile.settings.pixel_voice;
     }
 
     void ToggleMute()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.mute = !MenuSession::profile.settings.mute;
         ApplyAudio();
     }
 
     void ToggleSkipUnseen()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.skip_unseen = !MenuSession::profile.settings.skip_unseen;
     }
 
     void ToggleSkipChoices()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.skip_after_choices = !MenuSession::profile.settings.skip_after_choices;
     }
 
     void ToggleSkipTransitions()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.skip_transitions = !MenuSession::profile.settings.skip_transitions;
     }
 
     void Windowed()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.fullscreen = false;
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(false);
     }
 
     void Fullscreen()
     {
+        if (!CanNavigate())
+        {
+            return;
+        }
         MenuSession::profile.settings.fullscreen = true;
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(true);
     }
 
     void Update(float dt)
     {
+        if (fadingScreen !is null)
+        {
+            fadeTime += dt;
+            float progress = fadeTime < 0.5f ? fadeTime / 0.5f : 1.0f;
+            fadingScreen.SetSubtreeOpacity(fadeClosing ? 1.0f - progress : progress);
+            if (progress >= 1.0f)
+            {
+                fadingFrom.SetEnabled(false);
+                @fadingFrom = null;
+                @fadingScreen = null;
+                transitionBlocker.SetEnabled(false);
+                if (fadeClosing)
+                {
+                    if (submenuOrigin !is null)
+                    {
+                        submenuOrigin.Focus();
+                    }
+                }
+                else
+                {
+                    Button(submenu, "Back").Focus();
+                }
+            }
+        }
         if (inputBarrier > 0)
         {
             inputBarrier -= dt;

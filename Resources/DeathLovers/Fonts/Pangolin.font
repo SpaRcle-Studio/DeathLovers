@@ -11,6 +11,8 @@ use numeric depth: false
 					-s:DeathLovers/Fonts/Pangolin.ttf
 			-v:samplingPointSize
 				-f:86
+			-v:sdfRange
+				-f:24
 			-o:atlasSize
 				-v:x
 					-i:2048

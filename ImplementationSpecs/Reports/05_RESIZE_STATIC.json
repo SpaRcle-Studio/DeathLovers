@@ -1,0 +1,272 @@
+{
+  "status": "STATIC_ONLY_RUNTIME_RECHECK_REQUIRED",
+  "definitions": 583,
+  "references": 74,
+  "eventMethods": [
+    "StartSession",
+    "OpenLoad",
+    "OpenPreferences",
+    "OpenAbout",
+    "OpenHelp",
+    "Quit",
+    "Back",
+    "Windowed",
+    "Fullscreen",
+    "ToggleSkipUnseen",
+    "ToggleSkipChoices",
+    "ToggleSkipTransitions",
+    "ChangeSliders",
+    "ToggleMute",
+    "TogglePixelVoice",
+    "ConfirmYes"
+  ],
+  "layerChecks": [
+    {
+      "parent": "Windowed",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Windowed",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Windowed",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Fullscreen",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Fullscreen",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Fullscreen",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipUnseen",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipUnseen",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipUnseen",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipChoices",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipChoices",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipChoices",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipTransitions",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipTransitions",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "SkipTransitions",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "TextSpeed",
+      "child": "Handle",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "AutoSpeed",
+      "child": "Handle",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Music",
+      "child": "Handle",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Sfx",
+      "child": "Handle",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Voice",
+      "child": "Handle",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Mute",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Mute",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "Mute",
+      "child": "Label",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "PixelVoice",
+      "child": "Selected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "PixelVoice",
+      "child": "Unselected",
+      "priorityDelta": 1
+    },
+    {
+      "parent": "PixelVoice",
+      "child": "Label",
+      "priorityDelta": 1
+    }
+  ],
+  "screenChecks": [
+    {
+      "screen": "Preferences",
+      "child": "Navigation",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Preferences",
+      "child": "Title",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Preferences",
+      "child": "SettingsScroll",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Preferences",
+      "child": "Back",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Load",
+      "child": "Navigation",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Load",
+      "child": "Title",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Load",
+      "child": "Empty",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Load",
+      "child": "Back",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "About",
+      "child": "Navigation",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "About",
+      "child": "Title",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "About",
+      "child": "Credits",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "About",
+      "child": "Back",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Help",
+      "child": "Navigation",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Help",
+      "child": "Title",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Help",
+      "child": "Instructions",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "Help",
+      "child": "Back",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "SessionStart",
+      "child": "Navigation",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "SessionStart",
+      "child": "Title",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "SessionStart",
+      "child": "Pending",
+      "priorityDelta": 10
+    },
+    {
+      "screen": "SessionStart",
+      "child": "Back",
+      "priorityDelta": 10
+    }
+  ],
+  "pixelCenterCoverageCases": 40,
+  "fadeDurationSeconds": 0.5,
+  "sourceDuration": "options.rpy enter/intra_transition=dissolve; SDK 00definitions.rpy dissolve=Dissolve(0.5)",
+  "date": "2026-11-16",
+  "priorityEdits": 55,
+  "cursor": "Input owner registration; runtime Canvas viewport, editor SceneViewer image screen rect",
+  "backgroundPngLastPixel": {
+    "alpha": 255,
+    "r": 47,
+    "g": 63,
+    "b": 59
+  },
+  "nativeRun": "NOT_RUN",
+  "newCppFiles": 0,
+  "eventMethodCheck": "PASSED"
+}
