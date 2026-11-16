@@ -1,0 +1,272 @@
+{
+  "Root": {
+    "oracle": "Source-derived from pinned CanvasScaler.cs; no Unity runtime executed",
+    "scalers": [
+      {
+        "id": "match_1920_1080_0",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1920_1080_0.5",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1920_1080_1",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_1920_1080",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_1920_1080",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1280_720_0",
+        "scaleFactor": 0.6666666666666666,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1280_720_0.5",
+        "scaleFactor": 0.6666666666666666,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1280_720_1",
+        "scaleFactor": 0.6666666666666666,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_1280_720",
+        "scaleFactor": 0.6666666666666666,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_1280_720",
+        "scaleFactor": 0.6666666666666666,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1366_768_0",
+        "scaleFactor": 0.7114583333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1366_768_0.5",
+        "scaleFactor": 0.711284701034632,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1366_768_1",
+        "scaleFactor": 0.7111111111111111,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_1366_768",
+        "scaleFactor": 0.7111111111111111,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_1366_768",
+        "scaleFactor": 0.7114583333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1440_0",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1440_0.5",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1440_1",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_2560_1440",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_2560_1440",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1024_768_0",
+        "scaleFactor": 0.5333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1024_768_0.5",
+        "scaleFactor": 0.6158402871356008,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_1024_768_1",
+        "scaleFactor": 0.7111111111111111,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_1024_768",
+        "scaleFactor": 0.5333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_1024_768",
+        "scaleFactor": 0.7111111111111111,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1080_0",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1080_0.5",
+        "scaleFactor": 1.1547005383792515,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "match_2560_1080_1",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Expand_2560_1080",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "Shrink_2560_1080",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "physical_Inches_0",
+        "scaleFactor": 96,
+        "referencePixelsPerUnit": 1.0416666666666667
+      },
+      {
+        "id": "physical_Inches_96",
+        "scaleFactor": 96,
+        "referencePixelsPerUnit": 1.0416666666666667
+      },
+      {
+        "id": "physical_Inches_144",
+        "scaleFactor": 144,
+        "referencePixelsPerUnit": 1.0416666666666667
+      },
+      {
+        "id": "physical_Inches_192",
+        "scaleFactor": 192,
+        "referencePixelsPerUnit": 1.0416666666666667
+      },
+      {
+        "id": "physical_Centimeters_0",
+        "scaleFactor": 37.79527559055118,
+        "referencePixelsPerUnit": 2.6458333333333335
+      },
+      {
+        "id": "physical_Centimeters_96",
+        "scaleFactor": 37.79527559055118,
+        "referencePixelsPerUnit": 2.6458333333333335
+      },
+      {
+        "id": "physical_Centimeters_144",
+        "scaleFactor": 56.69291338582677,
+        "referencePixelsPerUnit": 2.6458333333333335
+      },
+      {
+        "id": "physical_Centimeters_192",
+        "scaleFactor": 75.59055118110236,
+        "referencePixelsPerUnit": 2.6458333333333335
+      },
+      {
+        "id": "physical_Millimeters_0",
+        "scaleFactor": 3.7795275590551185,
+        "referencePixelsPerUnit": 26.458333333333332
+      },
+      {
+        "id": "physical_Millimeters_96",
+        "scaleFactor": 3.7795275590551185,
+        "referencePixelsPerUnit": 26.458333333333332
+      },
+      {
+        "id": "physical_Millimeters_144",
+        "scaleFactor": 5.669291338582678,
+        "referencePixelsPerUnit": 26.458333333333332
+      },
+      {
+        "id": "physical_Millimeters_192",
+        "scaleFactor": 7.559055118110237,
+        "referencePixelsPerUnit": 26.458333333333332
+      },
+      {
+        "id": "physical_Points_0",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 75
+      },
+      {
+        "id": "physical_Points_96",
+        "scaleFactor": 1.3333333333333333,
+        "referencePixelsPerUnit": 75
+      },
+      {
+        "id": "physical_Points_144",
+        "scaleFactor": 2,
+        "referencePixelsPerUnit": 75
+      },
+      {
+        "id": "physical_Points_192",
+        "scaleFactor": 2.6666666666666665,
+        "referencePixelsPerUnit": 75
+      },
+      {
+        "id": "physical_Picas_0",
+        "scaleFactor": 16,
+        "referencePixelsPerUnit": 6.25
+      },
+      {
+        "id": "physical_Picas_96",
+        "scaleFactor": 16,
+        "referencePixelsPerUnit": 6.25
+      },
+      {
+        "id": "physical_Picas_144",
+        "scaleFactor": 24,
+        "referencePixelsPerUnit": 6.25
+      },
+      {
+        "id": "physical_Picas_192",
+        "scaleFactor": 32,
+        "referencePixelsPerUnit": 6.25
+      },
+      {
+        "id": "pixel_0.5",
+        "scaleFactor": 0.5,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "pixel_1",
+        "scaleFactor": 1,
+        "referencePixelsPerUnit": 100
+      },
+      {
+        "id": "pixel_2",
+        "scaleFactor": 2,
+        "referencePixelsPerUnit": 100
+      }
+    ]
+  }
+}

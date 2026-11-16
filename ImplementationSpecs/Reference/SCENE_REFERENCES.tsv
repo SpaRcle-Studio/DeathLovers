@@ -1,0 +1,41 @@
+file	line	id	candidates	status
+script.rpy	22	bg cgall	images/background/cgall.png	resolved
+script.rpy	39	bg office	images/background/office.png	resolved
+script.rpy	55	bg gate	images/background/gate.png	resolved
+script.rpy	67	darkness	images/background/darkness.png	resolved
+script.rpy	90	god	images/background/god.png	resolved
+script.rpy	196	gpt	images/background/gpt.png	resolved
+script.rpy	219	god	images/background/god.png	resolved
+script.rpy	230	black	RenPy builtin black	builtin
+script.rpy	235	office	images/background/office.png	resolved
+script.rpy	261	bg office	images/background/office.png	resolved
+script.rpy	300	corridor	images/background/corridor.PNG	resolved
+script.rpy	371	dumpster	images/background/dumpster.png	resolved
+script.rpy	1155	corridor	images/background/corridor.PNG	resolved
+script.rpy	1217	waroff	images/background/waroff.png	resolved
+script.rpy	1270	bg waroff	images/background/waroff.png	resolved
+script.rpy	1384	bg waroff	images/background/waroff.png	resolved
+script.rpy	1423	bg waroff	images/background/waroff.png	resolved
+script.rpy	1459	bg waroff	images/background/waroff.png	resolved
+script.rpy	1465	corridor	images/background/corridor.PNG	resolved
+script.rpy	1528	bg waroff	images/background/waroff.png	resolved
+script.rpy	1540	bg waroff	images/background/waroff.png	resolved
+script.rpy	1692	bg corridor	images/background/corridor.PNG	resolved
+script.rpy	1703	black	RenPy builtin black	builtin
+script.rpy	1712	corridor	images/background/corridor.PNG	resolved
+script.rpy	1768	corridor	images/background/corridor.PNG	resolved
+script.rpy	1795	corridor	images/background/corridor.PNG	resolved
+script.rpy	1854	corridor	images/background/corridor.PNG	resolved
+script.rpy	1864	corridor	images/background/corridor.PNG	resolved
+script.rpy	1875	bg corridor	images/background/corridor.PNG	resolved
+script.rpy	1910	corridor	images/background/corridor.PNG	resolved
+script.rpy	1937	diner	images/background/diner.png	resolved
+script.rpy	2583	bg cgall	images/background/cgall.png	resolved
+script.rpy	2606	bg plagueend	images/background/plagueend.png	resolved
+script.rpy	2642	bg warend	images/background/warend.png	resolved
+script.rpy	2678	bg hungerend	images/background/hungerend.png	resolved
+script.rpy	2710	bg warplagueend	images/background/warplagueend.png	resolved
+script.rpy	2742	bg plaguehunger	images/background/plaguehungerend.png	resolved
+script.rpy	2777	bg warhungerend	images/background/warhungerend.png	resolved
+script.rpy	2819	bg allend	images/background/allend.png	resolved
+script.rpy	2872	bg badend	images/background/badend.PNG	resolved

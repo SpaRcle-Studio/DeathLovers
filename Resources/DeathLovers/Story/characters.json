@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "characters": {
+    "ch_narrator": {
+      "states": []
+    },
+    "ch_oth": {
+      "states": []
+    },
+    "ch_news": {
+      "states": []
+    },
+    "ch_r": {
+      "states": []
+    },
+    "ch_death": {
+      "states": []
+    },
+    "ch_god": {
+      "states": []
+    },
+    "nvl_narrator": {
+      "states": []
+    },
+    "ch_p": {
+      "states": [
+        "normal",
+        "normal sig",
+        "cinema",
+        "cinema sig",
+        "happy",
+        "happy sig",
+        "nervous",
+        "nervous sig",
+        "serious",
+        "serious sig",
+        "sad",
+        "sad sig",
+        "hidden"
+      ],
+      "layer": "character_plague",
+      "position": [
+        250,
+        0
+      ],
+      "scale": [
+        0.3,
+        0.3
+      ],
+      "flip": [
+        false,
+        false
+      ],
+      "animation": null,
+      "order": 0,
+      "coordinateSpace": "RenPy1920x1080",
+      "stateResources": {
+        "normal": "images/plague/conq_normal.png",
+        "normal sig": "images/plague/conq_normalsig.png",
+        "cinema": "images/plague/conq_cinema.png",
+        "cinema sig": "images/plague/conq_cinemasig.png",
+        "happy": "images/plague/conq_happy.png",
+        "happy sig": "images/plague/conq_happysig.png",
+        "nervous": "images/plague/conq_nervous.png",
+        "nervous sig": "images/plague/conq_nervoussig.png",
+        "serious": "images/plague/conq_serious.png",
+        "serious sig": "images/plague/conq_serioussig.png",
+        "sad": "images/plague/conq_sad.png",
+        "sad sig": "images/plague/conq_sadsig.png",
+        "hidden": "images/empty.png"
+      }
+    },
+    "ch_w": {
+      "states": [
+        "normal",
+        "back",
+        "headsup",
+        "point",
+        "point angry",
+        "stare",
+        "hidden"
+      ],
+      "layer": "character_war",
+      "position": [
+        250,
+        -50
+      ],
+      "scale": [
+        0.32,
+        0.32
+      ],
+      "flip": [
+        false,
+        false
+      ],
+      "animation": null,
+      "order": 0,
+      "coordinateSpace": "RenPy1920x1080",
+      "stateResources": {
+        "normal": "images/war/war_normal.png",
+        "back": "images/war/war_back.png",
+        "headsup": "images/war/war_headsup.png",
+        "point": "images/war/war_point.png",
+        "point angry": "images/war/war_pointangry.png",
+        "stare": "images/war/war_stare.png",
+        "hidden": "images/empty.png"
+      }
+    },
+    "ch_h": {
+      "states": [
+        "normal",
+        "normal shy",
+        "angry",
+        "dissapointed",
+        "fear",
+        "fear shy",
+        "laughing",
+        "laughing nervous",
+        "laughing nervous shy",
+        "hidden"
+      ],
+      "layer": "character_hunger",
+      "position": [
+        360,
+        -50
+      ],
+      "scale": [
+        0.32,
+        0.32
+      ],
+      "flip": [
+        false,
+        false
+      ],
+      "animation": null,
+      "order": 0,
+      "coordinateSpace": "RenPy1920x1080",
+      "stateResources": {
+        "normal": "images/hunger/normal.png",
+        "normal shy": "images/hunger/normal_shy.png",
+        "angry": "images/hunger/angry.png",
+        "dissapointed": "images/hunger/dissapointed.png",
+        "fear": "images/hunger/fear.png",
+        "fear shy": "images/hunger/fear_shy.png",
+        "laughing": "images/hunger/laughing.png",
+        "laughing nervous": "images/hunger/laughing_nervous.png",
+        "laughing nervous shy": "images/hunger/laughing_nervous_shy.png",
+        "hidden": "images/empty.png"
+      }
+    }
+  }
+}

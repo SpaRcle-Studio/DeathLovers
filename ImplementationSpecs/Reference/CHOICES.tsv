@@ -1,0 +1,57 @@
+file	line	label	menuLine	text
+script.rpy	269	main_choice	267	"В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	275	main_choice	267	"Лучше к курилке у мусорки сходить сначала, после такого без сигаретки тяжко…" if not var_landfill_visited:
+script.rpy	281	main_choice	267	"Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	481	label_landfill	480	"А, эм, э… {i}Начать всасывать в себя никотин с удвоенной скоростью.{/i}": # (1)
+script.rpy	516	label_landfill	480	"Предположим, что попала. Смеяться будешь? Давай, смейся.": # (2)
+script.rpy	546	label_landfill	480	"А ничё тот факт, что у тебя скоро показатели по раку падать начнут? Ну как, попал?": # (3)
+script.rpy	651	label_landfill	650	"И вправду. Ну, я тогда пошёл." : # (1)
+script.rpy	719	label_landfill	650	"Ага. Самая особенная. Прямо как детишки с...": # (2)
+script.rpy	763	label_landfill	650	"Да, я просто думаю, что ты самая компетентная и, ну, всё-таки успех с К0-В1Дом — это же прям фурор был. К кому ж ещё мне обращаться?": # (3)
+script.rpy	833	label_landfill	832	"Ну, предположим, про стратегию Войны мне интереснее всего послушать." : # (1)
+script.rpy	858	label_landfill	832	"Окей, чего ты можешь сказать про Голод?": # (2)
+script.rpy	890	label_landfill	832	"...Я, пожалуй, воздержусь.":
+script.rpy	941	label_landfill	940	"{i}Выхватить у Чумы из рук сигарету и go freaky.{/i}" : # (1)
+script.rpy	980	label_landfill	979	"Уно ревёрс кард.":
+script.rpy	982	label_landfill	979	"уно ревёрс кард.":
+script.rpy	984	label_landfill	979	"УНО РЕВЁРС КАРД?":
+script.rpy	1025	label_landfill	1023	"В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1030	label_landfill	1023	"Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1035	label_landfill	940	"{i}Зачем-то продолжить свои попытки пробиться через её броню и начать умолять о помощи.{i}": # (2)
+script.rpy	1065	label_landfill	1063	"В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1070	label_landfill	1063	"Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1075	label_landfill	940	"Нет, всё-таки надо было тогда развернуться и пойти… {i}Всё-таки развернуться и пойти. Хотя бы сейчас.{/i}": # (3)
+script.rpy	1132	label_landfill	1130	"В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1138	label_landfill	1130	"Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1284	label_offices	1283	"Да я просто хотел спросить, как ты поживаешь, как дела идут…?": #ВЫБОР +1
+script.rpy	1302	label_offices	1283	"Тут такое дело, эм, мне нужна помощь. Я, ну, я… {i}Приготовиться падать ниц.{/i}": #ВЫБОР +0
+script.rpy	1328	label_offices	1283	"Как я заметил, дела у тебя идут в гору, хотелось узнать, как у коллеги, твои стратегии продвижения. ": #ВЫБОР +2
+script.rpy	1438	label_offices	1437	"...Эм, а чего за идея-фикс на том, что нужно постоянно на кого-то нападать? Это вся твоя работа? Без планирования?":
+script.rpy	1481	label_offices	1479	"В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1487	label_offices	1479	"Лучше к курилке у мусорки сходить сначала, после такого без сигаретки тяжко…" if not var_landfill_visited:
+script.rpy	1493	label_offices	1437	"ДА ДЕЛАЮ Я ДЕЛА. Просто чуть-чуть неудачно. Я ещё оклемаюсь, с колен встану. Просто надо помочь. Ты. Я. Мне помочь?": # (2)
+script.rpy	1524	label_offices	1437	"{i}Ударить кулаком по первой попавшейся поверхности.{/i} Работаю. Нуждаюсь в подкреплении для лучшего результата.": # (3)
+script.rpy	1608	label_offices	1607	"Чума, например?":
+script.rpy	1631	label_offices	1607	"Например, Голод, да?":
+script.rpy	1669	label_offices	1668	"СОСАТЬ + ЛЕЖАТЬ. {i}Ну, реалистично.{/i}":
+script.rpy	1720	label_offices	1718	"Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1726	label_offices	1718	"Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1731	label_offices	1668	"СЛУЖИТЬ ВОЙНЕ И МОЛЧАТЬ": # (2)
+script.rpy	1781	label_offices	1779	"Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1787	label_offices	1779	"Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1814	label_offices	1812	"Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1820	label_offices	1812	"Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1826	label_offices	1668	"РАБОТАТЬ И… РАБОТАТЬ!": # (3)
+script.rpy	1886	label_offices	1884	"Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1892	label_offices	1884	"Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	2040	label_canteen	2039	"Ты… {b}реально{/b} считала? Это, эм, немного…":
+script.rpy	2056	label_canteen	2039	"Воу. Это. Кхм. Это впечатляет. Ты, то есть, а что ещё ты так подсчитываешь в книжечке?":
+script.rpy	2084	label_canteen	2039	"Очень мило с твоей стороны, ну, типа, такое вот внимание ко мне… Спасибо? Извини, что меня не было?":
+script.rpy	2252	label_canteen	2251	"Ты… Ну, ты внимательная! С тобой тоже нужно быть внимательным, чтобы сотрудничество было, эм, плодотворным.":
+script.rpy	2268	label_canteen	2251	"Ты… Прелесть. Я ни разу ещё не встречал настолько хороших людей. Таких заботливых, что ли. С тобой просто работать. Душа коллектива!" :
+script.rpy	2291	label_canteen	2251	"Ты… Если честно, поражаюсь твоей организованности. У меня бы никогда не хватило терпения и упорства вести дневник… И, эм, в целом следить за собой я тоже не очень мастак.":
+script.rpy	2385	label_canteen	2384	"Ничего! Совсем не хочется есть.":
+script.rpy	2424	label_canteen	2384	"А-а-ам, ну… Ревекка, а что ты можешь посоветовать такого, ну, чтобы… Эм, не было массонабора, так сказать, да.":
+script.rpy	2487	label_canteen	2384	"Может, хватит меня проверять на вшивость? Я просто хочу Ребёнок Сюрприз.":
+script.rpy	2558	label_canteen	2556	"Кружок «Кумарный Джин», временно расположенный в {u}курилке{/u}." if not var_landfill_visited:
+script.rpy	2563	label_canteen	2556	"{s}Добровольно-{/s}принудительный труд в  {u}офисе{/u}. Да здравствует работа!" if not var_offices_visited:

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "AWAITING_USER_RUN",
+  "sourceFile": "script.rpy",
+  "sourceBaseline": "ImplementationSpecs/Reference/SOURCE_FILES.tsv",
+  "visitOrder": ["label_offices", "label_landfill", "label_canteen"],
+  "selector": "sourceLine of menu plus original 1-based option index; bind to immutable choiceId using coverage.json before runtime replay",
+  "packages": {
+    "W+": [[1283, 3], [1437, 3], [1607, 1], [1668, 3]],
+    "W-": [[1283, 1], [1437, 1]],
+    "P+": [[480, 3], [650, 1], [832, 1], [940, 1], [979, 1]],
+    "P-": [[480, 1], [650, 3], [832, 1], [940, 3]],
+    "H+": [[2042, 2], [2254, 3], [2387, 2]],
+    "H-": [[2042, 3], [2254, 2], [2387, 3]]
+  },
+  "runs": [
+    {"id": "ending_01", "packages": ["W-", "P-", "H-"], "scoresPWH": [1, 1, 0], "label": "bad_ending", "screenshot": "ending_01_1920x1080.png"},
+    {"id": "ending_02", "packages": ["W-", "P+", "H-"], "scoresPWH": [6, 1, 0], "label": "plague_ending", "screenshot": "ending_02_1920x1080.png"},
+    {"id": "ending_03", "packages": ["W+", "P-", "H-"], "scoresPWH": [1, 5, 0], "label": "war_ending", "screenshot": "ending_03_1920x1080.png"},
+    {"id": "ending_04", "packages": ["W-", "P-", "H+"], "scoresPWH": [1, 1, 6], "label": "hunger_ending", "screenshot": "ending_04_1920x1080.png"},
+    {"id": "ending_05", "packages": ["W+", "P+", "H-"], "scoresPWH": [6, 5, 0], "label": "plaguewar_ending", "screenshot": "ending_05_1920x1080.png"},
+    {"id": "ending_06", "packages": ["W-", "P+", "H+"], "scoresPWH": [6, 1, 6], "label": "plaguehunger_ending", "screenshot": "ending_06_1920x1080.png"},
+    {"id": "ending_07", "packages": ["W+", "P-", "H+"], "scoresPWH": [1, 5, 6], "label": "warhunger_ending", "screenshot": "ending_07_1920x1080.png"},
+    {"id": "ending_08", "packages": ["W+", "P+", "H+"], "scoresPWH": [6, 5, 6], "label": "harem_ending", "screenshot": "ending_08_1920x1080.png", "sourceFix": "D006: [[x3] is escaped literal text in RenPy."}
+  ],
+  "regressionRuns": [{"id": "D004", "visitOrder": ["label_canteen", "label_landfill", "label_offices"], "warOptions": [3, 3, 1, 2], "expected": "Reach ending after the third visit; no empty choice. Checked exhaustively by story validator."}]
+}

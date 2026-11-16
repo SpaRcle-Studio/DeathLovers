@@ -1,0 +1,1798 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "audio/music/god.ogg",
+      "source": "audio/music/god.ogg",
+      "target": "Resources/DeathLovers/Audio/music/god.ogg",
+      "sha256": "c5aaeb638045497cc3b800dc750b37d7c7168a29bfb68b432e714b1f03bcd5ee",
+      "names": [
+        "audio/music/god.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/Hunger.ogg",
+      "source": "audio/music/Hunger.ogg",
+      "target": "Resources/DeathLovers/Audio/music/Hunger.ogg",
+      "sha256": "74071948fd63f192966713a63ffb1528fd4cb19a02fb23f59951ffccd083275a",
+      "names": [
+        "audio/music/Hunger.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/main.ogg",
+      "source": "audio/music/main.ogg",
+      "target": "Resources/DeathLovers/Audio/music/main.ogg",
+      "sha256": "0c82c38a94729ac48f9388d76d9156b0d5718376a2a241ab040c4317219e878f",
+      "names": [
+        "audio/music/main.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/main_menu.ogg",
+      "source": "audio/music/main_menu.ogg",
+      "target": "Resources/DeathLovers/Audio/music/main_menu.ogg",
+      "sha256": "a30d4b6e6600738749ec755d93341c7235b7caf44df6796260be832a8d7860fa",
+      "names": [
+        "audio/music/main_menu.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/office.ogg",
+      "source": "audio/music/office.ogg",
+      "target": "Resources/DeathLovers/Audio/music/office.ogg",
+      "sha256": "1b08e6d2e0f296c52477e5c8fb2d3d689699d09f9c89b8f1ba6b27e035a26661",
+      "names": [
+        "audio/music/office.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/office.wav",
+      "source": "audio/music/office.wav",
+      "target": "Resources/DeathLovers/Audio/music/office.wav",
+      "sha256": "e8e008d15b4da160ad75ae884c6584a104a6101834b52377940c8f1d08c0fb91",
+      "names": [
+        "audio/music/office.wav"
+      ]
+    },
+    {
+      "id": "audio/music/plague.ogg",
+      "source": "audio/music/plague.ogg",
+      "target": "Resources/DeathLovers/Audio/music/plague.ogg",
+      "sha256": "860433e9a59b1099f7b75367bcc9a1c1e841b7b861718ef973541c918a89d18e",
+      "names": [
+        "audio/music/plague.ogg"
+      ]
+    },
+    {
+      "id": "audio/music/type2.wav",
+      "source": "audio/music/type2.wav",
+      "target": "Resources/DeathLovers/Audio/music/type2.wav",
+      "sha256": "c2dfdefb0d8b1eb4f404414ae1b1e63c2f8a1c2f4334f554f7cac01a266a317f",
+      "names": [
+        "audio/music/type2.wav"
+      ]
+    },
+    {
+      "id": "audio/music/war.ogg",
+      "source": "audio/music/war.ogg",
+      "target": "Resources/DeathLovers/Audio/music/war.ogg",
+      "sha256": "131927d9714c7a99697ea2648122a0bbf497d884065d1400bc9a5a0f55ae034f",
+      "names": [
+        "audio/music/war.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Canteen.ogg",
+      "source": "audio/sfx/Canteen.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Canteen.ogg",
+      "sha256": "75ba350df16c6fdb3bfdeb017c01e56344842182a92d0c2a3ee91de9a56a0a5e",
+      "names": [
+        "audio/sfx/Canteen.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/canteen.wav",
+      "source": "audio/sfx/canteen.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/canteen.wav",
+      "sha256": "df84e5b385eefdb3841642ed4b28a462b7d11e3a2215dcc46b73996ef197b421",
+      "names": [
+        "audio/sfx/canteen.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/Clock.ogg",
+      "source": "audio/sfx/Clock.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Clock.ogg",
+      "sha256": "69901c013d8da4973ea788530212acba2a5b557cfdb6a35052b10fbbeb7ba163",
+      "names": [
+        "audio/sfx/Clock.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Clock.wav",
+      "source": "audio/sfx/Clock.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/Clock.wav",
+      "sha256": "59ffd5b1464677707d1744afed947e86b434f50c7b7ed69b6ba7bb4b3754040a",
+      "names": [
+        "audio/sfx/Clock.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/Door.ogg",
+      "source": "audio/sfx/Door.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Door.ogg",
+      "sha256": "9d5814585e4541cbb7866294b3f4728e7c23b1207355f07fec8fbb3eb0eec0e9",
+      "names": [
+        "audio/sfx/Door.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Door.wav",
+      "source": "audio/sfx/Door.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/Door.wav",
+      "sha256": "8a3e55bb2482a1c885bae0f4788e23f88d55317f38437ffd5e13a5e1b46e98a6",
+      "names": [
+        "audio/sfx/Door.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/Dumpster.ogg",
+      "source": "audio/sfx/Dumpster.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Dumpster.ogg",
+      "sha256": "aada144d706b23394ae7a8836f804d677d8c356b15efa14899371824dfa95e13",
+      "names": [
+        "audio/sfx/Dumpster.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/dumpster.wav",
+      "source": "audio/sfx/dumpster.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/dumpster.wav",
+      "sha256": "b8ab52a5f3fc1bf3ec2eed1aceac3dcfdd8cf16c35c939c43956cc6a8fdc5893",
+      "names": [
+        "audio/sfx/dumpster.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/Knock.aiff",
+      "source": "audio/sfx/Knock.aiff",
+      "target": "Resources/DeathLovers/Audio/sfx/Knock.aiff",
+      "sha256": "ed1993c8793e9b57b309af5d6d183d4327fcf9647862b1b4f53f51802477d219",
+      "names": [
+        "audio/sfx/Knock.aiff"
+      ]
+    },
+    {
+      "id": "audio/sfx/Knock.ogg",
+      "source": "audio/sfx/Knock.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Knock.ogg",
+      "sha256": "8439795ce6ff74cee048a4364eba26b04df1fc8210f9bf5a19bb8e19ee6a1958",
+      "names": [
+        "audio/sfx/Knock.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Lighter.ogg",
+      "source": "audio/sfx/Lighter.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Lighter.ogg",
+      "sha256": "10e6d52357b20ba17bd3c6749c33617a2bda19273d3f4c86f260b36d199ad36a",
+      "names": [
+        "audio/sfx/Lighter.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Lighter.wav",
+      "source": "audio/sfx/Lighter.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/Lighter.wav",
+      "sha256": "a94243cc66020ab89e8bc54fb82baa6d8d2f44a3ce9556a8c7cb46a7f088ab95",
+      "names": [
+        "audio/sfx/Lighter.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/Lock.ogg",
+      "source": "audio/sfx/Lock.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Lock.ogg",
+      "sha256": "46259940dbe0e35f91ba47ceb5eacbb03d4b445719a52f5743734c6f60d119ad",
+      "names": [
+        "audio/sfx/Lock.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/lock.wav",
+      "source": "audio/sfx/lock.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/lock.wav",
+      "sha256": "e17cee9da08dea58f4cc21ca9c5f178007db68fe89da9d9b7edc5081f12fe032",
+      "names": [
+        "audio/sfx/lock.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/metalhit (mp3cut.net).wav",
+      "source": "audio/sfx/metalhit (mp3cut.net).wav",
+      "target": "Resources/DeathLovers/Audio/sfx/metalhit (mp3cut.net).wav",
+      "sha256": "88d849e290ce9a0521661748447ff68e1ece52961ca0c3c19aebfa2fd0761a32",
+      "names": [
+        "audio/sfx/metalhit (mp3cut.net).wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/MetalHit.ogg",
+      "source": "audio/sfx/MetalHit.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/MetalHit.ogg",
+      "sha256": "2baf230e4dbc07ef809a6b6e3646cae0695caebb00d622116e4cb5dd2d0c3424",
+      "names": [
+        "audio/sfx/MetalHit.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/metalhit.wav",
+      "source": "audio/sfx/metalhit.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/metalhit.wav",
+      "sha256": "216274d694894c39ea064f1a369051a0e0f8040ad0dbb6316627694b382c6707",
+      "names": [
+        "audio/sfx/metalhit.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/news.ogg",
+      "source": "audio/sfx/news.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/news.ogg",
+      "sha256": "69b82a136fa36c24f14cc328de7a947ef5f6416de98b952cd5045a2bf3760cd5",
+      "names": [
+        "audio/sfx/news.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/news.wav",
+      "source": "audio/sfx/news.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/news.wav",
+      "sha256": "60e3bbacca45a1efe2f7ac09cfbf9ab4d3e11d29a90ad329c8a6d91ed037a5fa",
+      "names": [
+        "audio/sfx/news.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/steps.ogg",
+      "source": "audio/sfx/steps.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/steps.ogg",
+      "sha256": "c922855bf508907a8b037a621f84773a0333c4f4fea102865b6f278d1c53509f",
+      "names": [
+        "audio/sfx/steps.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/Table.ogg",
+      "source": "audio/sfx/Table.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/Table.ogg",
+      "sha256": "99bfead5d5e9e25295f7b887ba7393fddf872d8e39a5bb5a3caaa5bcfd9c0d55",
+      "names": [
+        "audio/sfx/Table.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/table.wav",
+      "source": "audio/sfx/table.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/table.wav",
+      "sha256": "fb55c28e8bd5e7c8674ca9cc6c3f164cf995a4294aff93855d56e50c7445baf1",
+      "names": [
+        "audio/sfx/table.wav"
+      ]
+    },
+    {
+      "id": "audio/sfx/tun.ogg",
+      "source": "audio/sfx/tun.ogg",
+      "target": "Resources/DeathLovers/Audio/sfx/tun.ogg",
+      "sha256": "9fb7d8878b8b30569663c4fd79a33270af87eba7cea089d19edc6e8d6b8e3ee0",
+      "names": [
+        "audio/sfx/tun.ogg"
+      ]
+    },
+    {
+      "id": "audio/sfx/tun.wav",
+      "source": "audio/sfx/tun.wav",
+      "target": "Resources/DeathLovers/Audio/sfx/tun.wav",
+      "sha256": "bfc291ac20859bf1799845b44b306f0dbd56f33c69017d47f1ca77c7ca6c7a2d",
+      "names": [
+        "audio/sfx/tun.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/death.wav",
+      "source": "audio/voice/death.wav",
+      "target": "Resources/DeathLovers/Audio/voice/death.wav",
+      "sha256": "0545130eb8bc9d968f907f258ebbb16a75aa11e81e4278b83d33bd340417a689",
+      "names": [
+        "audio/voice/death.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/deathnarrator.wav",
+      "source": "audio/voice/deathnarrator.wav",
+      "target": "Resources/DeathLovers/Audio/voice/deathnarrator.wav",
+      "sha256": "e7525e6dec4ab70fcb463548c1d00b43579c5a838bc10276fd48aa5d35c1cd64",
+      "names": [
+        "audio/voice/deathnarrator.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/god.wav",
+      "source": "audio/voice/god.wav",
+      "target": "Resources/DeathLovers/Audio/voice/god.wav",
+      "sha256": "74194a7a13c1234e313a24064e23915851b879c96879c104b9560ae3fe2a773d",
+      "names": [
+        "audio/voice/god.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/hunger.wav",
+      "source": "audio/voice/hunger.wav",
+      "target": "Resources/DeathLovers/Audio/voice/hunger.wav",
+      "sha256": "d8e43c15106bcf903ea7fb0b1760a87d1f85b12afbb7a9aa5a4d400cd18535bc",
+      "names": [
+        "audio/voice/hunger.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/narrator.wav",
+      "source": "audio/voice/narrator.wav",
+      "target": "Resources/DeathLovers/Audio/voice/narrator.wav",
+      "sha256": "a666839f9802b7d57f44aa981ea9539a6494784d3a7fad1ee0584d270c411e75",
+      "names": [
+        "audio/voice/narrator.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/news.wav",
+      "source": "audio/voice/news.wav",
+      "target": "Resources/DeathLovers/Audio/voice/news.wav",
+      "sha256": "bbb5486b25bd5412733013115139c0aee118764708f1c571898892d8ed1efe8e",
+      "names": [
+        "audio/voice/news.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/plague.wav",
+      "source": "audio/voice/plague.wav",
+      "target": "Resources/DeathLovers/Audio/voice/plague.wav",
+      "sha256": "657b3b7d741663389e8b828f7b5ff05ac03c2133d15c7242d5252cd21f35a3ee",
+      "names": [
+        "audio/voice/plague.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/revecca.wav",
+      "source": "audio/voice/revecca.wav",
+      "target": "Resources/DeathLovers/Audio/voice/revecca.wav",
+      "sha256": "bbb5486b25bd5412733013115139c0aee118764708f1c571898892d8ed1efe8e",
+      "names": [
+        "audio/voice/revecca.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/voice.wav",
+      "source": "audio/voice/voice.wav",
+      "target": "Resources/DeathLovers/Audio/voice/voice.wav",
+      "sha256": "bbb5486b25bd5412733013115139c0aee118764708f1c571898892d8ed1efe8e",
+      "names": [
+        "audio/voice/voice.wav"
+      ]
+    },
+    {
+      "id": "audio/voice/war.wav",
+      "source": "audio/voice/war.wav",
+      "target": "Resources/DeathLovers/Audio/voice/war.wav",
+      "sha256": "33cbfbcf02efee4253c1dfb97749c98bdf9076360626d6c457fe9000b1231dbc",
+      "names": [
+        "audio/voice/war.wav"
+      ]
+    },
+    {
+      "id": "font/Pangolin.ttf",
+      "source": "font/Pangolin.ttf",
+      "target": "Resources/DeathLovers/Fonts/Pangolin.ttf",
+      "sha256": "a48db64eadc589c2e9f14a4ba79eed82a438c7f620f929dd19e352c20b2a922e",
+      "names": [
+        "font/Pangolin.ttf"
+      ]
+    },
+    {
+      "id": "font/YesevaOne.ttf",
+      "source": "font/YesevaOne.ttf",
+      "target": "Resources/DeathLovers/Fonts/YesevaOne.ttf",
+      "sha256": "6daf4d9b54e07474045ae91018391704fd73bbd7443a949e6063d192b71e7095",
+      "names": [
+        "font/YesevaOne.ttf"
+      ]
+    },
+    {
+      "id": "gui/bubble.png",
+      "source": "gui/bubble.png",
+      "target": "Resources/DeathLovers/UI/bubble.png",
+      "sha256": "a1d09a38be1acf64e305e225614f994c6ca758a38908f2f8cd87ea5714947133",
+      "names": [
+        "gui/bubble.png"
+      ]
+    },
+    {
+      "id": "gui/cursor.png",
+      "source": "gui/cursor.png",
+      "target": "Resources/DeathLovers/UI/cursor.png",
+      "sha256": "1547d44e763cd36c22223d983d44d915f9e995df3d91391d62a6899d55b684a0",
+      "names": [
+        "gui/cursor.png"
+      ]
+    },
+    {
+      "id": "gui/frame.png",
+      "source": "gui/frame.png",
+      "target": "Resources/DeathLovers/UI/frame.png",
+      "sha256": "79ccdc024f46c269ba75adc09e8d03e046f050f41ef38a222bccabaedb65a4ca",
+      "names": [
+        "gui/frame.png"
+      ]
+    },
+    {
+      "id": "gui/game_menu.png",
+      "source": "gui/game_menu.png",
+      "target": "Resources/DeathLovers/UI/game_menu.png",
+      "sha256": "9ad6e8d643350a08fb0f065242b78eb09341bbe7bd71cce62399af1c8207a911",
+      "names": [
+        "gui/game_menu.png"
+      ]
+    },
+    {
+      "id": "gui/main_menu.png",
+      "source": "gui/main_menu.png",
+      "target": "Resources/DeathLovers/UI/main_menu.png",
+      "sha256": "9ad6e8d643350a08fb0f065242b78eb09341bbe7bd71cce62399af1c8207a911",
+      "names": [
+        "gui/main_menu.png"
+      ]
+    },
+    {
+      "id": "gui/namebox.png",
+      "source": "gui/namebox.png",
+      "target": "Resources/DeathLovers/UI/namebox.png",
+      "sha256": "c7ed2d17e775f0d27678d8fd13fc397b4002b4b63afad9b1e898e4371118e188",
+      "names": [
+        "gui/namebox.png"
+      ]
+    },
+    {
+      "id": "gui/notify.png",
+      "source": "gui/notify.png",
+      "target": "Resources/DeathLovers/UI/notify.png",
+      "sha256": "7c4110376727dfe70f9dc90e0dd6ff1148d978db3bda675cddb1d72d3704a621",
+      "names": [
+        "gui/notify.png"
+      ]
+    },
+    {
+      "id": "gui/nvl.png",
+      "source": "gui/nvl.png",
+      "target": "Resources/DeathLovers/UI/nvl.png",
+      "sha256": "21580b2a14b040031979ec87b2bf2eeaca458f5fe41bbbc33df22ca897742b68",
+      "names": [
+        "gui/nvl.png"
+      ]
+    },
+    {
+      "id": "gui/skip.png",
+      "source": "gui/skip.png",
+      "target": "Resources/DeathLovers/UI/skip.png",
+      "sha256": "15b2f7a22f22076b45d1d5cc5d3c50e8e757dfa89e1ef8c64bd810f9217fc4b4",
+      "names": [
+        "gui/skip.png"
+      ]
+    },
+    {
+      "id": "gui/textbox.png",
+      "source": "gui/textbox.png",
+      "target": "Resources/DeathLovers/UI/textbox.png",
+      "sha256": "5d7cc74bdeedab406f363304af7a83e991b76310d62d3f9a0cbf42f6ded23e1f",
+      "names": [
+        "gui/textbox.png"
+      ]
+    },
+    {
+      "id": "gui/thoughtbubble.png",
+      "source": "gui/thoughtbubble.png",
+      "target": "Resources/DeathLovers/UI/thoughtbubble.png",
+      "sha256": "fd012edefef7819e06b1dbb380a125d34d35bc71e4f5952fcd59067f4d96869c",
+      "names": [
+        "gui/thoughtbubble.png"
+      ]
+    },
+    {
+      "id": "gui/window_icon.png",
+      "source": "gui/window_icon.png",
+      "target": "Resources/DeathLovers/UI/window_icon.png",
+      "sha256": "b67c3299296a3a24ebb2ec2c2113c49e9ac3376c77d85a60f49c7984629c6e2e",
+      "names": [
+        "gui/window_icon.png"
+      ]
+    },
+    {
+      "id": "gui/bar/bottom.png",
+      "source": "gui/bar/bottom.png",
+      "target": "Resources/DeathLovers/UI/bar/bottom.png",
+      "sha256": "5040efbe0937b80a4ec5f55150feaa934bd8db956dccefc83facd9ed88b91436",
+      "names": [
+        "gui/bar/bottom.png"
+      ]
+    },
+    {
+      "id": "gui/bar/left.png",
+      "source": "gui/bar/left.png",
+      "target": "Resources/DeathLovers/UI/bar/left.png",
+      "sha256": "5e837f400705fcb3262b8d334f4e6bae08acca96cb07b36e1b4ae75adbcc8ec1",
+      "names": [
+        "gui/bar/left.png"
+      ]
+    },
+    {
+      "id": "gui/bar/right.png",
+      "source": "gui/bar/right.png",
+      "target": "Resources/DeathLovers/UI/bar/right.png",
+      "sha256": "b6d48f9020112ecc39f4ec725303a6c25d6f870a3be93d5c470a814f951c01c1",
+      "names": [
+        "gui/bar/right.png"
+      ]
+    },
+    {
+      "id": "gui/bar/top.png",
+      "source": "gui/bar/top.png",
+      "target": "Resources/DeathLovers/UI/bar/top.png",
+      "sha256": "e566e7ba133759a5132a53f11f88a6365a498f8843a344d19b80a0cbaef52500",
+      "names": [
+        "gui/bar/top.png"
+      ]
+    },
+    {
+      "id": "gui/button/check_foreground.png",
+      "source": "gui/button/check_foreground.png",
+      "target": "Resources/DeathLovers/UI/button/check_foreground.png",
+      "sha256": "2f8e60679950e9aa2671e926fdf1cd70892d3c4057787a5e02321b2479174976",
+      "names": [
+        "gui/button/check_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/button/check_selected_foreground.png",
+      "source": "gui/button/check_selected_foreground.png",
+      "target": "Resources/DeathLovers/UI/button/check_selected_foreground.png",
+      "sha256": "cf476438923bd55ce2bb556b3cececa11e56e67c8208c9cd200c2c95b43fa562",
+      "names": [
+        "gui/button/check_selected_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/button/choice_hover_background.png",
+      "source": "gui/button/choice_hover_background.png",
+      "target": "Resources/DeathLovers/UI/button/choice_hover_background.png",
+      "sha256": "f41521903afbba96f74d34baf1134391ecd33ecdfedc94157b3aa569118fee44",
+      "names": [
+        "gui/button/choice_hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/choice_idle_background.png",
+      "source": "gui/button/choice_idle_background.png",
+      "target": "Resources/DeathLovers/UI/button/choice_idle_background.png",
+      "sha256": "205dea59ca1cd4ef3ce365253516c46666da690cb0e7dc08e36e32eb0bb590fe",
+      "names": [
+        "gui/button/choice_idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/hover_background.png",
+      "source": "gui/button/hover_background.png",
+      "target": "Resources/DeathLovers/UI/button/hover_background.png",
+      "sha256": "b0661913b07f0b8587dbe490ed0d9fd6dfec4e201c73abaa976f55927e2655b4",
+      "names": [
+        "gui/button/hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/idle_background.png",
+      "source": "gui/button/idle_background.png",
+      "target": "Resources/DeathLovers/UI/button/idle_background.png",
+      "sha256": "b0661913b07f0b8587dbe490ed0d9fd6dfec4e201c73abaa976f55927e2655b4",
+      "names": [
+        "gui/button/idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/quick_hover_background.png",
+      "source": "gui/button/quick_hover_background.png",
+      "target": "Resources/DeathLovers/UI/button/quick_hover_background.png",
+      "sha256": "3efa671f9e4ed150296323e94272fb25a2992e1fc96add96bb75b451aac0d220",
+      "names": [
+        "gui/button/quick_hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/quick_idle_background.png",
+      "source": "gui/button/quick_idle_background.png",
+      "target": "Resources/DeathLovers/UI/button/quick_idle_background.png",
+      "sha256": "3efa671f9e4ed150296323e94272fb25a2992e1fc96add96bb75b451aac0d220",
+      "names": [
+        "gui/button/quick_idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/radio_foreground.png",
+      "source": "gui/button/radio_foreground.png",
+      "target": "Resources/DeathLovers/UI/button/radio_foreground.png",
+      "sha256": "2f8e60679950e9aa2671e926fdf1cd70892d3c4057787a5e02321b2479174976",
+      "names": [
+        "gui/button/radio_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/button/radio_selected_foreground.png",
+      "source": "gui/button/radio_selected_foreground.png",
+      "target": "Resources/DeathLovers/UI/button/radio_selected_foreground.png",
+      "sha256": "c166f9cb9e631e4fde0adcff375915563a56b9e8220f315950839bbc60257bba",
+      "names": [
+        "gui/button/radio_selected_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/button/slot_hover_background.png",
+      "source": "gui/button/slot_hover_background.png",
+      "target": "Resources/DeathLovers/UI/button/slot_hover_background.png",
+      "sha256": "d361c0099a1540557ad2f2b1337da5979a6c231c8b52126e7eac7fbf40e3ac17",
+      "names": [
+        "gui/button/slot_hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/button/slot_idle_background.png",
+      "source": "gui/button/slot_idle_background.png",
+      "target": "Resources/DeathLovers/UI/button/slot_idle_background.png",
+      "sha256": "57019d0ca46e61947b6a0f1fc33f46cc5c0dbdb4e6ea5576e416daad453844d0",
+      "names": [
+        "gui/button/slot_idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/overlay/confirm.png",
+      "source": "gui/overlay/confirm.png",
+      "target": "Resources/DeathLovers/UI/overlay/confirm.png",
+      "sha256": "fc0fd5a51f4830c16dc6d10e31ec80fab479aaeb32f61e1a64aa3afa9cf343b3",
+      "names": [
+        "gui/overlay/confirm.png"
+      ]
+    },
+    {
+      "id": "gui/overlay/game_menu.png",
+      "source": "gui/overlay/game_menu.png",
+      "target": "Resources/DeathLovers/UI/overlay/game_menu.png",
+      "sha256": "3afb83c0df34125d08c20326398aa5fdafdfb8230811fa1d5ccf7f9060747b32",
+      "names": [
+        "gui/overlay/game_menu.png"
+      ]
+    },
+    {
+      "id": "gui/overlay/main_menu.png",
+      "source": "gui/overlay/main_menu.png",
+      "target": "Resources/DeathLovers/UI/overlay/main_menu.png",
+      "sha256": "8e0ddad84d71409db9d95b08b523e955241f616818d0a4b21b4f7fd9729589d3",
+      "names": [
+        "gui/overlay/main_menu.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_bg.png",
+      "source": "gui/parallax/prlx_bg.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_bg.png",
+      "sha256": "b74024b82824b1ffeb346cae8b36d651e7c7688a13285f9aa795a5b36b24c79f",
+      "names": [
+        "gui/parallax/prlx_bg.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_bg_1.png",
+      "source": "gui/parallax/prlx_bg_1.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_bg_1.png",
+      "sha256": "7d38c3102b4249e2051c698eb1a7795b212e1df3360e445e4fd053271c31263b",
+      "names": [
+        "gui/parallax/prlx_bg_1.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_bg_2.png",
+      "source": "gui/parallax/prlx_bg_2.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_bg_2.png",
+      "sha256": "91214209e581b1f922de7e625c01423b4c0927d7298821a65038e8e3835f2660",
+      "names": [
+        "gui/parallax/prlx_bg_2.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_fg.png",
+      "source": "gui/parallax/prlx_fg.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_fg.png",
+      "sha256": "be1069af86f60466964100a79decd1cde74db89205e5167973738174b5acf686",
+      "names": [
+        "gui/parallax/prlx_fg.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_full.png",
+      "source": "gui/parallax/prlx_full.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_full.png",
+      "sha256": "d0acd69520917ff882a6c456ae317179d045e94cd21418e9ed659dce12eb82b6",
+      "names": [
+        "gui/parallax/prlx_full.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_mid.png",
+      "source": "gui/parallax/prlx_mid.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_mid.png",
+      "sha256": "410e0f096c8621834cd6db2c3a809e6da0457b75ea6e92d193ceced6cef339b4",
+      "names": [
+        "gui/parallax/prlx_mid.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_mid_1.png",
+      "source": "gui/parallax/prlx_mid_1.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_mid_1.png",
+      "sha256": "3a318eebbde170eaa0958df1698e8ca1c234976392aa832a1c854272217d2041",
+      "names": [
+        "gui/parallax/prlx_mid_1.png"
+      ]
+    },
+    {
+      "id": "gui/parallax/prlx_mid_2.png",
+      "source": "gui/parallax/prlx_mid_2.png",
+      "target": "Resources/DeathLovers/UI/parallax/prlx_mid_2.png",
+      "sha256": "525757bbd955c4a286247698c36e819ed463c182d52eb617e618b7438dc3b946",
+      "names": [
+        "gui/parallax/prlx_mid_2.png"
+      ]
+    },
+    {
+      "id": "gui/phone/nvl.png",
+      "source": "gui/phone/nvl.png",
+      "target": "Resources/DeathLovers/UI/phone/nvl.png",
+      "sha256": "b15baebee61a5f4cac37a72d97f186de29d7a66c568a50acd1cbc8b7eb18d9e5",
+      "names": [
+        "gui/phone/nvl.png"
+      ]
+    },
+    {
+      "id": "gui/phone/textbox.png",
+      "source": "gui/phone/textbox.png",
+      "target": "Resources/DeathLovers/UI/phone/textbox.png",
+      "sha256": "360da233431bb2c1bfcb3cc5f60b08ae52687cdbc2a35ba12f247ef23b9094d0",
+      "names": [
+        "gui/phone/textbox.png"
+      ]
+    },
+    {
+      "id": "gui/phone/bar/bottom.png",
+      "source": "gui/phone/bar/bottom.png",
+      "target": "Resources/DeathLovers/UI/phone/bar/bottom.png",
+      "sha256": "5040efbe0937b80a4ec5f55150feaa934bd8db956dccefc83facd9ed88b91436",
+      "names": [
+        "gui/phone/bar/bottom.png"
+      ]
+    },
+    {
+      "id": "gui/phone/bar/left.png",
+      "source": "gui/phone/bar/left.png",
+      "target": "Resources/DeathLovers/UI/phone/bar/left.png",
+      "sha256": "5e837f400705fcb3262b8d334f4e6bae08acca96cb07b36e1b4ae75adbcc8ec1",
+      "names": [
+        "gui/phone/bar/left.png"
+      ]
+    },
+    {
+      "id": "gui/phone/bar/right.png",
+      "source": "gui/phone/bar/right.png",
+      "target": "Resources/DeathLovers/UI/phone/bar/right.png",
+      "sha256": "b6d48f9020112ecc39f4ec725303a6c25d6f870a3be93d5c470a814f951c01c1",
+      "names": [
+        "gui/phone/bar/right.png"
+      ]
+    },
+    {
+      "id": "gui/phone/bar/top.png",
+      "source": "gui/phone/bar/top.png",
+      "target": "Resources/DeathLovers/UI/phone/bar/top.png",
+      "sha256": "e566e7ba133759a5132a53f11f88a6365a498f8843a344d19b80a0cbaef52500",
+      "names": [
+        "gui/phone/bar/top.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/check_foreground.png",
+      "source": "gui/phone/button/check_foreground.png",
+      "target": "Resources/DeathLovers/UI/phone/button/check_foreground.png",
+      "sha256": "ee80391a52680b9a7fde3b2a16d8da1d6188e3b14117e7819516bf4b833bebc1",
+      "names": [
+        "gui/phone/button/check_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/check_selected_foreground.png",
+      "source": "gui/phone/button/check_selected_foreground.png",
+      "target": "Resources/DeathLovers/UI/phone/button/check_selected_foreground.png",
+      "sha256": "63dc68cfcb88fc0dc9aaba9f5ff55da9dd2590fa1af2cec46a8deeca65b1e748",
+      "names": [
+        "gui/phone/button/check_selected_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/choice_hover_background.png",
+      "source": "gui/phone/button/choice_hover_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/choice_hover_background.png",
+      "sha256": "b7330230fbd3ff8f4e92e96a1391b87381fc6d6b10e7f924cef857132c0b4bdc",
+      "names": [
+        "gui/phone/button/choice_hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/choice_idle_background.png",
+      "source": "gui/phone/button/choice_idle_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/choice_idle_background.png",
+      "sha256": "1122357988027d85f509c6b22fa6b862912eee5c42dd875b55f36a40baf190ed",
+      "names": [
+        "gui/phone/button/choice_idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/hover_background.png",
+      "source": "gui/phone/button/hover_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/hover_background.png",
+      "sha256": "e66c6217a2c5475e05a4ce8eee0966e5314ef01251afe80a3b353138ebdc1524",
+      "names": [
+        "gui/phone/button/hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/idle_background.png",
+      "source": "gui/phone/button/idle_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/idle_background.png",
+      "sha256": "e66c6217a2c5475e05a4ce8eee0966e5314ef01251afe80a3b353138ebdc1524",
+      "names": [
+        "gui/phone/button/idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/radio_foreground.png",
+      "source": "gui/phone/button/radio_foreground.png",
+      "target": "Resources/DeathLovers/UI/phone/button/radio_foreground.png",
+      "sha256": "ee80391a52680b9a7fde3b2a16d8da1d6188e3b14117e7819516bf4b833bebc1",
+      "names": [
+        "gui/phone/button/radio_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/radio_selected_foreground.png",
+      "source": "gui/phone/button/radio_selected_foreground.png",
+      "target": "Resources/DeathLovers/UI/phone/button/radio_selected_foreground.png",
+      "sha256": "63dc68cfcb88fc0dc9aaba9f5ff55da9dd2590fa1af2cec46a8deeca65b1e748",
+      "names": [
+        "gui/phone/button/radio_selected_foreground.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/slot_hover_background.png",
+      "source": "gui/phone/button/slot_hover_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/slot_hover_background.png",
+      "sha256": "601146c4b80bdb157029d32b0cdd772d2f22b412160ab4941fe80465535b8e1d",
+      "names": [
+        "gui/phone/button/slot_hover_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/button/slot_idle_background.png",
+      "source": "gui/phone/button/slot_idle_background.png",
+      "target": "Resources/DeathLovers/UI/phone/button/slot_idle_background.png",
+      "sha256": "b47b8dbae92ea221dbe83bd130d3eef66feb0fff1e7cb2f6ac56f9fe29149a81",
+      "names": [
+        "gui/phone/button/slot_idle_background.png"
+      ]
+    },
+    {
+      "id": "gui/phone/overlay/game_menu.png",
+      "source": "gui/phone/overlay/game_menu.png",
+      "target": "Resources/DeathLovers/UI/phone/overlay/game_menu.png",
+      "sha256": "af97ceca8b2c8bbf3acc0a1dfc3bb88bfcc127fd19d974222d18417c389cbc30",
+      "names": [
+        "gui/phone/overlay/game_menu.png"
+      ]
+    },
+    {
+      "id": "gui/phone/overlay/main_menu.png",
+      "source": "gui/phone/overlay/main_menu.png",
+      "target": "Resources/DeathLovers/UI/phone/overlay/main_menu.png",
+      "sha256": "d4f48fdd0cf812a7b96283314a9ac870026a1997643522eac15c6a956e3dfbb0",
+      "names": [
+        "gui/phone/overlay/main_menu.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/horizontal_hover_bar.png",
+      "source": "gui/phone/scrollbar/horizontal_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/horizontal_hover_bar.png",
+      "sha256": "8cb4a21f7a0dd0b726c24f4bdd07ec31e36906b885cd1ff2a345cefedef1b1b5",
+      "names": [
+        "gui/phone/scrollbar/horizontal_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/horizontal_hover_thumb.png",
+      "source": "gui/phone/scrollbar/horizontal_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/horizontal_hover_thumb.png",
+      "sha256": "fa64bea8fbd0c1f1bcf4bba14c9301e0569893a24dbfa62253ea492353e6b7a5",
+      "names": [
+        "gui/phone/scrollbar/horizontal_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/horizontal_idle_bar.png",
+      "source": "gui/phone/scrollbar/horizontal_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/horizontal_idle_bar.png",
+      "sha256": "f6289db33878c57a12755a4387bd5a855f98b35043e023bde80731baae628cbd",
+      "names": [
+        "gui/phone/scrollbar/horizontal_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/horizontal_idle_thumb.png",
+      "source": "gui/phone/scrollbar/horizontal_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/horizontal_idle_thumb.png",
+      "sha256": "8fad79487e78c44758b52359a1c98ba381a16ba5a36ebe6518e64b2ed9e8aac1",
+      "names": [
+        "gui/phone/scrollbar/horizontal_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/vertical_hover_bar.png",
+      "source": "gui/phone/scrollbar/vertical_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/vertical_hover_bar.png",
+      "sha256": "c0b0318fddf938d91c493acc3a6752448d57895552e3858233ad326eca7c7b47",
+      "names": [
+        "gui/phone/scrollbar/vertical_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/vertical_hover_thumb.png",
+      "source": "gui/phone/scrollbar/vertical_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/vertical_hover_thumb.png",
+      "sha256": "1a647a2821c142613cbb4eb534ff60e65a455cbcc5368434b88ece5c2242ac99",
+      "names": [
+        "gui/phone/scrollbar/vertical_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/vertical_idle_bar.png",
+      "source": "gui/phone/scrollbar/vertical_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/vertical_idle_bar.png",
+      "sha256": "6818bb2bef4f7c6a9285dc09d85a7a1dff3fd3c72db26c9d0cb077cfc4517055",
+      "names": [
+        "gui/phone/scrollbar/vertical_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/scrollbar/vertical_idle_thumb.png",
+      "source": "gui/phone/scrollbar/vertical_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/scrollbar/vertical_idle_thumb.png",
+      "sha256": "3703f8acc7e915c3bf35c3f7eaee176ca2f6beef24058e90f556870d67d143af",
+      "names": [
+        "gui/phone/scrollbar/vertical_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/horizontal_hover_bar.png",
+      "source": "gui/phone/slider/horizontal_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/horizontal_hover_bar.png",
+      "sha256": "5c5b57f591d75622cbaff0112a6e5066644b597db39683e315a0468b9056c655",
+      "names": [
+        "gui/phone/slider/horizontal_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/horizontal_hover_thumb.png",
+      "source": "gui/phone/slider/horizontal_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/horizontal_hover_thumb.png",
+      "sha256": "6d2692a2bb0a6b792add5bbecf54e61136a9d0ab47fd93910595527549470f32",
+      "names": [
+        "gui/phone/slider/horizontal_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/horizontal_idle_bar.png",
+      "source": "gui/phone/slider/horizontal_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/horizontal_idle_bar.png",
+      "sha256": "7b5e2f9f9ea45eaf8a877fed69d1458c5bfedc4b0f64a7efcd276380d6df6f88",
+      "names": [
+        "gui/phone/slider/horizontal_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/horizontal_idle_thumb.png",
+      "source": "gui/phone/slider/horizontal_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/horizontal_idle_thumb.png",
+      "sha256": "ce94b392e12a421a8efaf640b2de556e9491936cbba21a25bf3a0c1379a183bb",
+      "names": [
+        "gui/phone/slider/horizontal_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/vertical_hover_bar.png",
+      "source": "gui/phone/slider/vertical_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/vertical_hover_bar.png",
+      "sha256": "e1f6bf46eceb3c35ac8453fcfba2bfe3c8ebb10dd098598b90ed9cb013af24f3",
+      "names": [
+        "gui/phone/slider/vertical_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/vertical_hover_thumb.png",
+      "source": "gui/phone/slider/vertical_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/vertical_hover_thumb.png",
+      "sha256": "78803465acf23afeadfd0cef527a1d830aaa26f442196395ba51c6f969af5c4c",
+      "names": [
+        "gui/phone/slider/vertical_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/vertical_idle_bar.png",
+      "source": "gui/phone/slider/vertical_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/vertical_idle_bar.png",
+      "sha256": "8bc9282e008ef64ce322841d08ebf3355048c2160dd03e6e6d7adafe5dd31e9a",
+      "names": [
+        "gui/phone/slider/vertical_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/phone/slider/vertical_idle_thumb.png",
+      "source": "gui/phone/slider/vertical_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/phone/slider/vertical_idle_thumb.png",
+      "sha256": "50021b025d42e313f8ef3bad06cf87ee9b580acac97c1bc97eb9c0772ae62808",
+      "names": [
+        "gui/phone/slider/vertical_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/horizontal_hover_bar.png",
+      "source": "gui/scrollbar/horizontal_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/horizontal_hover_bar.png",
+      "sha256": "8cb4a21f7a0dd0b726c24f4bdd07ec31e36906b885cd1ff2a345cefedef1b1b5",
+      "names": [
+        "gui/scrollbar/horizontal_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/horizontal_hover_thumb.png",
+      "source": "gui/scrollbar/horizontal_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/horizontal_hover_thumb.png",
+      "sha256": "fa64bea8fbd0c1f1bcf4bba14c9301e0569893a24dbfa62253ea492353e6b7a5",
+      "names": [
+        "gui/scrollbar/horizontal_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/horizontal_idle_bar.png",
+      "source": "gui/scrollbar/horizontal_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/horizontal_idle_bar.png",
+      "sha256": "f6289db33878c57a12755a4387bd5a855f98b35043e023bde80731baae628cbd",
+      "names": [
+        "gui/scrollbar/horizontal_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/horizontal_idle_thumb.png",
+      "source": "gui/scrollbar/horizontal_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/horizontal_idle_thumb.png",
+      "sha256": "8fad79487e78c44758b52359a1c98ba381a16ba5a36ebe6518e64b2ed9e8aac1",
+      "names": [
+        "gui/scrollbar/horizontal_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/vertical_hover_bar.png",
+      "source": "gui/scrollbar/vertical_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/vertical_hover_bar.png",
+      "sha256": "c0b0318fddf938d91c493acc3a6752448d57895552e3858233ad326eca7c7b47",
+      "names": [
+        "gui/scrollbar/vertical_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/vertical_hover_thumb.png",
+      "source": "gui/scrollbar/vertical_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/vertical_hover_thumb.png",
+      "sha256": "1a647a2821c142613cbb4eb534ff60e65a455cbcc5368434b88ece5c2242ac99",
+      "names": [
+        "gui/scrollbar/vertical_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/vertical_idle_bar.png",
+      "source": "gui/scrollbar/vertical_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/vertical_idle_bar.png",
+      "sha256": "6818bb2bef4f7c6a9285dc09d85a7a1dff3fd3c72db26c9d0cb077cfc4517055",
+      "names": [
+        "gui/scrollbar/vertical_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/scrollbar/vertical_idle_thumb.png",
+      "source": "gui/scrollbar/vertical_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/scrollbar/vertical_idle_thumb.png",
+      "sha256": "3703f8acc7e915c3bf35c3f7eaee176ca2f6beef24058e90f556870d67d143af",
+      "names": [
+        "gui/scrollbar/vertical_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/slider/horizontal_hover_bar.png",
+      "source": "gui/slider/horizontal_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/slider/horizontal_hover_bar.png",
+      "sha256": "785dd9520e8942cfb3565ae5bfca74028b32b7f13e42513a7a7d2ddda564303f",
+      "names": [
+        "gui/slider/horizontal_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/slider/horizontal_hover_thumb.png",
+      "source": "gui/slider/horizontal_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/slider/horizontal_hover_thumb.png",
+      "sha256": "e7b9d1b5123d275b29421b560ea1b0ea0769c58606cd134161b4e86a7e9db939",
+      "names": [
+        "gui/slider/horizontal_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/slider/horizontal_idle_bar.png",
+      "source": "gui/slider/horizontal_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/slider/horizontal_idle_bar.png",
+      "sha256": "b6d48f9020112ecc39f4ec725303a6c25d6f870a3be93d5c470a814f951c01c1",
+      "names": [
+        "gui/slider/horizontal_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/slider/horizontal_idle_thumb.png",
+      "source": "gui/slider/horizontal_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/slider/horizontal_idle_thumb.png",
+      "sha256": "e318c2c753cb0c9aab5f3c643650124b9367561198dadd4a2581028ba86a2526",
+      "names": [
+        "gui/slider/horizontal_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/slider/vertical_hover_bar.png",
+      "source": "gui/slider/vertical_hover_bar.png",
+      "target": "Resources/DeathLovers/UI/slider/vertical_hover_bar.png",
+      "sha256": "d1557f6964ccb0e46159b2016bf73462a2bb308a7ab702c014e55e39b05a4d84",
+      "names": [
+        "gui/slider/vertical_hover_bar.png"
+      ]
+    },
+    {
+      "id": "gui/slider/vertical_hover_thumb.png",
+      "source": "gui/slider/vertical_hover_thumb.png",
+      "target": "Resources/DeathLovers/UI/slider/vertical_hover_thumb.png",
+      "sha256": "17482b2d21cba188da957f9d3fac30af6219cda09fd92d18ecdf874a4a0ad0b9",
+      "names": [
+        "gui/slider/vertical_hover_thumb.png"
+      ]
+    },
+    {
+      "id": "gui/slider/vertical_idle_bar.png",
+      "source": "gui/slider/vertical_idle_bar.png",
+      "target": "Resources/DeathLovers/UI/slider/vertical_idle_bar.png",
+      "sha256": "e566e7ba133759a5132a53f11f88a6365a498f8843a344d19b80a0cbaef52500",
+      "names": [
+        "gui/slider/vertical_idle_bar.png"
+      ]
+    },
+    {
+      "id": "gui/slider/vertical_idle_thumb.png",
+      "source": "gui/slider/vertical_idle_thumb.png",
+      "target": "Resources/DeathLovers/UI/slider/vertical_idle_thumb.png",
+      "sha256": "ab698bc3b034e9553287adb6ec98bdc93c6784e9ef6cbea8bdba66fa8780edf3",
+      "names": [
+        "gui/slider/vertical_idle_thumb.png"
+      ]
+    },
+    {
+      "id": "images/dissapointed.png",
+      "source": "images/dissapointed.png",
+      "target": "Resources/DeathLovers/Images/dissapointed.png",
+      "sha256": "2aded57161e8df3df18587cf03bc76bdf2981e3b9dad4977eda19250699c5db3",
+      "names": [
+        "dissapointed"
+      ]
+    },
+    {
+      "id": "images/empty.png",
+      "source": "images/empty.png",
+      "target": "Resources/DeathLovers/Images/empty.png",
+      "sha256": "a5d6791c98806fa3965090bca46b039bafbc1dedeb592b04f431458de631d328",
+      "names": [
+        "hunger empty",
+        "war empty",
+        "plague empty",
+        "empty"
+      ]
+    },
+    {
+      "id": "images/alice/blush.png",
+      "source": "images/alice/blush.png",
+      "target": "Resources/DeathLovers/Images/alice/blush.png",
+      "sha256": "5d88439d6dec4acab7934db6a276a68ebdb0f5fe59029635e5ecf36eefe496db",
+      "names": [
+        "alice blush",
+        "blush"
+      ]
+    },
+    {
+      "id": "images/alice/doubt.png",
+      "source": "images/alice/doubt.png",
+      "target": "Resources/DeathLovers/Images/alice/doubt.png",
+      "sha256": "23534664044e0f1eff3af5f79c52d15926ca089ba6f3e385e9a8deef937ed50c",
+      "names": [
+        "alice doubt",
+        "doubt"
+      ]
+    },
+    {
+      "id": "images/alice/embarrassed.png",
+      "source": "images/alice/embarrassed.png",
+      "target": "Resources/DeathLovers/Images/alice/embarrassed.png",
+      "sha256": "ac7ee6ee1909ee39c18aa2bf4fc40aae3f0a59d5316bdc7082786f5712c7c8cf",
+      "names": [
+        "alice embarrassed",
+        "embarrassed"
+      ]
+    },
+    {
+      "id": "images/alice/happy.png",
+      "source": "images/alice/happy.png",
+      "target": "Resources/DeathLovers/Images/alice/happy.png",
+      "sha256": "3a7abf204a005378739a400ff577fab832a5195d17e07f810d52232b52e53ee3",
+      "names": [
+        "alice happy",
+        "happy"
+      ]
+    },
+    {
+      "id": "images/alice/idle.png",
+      "source": "images/alice/idle.png",
+      "target": "Resources/DeathLovers/Images/alice/idle.png",
+      "sha256": "0f60545ec24177b829cb3bc74f522cf7d1fe0bc9b6c88c4115dd200115663443",
+      "names": [
+        "alice idle",
+        "idle"
+      ]
+    },
+    {
+      "id": "images/alice/teasing.png",
+      "source": "images/alice/teasing.png",
+      "target": "Resources/DeathLovers/Images/alice/teasing.png",
+      "sha256": "c040b52721f5358e1e5c2829487a0232194302d91655c59c4c57fc706ef499b4",
+      "names": [
+        "alice teasing",
+        "teasing"
+      ]
+    },
+    {
+      "id": "images/alice/worried.png",
+      "source": "images/alice/worried.png",
+      "target": "Resources/DeathLovers/Images/alice/worried.png",
+      "sha256": "031e426b1c37e810a8fbbc1a935bc5d30e74fa2984a95b50829e7f16fc33c1bc",
+      "names": [
+        "alice worried",
+        "worried"
+      ]
+    },
+    {
+      "id": "images/background/allend.png",
+      "source": "images/background/allend.png",
+      "target": "Resources/DeathLovers/Images/background/allend.png",
+      "sha256": "b00f8b405240b995144ea33f97afe879598483aa3758d897633c8f1ff6f6761f",
+      "names": [
+        "bg allend",
+        "allend"
+      ]
+    },
+    {
+      "id": "images/background/badend.PNG",
+      "source": "images/background/badend.PNG",
+      "target": "Resources/DeathLovers/Images/background/badend.PNG",
+      "sha256": "8e9a4f8aa04bb1e1d626236c1feab27ee746caa139ce7f56896ae36bb3e0c0ab",
+      "names": [
+        "bg badend",
+        "badend"
+      ]
+    },
+    {
+      "id": "images/background/cgall.png",
+      "source": "images/background/cgall.png",
+      "target": "Resources/DeathLovers/Images/background/cgall.png",
+      "sha256": "0a3785ca4d21c092692c3fc91eb51c8abaddddb67bec5c3c0217066a5c7031fc",
+      "names": [
+        "bg cgall",
+        "cgall"
+      ]
+    },
+    {
+      "id": "images/background/city.png",
+      "source": "images/background/city.png",
+      "target": "Resources/DeathLovers/Images/background/city.png",
+      "sha256": "e6d113986da1c3f738cc0f8aa032da4eecc2d1fa52b5322ce7673e888b6afc81",
+      "names": [
+        "bg city",
+        "city"
+      ]
+    },
+    {
+      "id": "images/background/corridor.PNG",
+      "source": "images/background/corridor.PNG",
+      "target": "Resources/DeathLovers/Images/background/corridor.PNG",
+      "sha256": "aff34387504aaa980d7b7bd3398936b2f42307675842eaddb7ab5f793511d7c0",
+      "names": [
+        "bg corridor",
+        "corridor"
+      ]
+    },
+    {
+      "id": "images/background/darkness.png",
+      "source": "images/background/darkness.png",
+      "target": "Resources/DeathLovers/Images/background/darkness.png",
+      "sha256": "3a460a7701b49cc38d9328dbc25bae4a4170ce9bc4fc3c1426ab16a1ea65c3fa",
+      "names": [
+        "bg darkness",
+        "darkness"
+      ]
+    },
+    {
+      "id": "images/background/diner.png",
+      "source": "images/background/diner.png",
+      "target": "Resources/DeathLovers/Images/background/diner.png",
+      "sha256": "0e2c59662ec7a07b08586a6863e844b986c33b109efb67a46f415a621ca847d4",
+      "names": [
+        "bg diner",
+        "diner"
+      ]
+    },
+    {
+      "id": "images/background/dumpster.png",
+      "source": "images/background/dumpster.png",
+      "target": "Resources/DeathLovers/Images/background/dumpster.png",
+      "sha256": "ac66feac1965a47792cc910559c08732e4a9be748aec2ad932b6d300380fe78b",
+      "names": [
+        "bg dumpster",
+        "dumpster"
+      ]
+    },
+    {
+      "id": "images/background/gate.png",
+      "source": "images/background/gate.png",
+      "target": "Resources/DeathLovers/Images/background/gate.png",
+      "sha256": "2544143a8f7d9854e4101747f72fb7c092ae3f895e94c408af113afb89d2a8f1",
+      "names": [
+        "bg gate",
+        "gate"
+      ]
+    },
+    {
+      "id": "images/background/god.png",
+      "source": "images/background/god.png",
+      "target": "Resources/DeathLovers/Images/background/god.png",
+      "sha256": "8111fe7a022092aea8c496051ca18cf9902397b4d6fe92295d40d0cdcd7aa8f8",
+      "names": [
+        "bg god",
+        "god"
+      ]
+    },
+    {
+      "id": "images/background/gpt.png",
+      "source": "images/background/gpt.png",
+      "target": "Resources/DeathLovers/Images/background/gpt.png",
+      "sha256": "e237ea3f2f7316143be4d15520f3618998ed53799152728fe2a12719511536f0",
+      "names": [
+        "bg gpt",
+        "gpt"
+      ]
+    },
+    {
+      "id": "images/background/hunger1.png",
+      "source": "images/background/hunger1.png",
+      "target": "Resources/DeathLovers/Images/background/hunger1.png",
+      "sha256": "5de730d3483aa02a3e6e6e558b4cdcb3ab286b5497af4dade286374f1c91fc12",
+      "names": [
+        "hunger1"
+      ]
+    },
+    {
+      "id": "images/background/hungerend.png",
+      "source": "images/background/hungerend.png",
+      "target": "Resources/DeathLovers/Images/background/hungerend.png",
+      "sha256": "75ef3ba01adca8a7529120191a83f51d3a49fffef4b8141e4b939a3397878c1b",
+      "names": [
+        "bg hungerend",
+        "hungerend"
+      ]
+    },
+    {
+      "id": "images/background/itch.png",
+      "source": "images/background/itch.png",
+      "target": "Resources/DeathLovers/Images/background/itch.png",
+      "sha256": "913dad56cebf142ed2de9fdbc61c8e2c54f52848aa1c4be604d2b814bfcf01d9",
+      "names": [
+        "itch"
+      ]
+    },
+    {
+      "id": "images/background/office.png",
+      "source": "images/background/office.png",
+      "target": "Resources/DeathLovers/Images/background/office.png",
+      "sha256": "2e415f142371355f67af77ac34c0ab9744d24b398ec0ada592cb152f70a84399",
+      "names": [
+        "bg office",
+        "office"
+      ]
+    },
+    {
+      "id": "images/background/plague1.png",
+      "source": "images/background/plague1.png",
+      "target": "Resources/DeathLovers/Images/background/plague1.png",
+      "sha256": "3f69ff6c95e280053c956416f6bd69c6a61cedb6c286f4ca7c6610742b59bd45",
+      "names": [
+        "plague1"
+      ]
+    },
+    {
+      "id": "images/background/plagueend.png",
+      "source": "images/background/plagueend.png",
+      "target": "Resources/DeathLovers/Images/background/plagueend.png",
+      "sha256": "89774355e69c7cd590cbfba99e2313cfe1588e057bf9e437ca12115b53dda585",
+      "names": [
+        "bg plagueend",
+        "plagueend"
+      ]
+    },
+    {
+      "id": "images/background/plaguehungerend.png",
+      "source": "images/background/plaguehungerend.png",
+      "target": "Resources/DeathLovers/Images/background/plaguehungerend.png",
+      "sha256": "002776a6a42698da48b386a53ead053a7e6edd1bcfeff9289b77e5c2fd2ba7cb",
+      "names": [
+        "bg plaguehunger",
+        "plaguehungerend"
+      ]
+    },
+    {
+      "id": "images/background/war1.png",
+      "source": "images/background/war1.png",
+      "target": "Resources/DeathLovers/Images/background/war1.png",
+      "sha256": "9f5c14e7b50654696bbdaac5004fe94fc549fb1a3e365fc40f9e1eff8a44b140",
+      "names": [
+        "war1"
+      ]
+    },
+    {
+      "id": "images/background/warend.png",
+      "source": "images/background/warend.png",
+      "target": "Resources/DeathLovers/Images/background/warend.png",
+      "sha256": "d729528e98f411c255931d6ad9e13d280c219fb8b71be4b681fffa9784442921",
+      "names": [
+        "bg warend",
+        "warend"
+      ]
+    },
+    {
+      "id": "images/background/warhungerend.png",
+      "source": "images/background/warhungerend.png",
+      "target": "Resources/DeathLovers/Images/background/warhungerend.png",
+      "sha256": "d9125e4be240fe0c32b5b6fb6eacbeb541cd82738ef65ff2878352da1a01515e",
+      "names": [
+        "bg warhungerend",
+        "warhungerend"
+      ]
+    },
+    {
+      "id": "images/background/waroff.png",
+      "source": "images/background/waroff.png",
+      "target": "Resources/DeathLovers/Images/background/waroff.png",
+      "sha256": "a45f4c91f76723320ea8b8578eb8188536ce4ee710207843c50890ed3c389bb4",
+      "names": [
+        "bg waroff",
+        "waroff"
+      ]
+    },
+    {
+      "id": "images/background/warplagueend.png",
+      "source": "images/background/warplagueend.png",
+      "target": "Resources/DeathLovers/Images/background/warplagueend.png",
+      "sha256": "87818af6adebb7981d00774fea1e3fea2a6ed9274bdc7b151a36eaaf127cbc1e",
+      "names": [
+        "bg warplagueend",
+        "warplagueend"
+      ]
+    },
+    {
+      "id": "images/hunger/angry.png",
+      "source": "images/hunger/angry.png",
+      "target": "Resources/DeathLovers/Images/hunger/angry.png",
+      "sha256": "36c812b3c88a9d71c13acc888f8708fd96fbd64c08382f148ccdbc4eb1f07614",
+      "names": [
+        "hunger angry",
+        "angry"
+      ]
+    },
+    {
+      "id": "images/hunger/dissapointed.png",
+      "source": "images/hunger/dissapointed.png",
+      "target": "Resources/DeathLovers/Images/hunger/dissapointed.png",
+      "sha256": "2aded57161e8df3df18587cf03bc76bdf2981e3b9dad4977eda19250699c5db3",
+      "names": [
+        "hunger dissapointed",
+        "dissapointed"
+      ]
+    },
+    {
+      "id": "images/hunger/fear.png",
+      "source": "images/hunger/fear.png",
+      "target": "Resources/DeathLovers/Images/hunger/fear.png",
+      "sha256": "7d07de51ae95319359ef2e92bfb88478262d0405c95cb61716454d8362a3e220",
+      "names": [
+        "hunger fear",
+        "fear"
+      ]
+    },
+    {
+      "id": "images/hunger/fear_shy.png",
+      "source": "images/hunger/fear_shy.png",
+      "target": "Resources/DeathLovers/Images/hunger/fear_shy.png",
+      "sha256": "cc531cede43a59d014432d65fffe3d6f735e21e2798713739d89591e40cfc395",
+      "names": [
+        "hunger fear shy",
+        "fear_shy"
+      ]
+    },
+    {
+      "id": "images/hunger/laughing.png",
+      "source": "images/hunger/laughing.png",
+      "target": "Resources/DeathLovers/Images/hunger/laughing.png",
+      "sha256": "8f0bfc2094a0ad90fa61bc12067e6cf051513e2d7f5ca2aab59c76d033a6d023",
+      "names": [
+        "hunger laughing",
+        "laughing"
+      ]
+    },
+    {
+      "id": "images/hunger/laughing_nervous.png",
+      "source": "images/hunger/laughing_nervous.png",
+      "target": "Resources/DeathLovers/Images/hunger/laughing_nervous.png",
+      "sha256": "7062fbe17d9b57a90915befe0ac63205978804842f1b1040baa9efb2c70be715",
+      "names": [
+        "hunger laughing nervous",
+        "laughing_nervous"
+      ]
+    },
+    {
+      "id": "images/hunger/laughing_nervous_shy.png",
+      "source": "images/hunger/laughing_nervous_shy.png",
+      "target": "Resources/DeathLovers/Images/hunger/laughing_nervous_shy.png",
+      "sha256": "fdb31d09416462ea5b51aa66637a4f22a5f7b34c4c8c867cd5fe97778940ddde",
+      "names": [
+        "hunger laughing nervous shy",
+        "laughing_nervous_shy"
+      ]
+    },
+    {
+      "id": "images/hunger/normal.png",
+      "source": "images/hunger/normal.png",
+      "target": "Resources/DeathLovers/Images/hunger/normal.png",
+      "sha256": "f15e38861026eaaf6c48eece56af3a2071d9d0b96831a1bb59723a95b450f49d",
+      "names": [
+        "hunger normal",
+        "normal"
+      ]
+    },
+    {
+      "id": "images/hunger/normal_shy.png",
+      "source": "images/hunger/normal_shy.png",
+      "target": "Resources/DeathLovers/Images/hunger/normal_shy.png",
+      "sha256": "20251320b2446df66d7525200ed6431d1629ee084d02384d4ef74ca0f8836fd9",
+      "names": [
+        "hunger normal shy",
+        "normal_shy"
+      ]
+    },
+    {
+      "id": "images/plague/conq_cinema.png",
+      "source": "images/plague/conq_cinema.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_cinema.png",
+      "sha256": "59a4eecfed83df12de11b5c318b1c3939f4c9bb96a6e15556a0245f8c5596d69",
+      "names": [
+        "plague cinema",
+        "conq_cinema"
+      ]
+    },
+    {
+      "id": "images/plague/conq_cinemasig.png",
+      "source": "images/plague/conq_cinemasig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_cinemasig.png",
+      "sha256": "c22428b5edb7fdad56df8db2f53c1a6b0d169a884c45e2e3680e36314172b4a4",
+      "names": [
+        "plague cinemasig",
+        "conq_cinemasig"
+      ]
+    },
+    {
+      "id": "images/plague/conq_happy.png",
+      "source": "images/plague/conq_happy.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_happy.png",
+      "sha256": "8945c55548bbc8dd5f6cc25e690795b909777d5dd7bbd4731a596d12d66f665b",
+      "names": [
+        "plague happy",
+        "conq_happy"
+      ]
+    },
+    {
+      "id": "images/plague/conq_happysig.png",
+      "source": "images/plague/conq_happysig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_happysig.png",
+      "sha256": "4f7f222a12c416d844416a9ba5519291779080d80bed8dbbaae0c47700533e9a",
+      "names": [
+        "plague happysig",
+        "conq_happysig"
+      ]
+    },
+    {
+      "id": "images/plague/conq_nervous.png",
+      "source": "images/plague/conq_nervous.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_nervous.png",
+      "sha256": "385a034961121e8a38551815b5c8e6dfe22ec109fbfafce8dd8edcbe13dfb21d",
+      "names": [
+        "plague nervous",
+        "conq_nervous"
+      ]
+    },
+    {
+      "id": "images/plague/conq_nervoussig.png",
+      "source": "images/plague/conq_nervoussig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_nervoussig.png",
+      "sha256": "1c7fd8abbab0c804fcc64839567922dd2b9dda5e7aa0d4c8e0f7d8a3b0451b59",
+      "names": [
+        "plague nervoussig",
+        "conq_nervoussig"
+      ]
+    },
+    {
+      "id": "images/plague/conq_normal.png",
+      "source": "images/plague/conq_normal.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_normal.png",
+      "sha256": "351277fe4b5db16f0eced7d31d6b2021f7b4aa612def30e9b550cebb1ea6cd3f",
+      "names": [
+        "plague normal",
+        "conq_normal"
+      ]
+    },
+    {
+      "id": "images/plague/conq_normalsig.png",
+      "source": "images/plague/conq_normalsig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_normalsig.png",
+      "sha256": "36fde57fa4a69380b8087fd3e34ed323cb3b715ad0e4959f78e036e86ba2c6c4",
+      "names": [
+        "plague normalsig",
+        "conq_normalsig"
+      ]
+    },
+    {
+      "id": "images/plague/conq_sad.png",
+      "source": "images/plague/conq_sad.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_sad.png",
+      "sha256": "e769457d9a7f96064f32fe3c29a06865df2bc32da632e829be498060245f1c71",
+      "names": [
+        "plague sad",
+        "conq_sad"
+      ]
+    },
+    {
+      "id": "images/plague/conq_sadsig.png",
+      "source": "images/plague/conq_sadsig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_sadsig.png",
+      "sha256": "b29c658dec27741e314d056ca563461fd1b75a5e6dc374d9626c42cff721fb94",
+      "names": [
+        "plague sadsig",
+        "conq_sadsig"
+      ]
+    },
+    {
+      "id": "images/plague/conq_serious.png",
+      "source": "images/plague/conq_serious.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_serious.png",
+      "sha256": "a375de0692800f081e0789474ae9a3fd1d0b63f0cc9f55627fbbcd35bbb7f3f7",
+      "names": [
+        "plague serious",
+        "conq_serious"
+      ]
+    },
+    {
+      "id": "images/plague/conq_serioussig.png",
+      "source": "images/plague/conq_serioussig.png",
+      "target": "Resources/DeathLovers/Images/plague/conq_serioussig.png",
+      "sha256": "9fb7df5ad4e896e6ceeab5be20d89fe760a22942e27e3b1240bb046cd189bb39",
+      "names": [
+        "plague serioussig",
+        "conq_serioussig"
+      ]
+    },
+    {
+      "id": "images/war/war_back.png",
+      "source": "images/war/war_back.png",
+      "target": "Resources/DeathLovers/Images/war/war_back.png",
+      "sha256": "ccfb627e0f292b76c7061f6a028c41829c12cb901bde0358de3a64463a3051ad",
+      "names": [
+        "war back",
+        "war_back"
+      ]
+    },
+    {
+      "id": "images/war/war_headsup.png",
+      "source": "images/war/war_headsup.png",
+      "target": "Resources/DeathLovers/Images/war/war_headsup.png",
+      "sha256": "386128bd31b4e84c94b5c4a8681312a7088d50531bae6863d66393b422cf9426",
+      "names": [
+        "war headsup",
+        "war_headsup"
+      ]
+    },
+    {
+      "id": "images/war/war_normal.png",
+      "source": "images/war/war_normal.png",
+      "target": "Resources/DeathLovers/Images/war/war_normal.png",
+      "sha256": "3ec3c8e8db5863a3f0f8822f019e9dbd80460fbc7d56f0c8db0aab90609c7538",
+      "names": [
+        "war normal",
+        "war_normal"
+      ]
+    },
+    {
+      "id": "images/war/war_point.png",
+      "source": "images/war/war_point.png",
+      "target": "Resources/DeathLovers/Images/war/war_point.png",
+      "sha256": "a63a77e8f054d8b40698a7508991bf71a2fa92c79221d893c42ffd5f1479b9ea",
+      "names": [
+        "war point",
+        "war_point"
+      ]
+    },
+    {
+      "id": "images/war/war_pointangry.png",
+      "source": "images/war/war_pointangry.png",
+      "target": "Resources/DeathLovers/Images/war/war_pointangry.png",
+      "sha256": "c11414cc34d49bbc425452bc35f984bc2d4644624c0ff5ba066da668803d2bc1",
+      "names": [
+        "war point angry",
+        "war_pointangry"
+      ]
+    },
+    {
+      "id": "images/war/war_stare.png",
+      "source": "images/war/war_stare.png",
+      "target": "Resources/DeathLovers/Images/war/war_stare.png",
+      "sha256": "9ce2e0acfd3145b4d09e4647c8c9abc212ff0a5b727821c809d1f8cc8cc0a382",
+      "names": [
+        "war stare",
+        "war_stare"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "status": "PASSED",
+  "contentVersion": "9574ed245ed15b69bd06b90df63cb64165a93244156ddda042d8f5d47b727308",
+  "deterministicJsonFiles": 16,
+  "outputHashes": {
+    "aliases.json": "20b15df891080ca8f1aa2d25f2911cb45c909b46ef3853a47a79e49f7de6e5ee",
+    "assets.json": "013df339ad442cd78631bb7b6c7e078f9cef43f20ebeb8102f2df89f4cfe1e2b",
+    "asset_import_baseline.json": "013df339ad442cd78631bb7b6c7e078f9cef43f20ebeb8102f2df89f4cfe1e2b",
+    "candidate.assets.json": "013df339ad442cd78631bb7b6c7e078f9cef43f20ebeb8102f2df89f4cfe1e2b",
+    "candidate.command_ids.json": "338cd716b7f34d32e4ec645b05e30b54724172c264cf304f76e7d837f8394f7c",
+    "candidate.story.json": "8840bdeb50ee1a84a45afef663ef6a2b3a3a81ecd7daf6204cea761a50cc080b",
+    "characters.json": "f67464d7fbac743a09edbc906f9da715a223b5ce594beb7e94aaf6ffe8b3dd5a",
+    "command_ids.json": "338cd716b7f34d32e4ec645b05e30b54724172c264cf304f76e7d837f8394f7c",
+    "coverage.json": "ea60ca513e2b96c552dd15fb8b17c5635cc08fdda7ec1b1a4649a3f7d60dbe55",
+    "resolved-config.json": "50620bffab27269a3de85dfdf42bec540c14a6e7f1b91b5320db7c78da07d0d5",
+    "resource-usage.json": "ee86f31c5ea1ac581eafded8ed2f20967ea887129ce23cb0dde91500ed3a3af0",
+    "story.json": "8840bdeb50ee1a84a45afef663ef6a2b3a3a81ecd7daf6204cea761a50cc080b",
+    "text-audit.json": "bf8f21e4e78f57eadb5a0793cb3e11dbefa63f5e18c2792f0b1f5461ff36454a",
+    "validation.json": "8d29180cd50210f1b1f4961e55a57c6a8dc9b3d6eaa4a84fc85584662c816de7",
+    "Debug\\bound-playthroughs.json": "42066207ac9b14522071623223ef2ac70ab4aa5c9ee78463bdd6e25c24ce7218",
+    "Debug\\checkpoints.json": "cf4071a4cad82f942cf3e665f4e1da79440535cc3e0e93daf0cb1cf37586b4bb"
+  },
+  "textEditPreservesAllIds": true,
+  "negativeTargets": [
+    {
+      "code": "TARGET",
+      "message": "Dangling target",
+      "sourceFile": "script.rpy",
+      "sourceLine": 258
+    },
+    {
+      "code": "RETURN_TARGET",
+      "message": "Call requires a valid continuation",
+      "sourceFile": "script.rpy",
+      "sourceLine": 258
+    }
+  ],
+  "commandCounts": {
+    "Audio": 60,
+    "Scene": 40,
+    "Say": 1663,
+    "NvlClear": 2,
+    "Return": 15,
+    "Call": 20,
+    "Choice": 22,
+    "Assign": 50,
+    "RollbackBarrier": 55,
+    "Branch": 31,
+    "Jump": 21,
+    "Character": 171,
+    "RestartToMenu": 8
+  },
+  "commands": 2158,
+  "choiceOptions": 56,
+  "labels": 15,
+  "assets": 193,
+  "exploredStates": 1180031,
+  "reachableCommands": 2142,
+  "documentedUnreachable": 16,
+  "endingTraces": 8,
+  "D004": "No reachable empty choice in exhaustive graph traversal",
+  "D006": "Escaped source preserved; normalized text has literal [x3]",
+  "runtime": "Not executed; runtime/debug integration belongs to stages 05-07"
+}

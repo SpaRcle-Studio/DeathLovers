@@ -1,0 +1,109 @@
+file	line	indent	text
+script.rpy	1	0	default var_offices_visited = False # офисы
+script.rpy	2	0	default var_canteen_visited = False # столовая
+script.rpy	3	0	default var_landfill_visited = False # свалка
+script.rpy	4	0	default var_roots = 0
+script.rpy	6	0	default var_hunger_score = 0 # очки Голода
+script.rpy	7	0	default var_war_score = 0 # очки Войны
+script.rpy	8	0	default var_plague_score = 0 # очки Чумы
+script.rpy	269	8	        "В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	270	12	            $ var_canteen_visited = True
+script.rpy	275	8	        "Лучше к курилке у мусорки сходить сначала, после такого без сигаретки тяжко…" if not var_landfill_visited:
+script.rpy	276	12	            $ var_landfill_visited = True
+script.rpy	281	8	        "Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	282	12	            $ var_offices_visited = True
+script.rpy	286	4	    if not var_canteen_visited or not var_landfill_visited or not var_offices_visited:
+script.rpy	299	4	    $ var_roots += 1
+script.rpy	482	12	            $ var_plague_score += 0
+script.rpy	517	12	            $ var_plague_score += 1
+script.rpy	547	12	            $ var_plague_score += 3
+script.rpy	642	4	    if var_roots >=1:
+script.rpy	652	12	            $ var_plague_score += 1
+script.rpy	720	12	            $ var_plague_score += 2
+script.rpy	764	12	            $ var_plague_score += 0
+script.rpy	902	12	            if var_roots == 3:
+script.rpy	942	12	            $ var_plague_score += 2
+script.rpy	998	12	            if var_plague_score >= 5:
+script.rpy	1002	12	            if var_plague_score < 5:
+script.rpy	1011	12	            if var_roots == 3:
+script.rpy	1025	16	                "В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1026	20	                    $ var_canteen_visited = True
+script.rpy	1030	16	                "Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1031	20	                    $ var_offices_visited = True
+script.rpy	1051	12	            if var_roots == 3:
+script.rpy	1065	20	                    "В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1066	24	                        $ var_canteen_visited = True
+script.rpy	1070	20	                    "Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1071	24	                        $ var_offices_visited = True
+script.rpy	1076	12	            $ var_plague_score += 1
+script.rpy	1085	12	            if var_plague_score >= 5:
+script.rpy	1108	12	            if var_plague_score < 5:
+script.rpy	1118	12	            if var_roots == 3:
+script.rpy	1132	16	                "В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1133	20	                    $ var_canteen_visited = True
+script.rpy	1138	16	                "Cразу к офисам, дай Бог, наткнусь на кого деятельного." if not var_offices_visited:
+script.rpy	1139	20	                    $ var_offices_visited = True
+script.rpy	1154	4	    $ var_roots += 1
+script.rpy	1285	12	            $ var_war_score += 1
+script.rpy	1303	12	            $ var_war_score += 0
+script.rpy	1330	12	            $ var_war_score += 2
+script.rpy	1440	12	            $ var_war_score += 0
+script.rpy	1469	12	            if var_roots == 3:
+script.rpy	1481	16	                "В столовую, а то мне без сахарной бомбы тяжело думается." if not var_canteen_visited:
+script.rpy	1482	20	                    $ var_canteen_visited = True
+script.rpy	1487	16	                "Лучше к курилке у мусорки сходить сначала, после такого без сигаретки тяжко…" if not var_landfill_visited:
+script.rpy	1488	20	                    $ var_landfill_visited = True
+script.rpy	1495	12	            $ var_war_score += 1
+script.rpy	1526	12	            $ var_war_score += 2
+script.rpy	1672	12	            $ var_war_score += 0
+script.rpy	1705	12	            if var_roots == 3:
+script.rpy	1720	16	                "Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1721	20	                    $ var_canteen_visited = True
+script.rpy	1726	16	                "Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1727	20	                    $ var_landfill_visited = True
+script.rpy	1733	12	            $ var_war_score += 2
+script.rpy	1759	12	            if var_war_score >= 5:
+script.rpy	1781	20	                    "Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1782	24	                        $ var_canteen_visited = True
+script.rpy	1787	20	                    "Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1788	24	                        $ var_landfill_visited = True
+script.rpy	1792	12	            if var_war_score < 5:
+script.rpy	1799	16	                if var_roots == 3:
+script.rpy	1814	20	                    "Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1815	24	                        $ var_canteen_visited = True
+script.rpy	1820	20	                    "Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1821	24	                        $ var_landfill_visited = True
+script.rpy	1828	12	            $ var_war_score += 1
+script.rpy	1842	12	            if var_war_score >= 5:
+script.rpy	1856	16	                if var_roots == 3:
+script.rpy	1861	12	            if var_war_score < 5:
+script.rpy	1868	16	                if var_roots == 3:
+script.rpy	1886	16	                "Обожраться в {u}столовой{/u}. Тактическое отступление." if not var_canteen_visited:
+script.rpy	1887	20	                    $ var_canteen_visited = True
+script.rpy	1892	16	                "Пыхнуть в {u}курилке{/u}. Вернуть себе запал." if not var_landfill_visited:
+script.rpy	1893	20	                    $ var_landfill_visited = True
+script.rpy	1909	4	    $ var_roots += 1
+script.rpy	2041	12	            $ var_hunger_score += 1
+script.rpy	2057	12	            $ var_hunger_score += 2
+script.rpy	2085	12	            $ var_hunger_score += 0
+script.rpy	2234	4	    if var_roots == 2:
+script.rpy	2241	4	    if var_roots == 3:
+script.rpy	2253	12	            $ var_hunger_score += 1
+script.rpy	2269	12	            $ var_hunger_score += 0
+script.rpy	2292	12	            $ var_hunger_score += 2
+script.rpy	2386	12	            $ var_hunger_score += 1
+script.rpy	2425	12	            $ var_hunger_score += 2
+script.rpy	2488	12	            $ var_hunger_score += 0
+script.rpy	2546	4	    if var_roots == 3:
+script.rpy	2558	8	        "Кружок «Кумарный Джин», временно расположенный в {u}курилке{/u}." if not var_landfill_visited:
+script.rpy	2559	12	            $ var_landfill_visited = True
+script.rpy	2563	8	        "{s}Добровольно-{/s}принудительный труд в  {u}офисе{/u}. Да здравствует работа!" if not var_offices_visited:
+script.rpy	2564	12	            $ var_offices_visited = True
+script.rpy	2580	4	    if var_plague_score < 5 and var_war_score < 5 and var_hunger_score < 5:
+script.rpy	2590	4	    if var_plague_score >= 5 and var_war_score < 5 and var_hunger_score < 5:
+script.rpy	2592	4	    if var_plague_score < 5 and var_war_score >= 5 and var_hunger_score < 5:
+script.rpy	2594	4	    if var_plague_score < 5 and var_war_score < 5 and var_hunger_score >= 5:
+script.rpy	2596	4	    if var_plague_score >= 5 and var_war_score >= 5 and var_hunger_score < 5:
+script.rpy	2598	4	    if var_plague_score >= 5 and var_war_score < 5 and var_hunger_score >= 5:
+script.rpy	2600	4	    if var_plague_score < 5 and var_war_score >= 5 and var_hunger_score >= 5:
+script.rpy	2602	4	    if var_plague_score >= 5 and var_war_score >= 5 and var_hunger_score >= 5:

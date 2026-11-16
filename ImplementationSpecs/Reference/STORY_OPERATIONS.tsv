@@ -1,0 +1,245 @@
+file	line	indent	text	label
+script.rpy	1	0	default var_offices_visited = False # офисы	
+script.rpy	2	0	default var_canteen_visited = False # столовая	
+script.rpy	3	0	default var_landfill_visited = False # свалка	
+script.rpy	4	0	default var_roots = 0	
+script.rpy	6	0	default var_hunger_score = 0 # очки Голода	
+script.rpy	7	0	default var_war_score = 0 # очки Войны	
+script.rpy	8	0	default var_plague_score = 0 # очки Чумы	
+script.rpy	10	0	label label_prologue:	label_prologue
+script.rpy	255	4	return	label_prologue
+script.rpy	257	0	label start:	start
+script.rpy	258	4	call label_prologue from _call_label_prologue	start
+script.rpy	260	4	label main_choice:	main_choice
+script.rpy	267	4	menu:	main_choice
+script.rpy	270	12	$ var_canteen_visited = True	main_choice
+script.rpy	271	12	$ renpy.block_rollback()	main_choice
+script.rpy	272	12	call label_canteen from _call_label_canteen	main_choice
+script.rpy	276	12	$ var_landfill_visited = True	main_choice
+script.rpy	277	12	$ renpy.block_rollback()	main_choice
+script.rpy	278	12	call label_landfill from _call_label_landfill	main_choice
+script.rpy	282	12	$ var_offices_visited = True	main_choice
+script.rpy	283	12	$ renpy.block_rollback()	main_choice
+script.rpy	284	12	call label_offices from _call_label_offices	main_choice
+script.rpy	286	4	if not var_canteen_visited or not var_landfill_visited or not var_offices_visited:	main_choice
+script.rpy	287	8	jump main_choice	main_choice
+script.rpy	289	0	return	main_choice
+script.rpy	298	0	label label_landfill:	label_landfill
+script.rpy	299	4	$ var_roots += 1	label_landfill
+script.rpy	480	4	menu:	label_landfill
+script.rpy	482	12	$ var_plague_score += 0	label_landfill
+script.rpy	483	12	$ renpy.block_rollback()	label_landfill
+script.rpy	517	12	$ var_plague_score += 1	label_landfill
+script.rpy	518	12	$ renpy.block_rollback()	label_landfill
+script.rpy	547	12	$ var_plague_score += 3	label_landfill
+script.rpy	548	12	$ renpy.block_rollback()	label_landfill
+script.rpy	642	4	if var_roots >=1:	label_landfill
+script.rpy	650	4	menu:	label_landfill
+script.rpy	652	12	$ var_plague_score += 1	label_landfill
+script.rpy	653	12	$ renpy.block_rollback()	label_landfill
+script.rpy	720	12	$ var_plague_score += 2	label_landfill
+script.rpy	721	12	$ renpy.block_rollback()	label_landfill
+script.rpy	764	12	$ var_plague_score += 0	label_landfill
+script.rpy	765	12	$ renpy.block_rollback()	label_landfill
+script.rpy	832	4	menu:	label_landfill
+script.rpy	834	12	$ renpy.block_rollback()	label_landfill
+script.rpy	859	12	$ renpy.block_rollback()	label_landfill
+script.rpy	891	12	$ renpy.block_rollback()	label_landfill
+script.rpy	902	12	if var_roots == 3:	label_landfill
+script.rpy	911	12	else:	label_landfill
+script.rpy	940	4	menu:	label_landfill
+script.rpy	942	12	$ var_plague_score += 2	label_landfill
+script.rpy	943	12	$ renpy.block_rollback()	label_landfill
+script.rpy	979	12	menu:	label_landfill
+script.rpy	998	12	if var_plague_score >= 5:	label_landfill
+script.rpy	1002	12	if var_plague_score < 5:	label_landfill
+script.rpy	1011	12	if var_roots == 3:	label_landfill
+script.rpy	1016	16	jump ending	label_landfill
+script.rpy	1023	12	menu:	label_landfill
+script.rpy	1026	20	$ var_canteen_visited = True	label_landfill
+script.rpy	1027	20	$ renpy.block_rollback()	label_landfill
+script.rpy	1028	20	jump label_canteen	label_landfill
+script.rpy	1031	20	$ var_offices_visited = True	label_landfill
+script.rpy	1032	20	$ renpy.block_rollback()	label_landfill
+script.rpy	1033	20	jump label_offices	label_landfill
+script.rpy	1036	12	$ renpy.block_rollback()	label_landfill
+script.rpy	1051	12	if var_roots == 3:	label_landfill
+script.rpy	1057	16	jump ending	label_landfill
+script.rpy	1058	12	else:	label_landfill
+script.rpy	1063	16	menu:	label_landfill
+script.rpy	1066	24	$ var_canteen_visited = True	label_landfill
+script.rpy	1067	24	$ renpy.block_rollback()	label_landfill
+script.rpy	1068	24	call label_canteen from _call_label_canteen_1	label_landfill
+script.rpy	1071	24	$ var_offices_visited = True	label_landfill
+script.rpy	1072	24	$ renpy.block_rollback()	label_landfill
+script.rpy	1073	24	call label_offices from _call_label_offices_1	label_landfill
+script.rpy	1076	12	$ var_plague_score += 1	label_landfill
+script.rpy	1077	12	$ renpy.block_rollback()	label_landfill
+script.rpy	1085	12	if var_plague_score >= 5:	label_landfill
+script.rpy	1108	12	if var_plague_score < 5:	label_landfill
+script.rpy	1118	12	if var_roots == 3:	label_landfill
+script.rpy	1123	16	jump ending	label_landfill
+script.rpy	1130	12	menu directions:	label_landfill
+script.rpy	1133	20	$ var_canteen_visited = True	label_landfill
+script.rpy	1134	20	$ renpy.block_rollback()	label_landfill
+script.rpy	1135	20	call label_canteen from _call_label_canteen_2	label_landfill
+script.rpy	1139	20	$ var_offices_visited = True	label_landfill
+script.rpy	1140	20	$ renpy.block_rollback()	label_landfill
+script.rpy	1141	20	call label_offices from _call_label_offices_2	label_landfill
+script.rpy	1142	0	return	label_landfill
+script.rpy	1153	0	label label_offices:	label_offices
+script.rpy	1154	4	$ var_roots += 1	label_offices
+script.rpy	1283	4	menu:	label_offices
+script.rpy	1285	12	$ var_war_score += 1	label_offices
+script.rpy	1286	12	$ renpy.block_rollback()	label_offices
+script.rpy	1303	12	$ var_war_score += 0	label_offices
+script.rpy	1304	12	$ renpy.block_rollback()	label_offices
+script.rpy	1329	12	$ renpy.block_rollback()	label_offices
+script.rpy	1330	12	$ var_war_score += 2	label_offices
+script.rpy	1331	12	$ renpy.block_rollback()	label_offices
+script.rpy	1437	4	menu:	label_offices
+script.rpy	1439	12	$ renpy.block_rollback()	label_offices
+script.rpy	1440	12	$ var_war_score += 0	label_offices
+script.rpy	1469	12	if var_roots == 3:	label_offices
+script.rpy	1473	16	jump ending	label_offices
+script.rpy	1479	12	menu:	label_offices
+script.rpy	1482	20	$ var_canteen_visited = True	label_offices
+script.rpy	1483	20	$ renpy.block_rollback()	label_offices
+script.rpy	1484	20	call label_canteen from _call_label_canteen_3	label_offices
+script.rpy	1488	20	$ var_landfill_visited = True	label_offices
+script.rpy	1489	20	$ renpy.block_rollback()	label_offices
+script.rpy	1490	20	call label_landfill from _call_label_landfill_1	label_offices
+script.rpy	1494	12	$ renpy.block_rollback()	label_offices
+script.rpy	1495	12	$ var_war_score += 1	label_offices
+script.rpy	1525	12	$ renpy.block_rollback()	label_offices
+script.rpy	1526	12	$ var_war_score += 2	label_offices
+script.rpy	1607	4	menu:	label_offices
+script.rpy	1609	12	$ renpy.block_rollback()	label_offices
+script.rpy	1632	12	$ renpy.block_rollback()	label_offices
+script.rpy	1668	4	menu:	label_offices
+script.rpy	1670	12	$ renpy.block_rollback()	label_offices
+script.rpy	1672	12	$ var_war_score += 0	label_offices
+script.rpy	1705	12	if var_roots == 3:	label_offices
+script.rpy	1709	16	jump ending	label_offices
+script.rpy	1718	12	menu:	label_offices
+script.rpy	1721	20	$ var_canteen_visited = True	label_offices
+script.rpy	1722	20	$ renpy.block_rollback()	label_offices
+script.rpy	1723	20	call label_canteen from _call_label_canteen_4	label_offices
+script.rpy	1727	20	$ var_landfill_visited = True	label_offices
+script.rpy	1728	20	$ renpy.block_rollback()	label_offices
+script.rpy	1729	20	call label_landfill from _call_label_landfill_2	label_offices
+script.rpy	1732	12	$ renpy.block_rollback()	label_offices
+script.rpy	1733	12	$ var_war_score += 2	label_offices
+script.rpy	1759	12	if var_war_score >= 5:	label_offices
+script.rpy	1779	16	menu:	label_offices
+script.rpy	1782	24	$ var_canteen_visited = True	label_offices
+script.rpy	1783	24	$ renpy.block_rollback()	label_offices
+script.rpy	1784	24	call label_canteen from _call_label_canteen_5	label_offices
+script.rpy	1788	24	$ var_landfill_visited = True	label_offices
+script.rpy	1789	24	$ renpy.block_rollback()	label_offices
+script.rpy	1790	24	call label_landfill from _call_label_landfill_3	label_offices
+script.rpy	1792	12	if var_war_score < 5:	label_offices
+script.rpy	1799	16	if var_roots == 3:	label_offices
+script.rpy	1803	20	jump ending	label_offices
+script.rpy	1812	16	menu:	label_offices
+script.rpy	1815	24	$ var_canteen_visited = True	label_offices
+script.rpy	1816	24	$ renpy.block_rollback()	label_offices
+script.rpy	1817	24	call label_canteen from _call_label_canteen_6	label_offices
+script.rpy	1821	24	$ var_landfill_visited = True	label_offices
+script.rpy	1822	24	$ renpy.block_rollback()	label_offices
+script.rpy	1823	24	call label_landfill from _call_label_landfill_4	label_offices
+script.rpy	1827	12	$ renpy.block_rollback()	label_offices
+script.rpy	1828	12	$ var_war_score += 1	label_offices
+script.rpy	1842	12	if var_war_score >= 5:	label_offices
+script.rpy	1856	16	if var_roots == 3:	label_offices
+script.rpy	1859	20	jump ending	label_offices
+script.rpy	1861	12	if var_war_score < 5:	label_offices
+script.rpy	1868	16	if var_roots == 3:	label_offices
+script.rpy	1872	20	jump ending	label_offices
+script.rpy	1884	12	menu:	label_offices
+script.rpy	1887	20	$ var_canteen_visited = True	label_offices
+script.rpy	1888	20	$ renpy.block_rollback()	label_offices
+script.rpy	1889	20	call label_canteen from _call_label_canteen_7	label_offices
+script.rpy	1893	20	$ var_landfill_visited = True	label_offices
+script.rpy	1894	20	$ renpy.block_rollback()	label_offices
+script.rpy	1895	20	call label_landfill from _call_label_landfill_5	label_offices
+script.rpy	1896	12	return	label_offices
+script.rpy	1898	4	return	label_offices
+script.rpy	1899	0	return	label_offices
+script.rpy	1908	0	label label_canteen:	label_canteen
+script.rpy	1909	4	$ var_roots += 1	label_canteen
+script.rpy	2039	4	menu:	label_canteen
+script.rpy	2041	12	$ var_hunger_score += 1	label_canteen
+script.rpy	2042	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2057	12	$ var_hunger_score += 2	label_canteen
+script.rpy	2058	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2085	12	$ var_hunger_score += 0	label_canteen
+script.rpy	2086	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2234	4	if var_roots == 2:	label_canteen
+script.rpy	2241	4	if var_roots == 3:	label_canteen
+script.rpy	2251	4	menu:	label_canteen
+script.rpy	2253	12	$ var_hunger_score += 1	label_canteen
+script.rpy	2254	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2269	12	$ var_hunger_score += 0	label_canteen
+script.rpy	2270	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2292	12	$ var_hunger_score += 2	label_canteen
+script.rpy	2293	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2384	4	menu:	label_canteen
+script.rpy	2386	12	$ var_hunger_score += 1	label_canteen
+script.rpy	2387	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2425	12	$ var_hunger_score += 2	label_canteen
+script.rpy	2426	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2488	12	$ var_hunger_score += 0	label_canteen
+script.rpy	2489	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2546	4	if var_roots == 3:	label_canteen
+script.rpy	2550	8	jump ending	label_canteen
+script.rpy	2556	4	menu:	label_canteen
+script.rpy	2559	12	$ var_landfill_visited = True	label_canteen
+script.rpy	2560	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2561	12	call label_landfill from _call_label_landfill_6	label_canteen
+script.rpy	2564	12	$ var_offices_visited = True	label_canteen
+script.rpy	2565	12	$ renpy.block_rollback()	label_canteen
+script.rpy	2566	12	call label_offices from _call_label_offices_3	label_canteen
+script.rpy	2567	0	return	label_canteen
+script.rpy	2576	0	label ending:	ending
+script.rpy	2577	4	$ renpy.block_rollback()	ending
+script.rpy	2580	4	if var_plague_score < 5 and var_war_score < 5 and var_hunger_score < 5:	ending
+script.rpy	2581	8	jump bad_ending	ending
+script.rpy	2590	4	if var_plague_score >= 5 and var_war_score < 5 and var_hunger_score < 5:	ending
+script.rpy	2591	8	jump plague_ending	ending
+script.rpy	2592	4	if var_plague_score < 5 and var_war_score >= 5 and var_hunger_score < 5:	ending
+script.rpy	2593	8	jump war_ending	ending
+script.rpy	2594	4	if var_plague_score < 5 and var_war_score < 5 and var_hunger_score >= 5:	ending
+script.rpy	2595	8	jump hunger_ending	ending
+script.rpy	2596	4	if var_plague_score >= 5 and var_war_score >= 5 and var_hunger_score < 5:	ending
+script.rpy	2597	8	jump plaguewar_ending	ending
+script.rpy	2598	4	if var_plague_score >= 5 and var_war_score < 5 and var_hunger_score >= 5:	ending
+script.rpy	2599	8	jump plaguehunger_ending	ending
+script.rpy	2600	4	if var_plague_score < 5 and var_war_score >= 5 and var_hunger_score >= 5:	ending
+script.rpy	2601	8	jump warhunger_ending	ending
+script.rpy	2602	4	if var_plague_score >= 5 and var_war_score >= 5 and var_hunger_score >= 5:	ending
+script.rpy	2603	8	jump harem_ending	ending
+script.rpy	2605	0	label plague_ending:	plague_ending
+script.rpy	2638	4	$ renpy.full_restart(config.game_main_transition)	plague_ending
+script.rpy	2639	0	return	plague_ending
+script.rpy	2641	0	label war_ending:	war_ending
+script.rpy	2674	4	$ renpy.full_restart(config.game_main_transition)	war_ending
+script.rpy	2675	0	return	war_ending
+script.rpy	2677	0	label hunger_ending:	hunger_ending
+script.rpy	2706	4	$ renpy.full_restart(config.game_main_transition)	hunger_ending
+script.rpy	2707	0	return	hunger_ending
+script.rpy	2709	0	label plaguewar_ending:	plaguewar_ending
+script.rpy	2738	4	$ renpy.full_restart(config.game_main_transition)	plaguewar_ending
+script.rpy	2739	0	return	plaguewar_ending
+script.rpy	2741	0	label plaguehunger_ending:	plaguehunger_ending
+script.rpy	2773	4	$ renpy.full_restart(config.game_main_transition)	plaguehunger_ending
+script.rpy	2774	0	return	plaguehunger_ending
+script.rpy	2776	0	label warhunger_ending:	warhunger_ending
+script.rpy	2815	4	$ renpy.full_restart(config.game_main_transition)	warhunger_ending
+script.rpy	2816	0	return	warhunger_ending
+script.rpy	2818	0	label harem_ending:	harem_ending
+script.rpy	2868	4	$ renpy.full_restart(config.game_main_transition)	harem_ending
+script.rpy	2869	0	return	harem_ending
+script.rpy	2871	0	label bad_ending:	bad_ending
+script.rpy	2910	4	$ renpy.full_restart(config.game_main_transition)	bad_ending
+script.rpy	2911	0	return	bad_ending

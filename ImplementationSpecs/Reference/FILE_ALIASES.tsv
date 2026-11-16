@@ -1,0 +1,3 @@
+id	source	physical	reason
+case-corridor	images/background/corridor.png	images/background/corridor.PNG	unique case-insensitive Windows match; images.rpy
+case-badend	images/background/badend.png	images/background/badend.PNG	unique case-insensitive Windows match; images.rpy

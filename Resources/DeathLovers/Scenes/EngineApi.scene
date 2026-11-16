@@ -3520,31 +3520,31 @@ use numeric depth: false
 								-v:x
 									-f:812
 								-v:y
-									-f:553.5
+									-f:345.5
 							-o:size
 								-v:x
-									-f:1744.14
+									-f:2207.58
 								-v:y
-									-f:1188.89
+									-f:939.309
 							-o:offsetMin
 								-v:x
-									-f:-60.0707
+									-f:-291.79
 								-v:y
-									-f:-40.9472
+									-f:-124.155
 							-o:offsetMax
 								-v:x
-									-f:1684.07
+									-f:1915.79
 								-v:y
-									-f:1147.95
+									-f:815.155
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.931117
+									-f:0.735647
 								-v:y
-									-f:0.931117
+									-f:0.735647
 								-v:z
-									-f:0.931117
+									-f:0.735647
 							-v:localPriority
 								-i:0

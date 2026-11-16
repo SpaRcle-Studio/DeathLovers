@@ -1,0 +1,874 @@
+{
+  "Root": {
+    "cases": [],
+    "scalers": [
+      {
+        "id": "match_1920_1080_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_1920_1080_0.5",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_1920_1080_1",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_1920_1080",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_1920_1080",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "match_1280_720_0",
+        "viewport": {
+          "x": 1280,
+          "y": 720
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_1280_720_0.5",
+        "viewport": {
+          "x": 1280,
+          "y": 720
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_1280_720_1",
+        "viewport": {
+          "x": 1280,
+          "y": 720
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_1280_720",
+        "viewport": {
+          "x": 1280,
+          "y": 720
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_1280_720",
+        "viewport": {
+          "x": 1280,
+          "y": 720
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "match_1366_768_0",
+        "viewport": {
+          "x": 1366,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_1366_768_0.5",
+        "viewport": {
+          "x": 1366,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_1366_768_1",
+        "viewport": {
+          "x": 1366,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_1366_768",
+        "viewport": {
+          "x": 1366,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_1366_768",
+        "viewport": {
+          "x": 1366,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "match_2560_1440_0",
+        "viewport": {
+          "x": 2560,
+          "y": 1440
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_2560_1440_0.5",
+        "viewport": {
+          "x": 2560,
+          "y": 1440
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_2560_1440_1",
+        "viewport": {
+          "x": 2560,
+          "y": 1440
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_2560_1440",
+        "viewport": {
+          "x": 2560,
+          "y": 1440
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_2560_1440",
+        "viewport": {
+          "x": 2560,
+          "y": 1440
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "match_1024_768_0",
+        "viewport": {
+          "x": 1024,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_1024_768_0.5",
+        "viewport": {
+          "x": 1024,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_1024_768_1",
+        "viewport": {
+          "x": 1024,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_1024_768",
+        "viewport": {
+          "x": 1024,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_1024_768",
+        "viewport": {
+          "x": 1024,
+          "y": 768
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "match_2560_1080_0",
+        "viewport": {
+          "x": 2560,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0
+        }
+      },
+      {
+        "id": "match_2560_1080_0.5",
+        "viewport": {
+          "x": 2560,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 0.5
+        }
+      },
+      {
+        "id": "match_2560_1080_1",
+        "viewport": {
+          "x": 2560,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "MatchWidthOrHeight",
+          "match": 1
+        }
+      },
+      {
+        "id": "Expand_2560_1080",
+        "viewport": {
+          "x": 2560,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Expand"
+        }
+      },
+      {
+        "id": "Shrink_2560_1080",
+        "viewport": {
+          "x": 2560,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ScaleWithScreenSize",
+          "referenceResolution": {
+            "x": 1920,
+            "y": 1080
+          },
+          "screenMatchMode": "Shrink"
+        }
+      },
+      {
+        "id": "physical_Inches_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 0,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Inches",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Inches_96",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Inches",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Inches_144",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 144,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Inches",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Inches_192",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 192,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Inches",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Centimeters_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 0,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Centimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Centimeters_96",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Centimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Centimeters_144",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 144,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Centimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Centimeters_192",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 192,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Centimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Millimeters_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 0,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Millimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Millimeters_96",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Millimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Millimeters_144",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 144,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Millimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Millimeters_192",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 192,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Millimeters",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Points_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 0,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Points",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Points_96",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Points",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Points_144",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 144,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Points",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Points_192",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 192,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Points",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Picas_0",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 0,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Picas",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Picas_96",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Picas",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Picas_144",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 144,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Picas",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "physical_Picas_192",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 192,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPhysicalSize",
+          "physicalUnit": "Picas",
+          "fallbackScreenDPI": 96,
+          "defaultSpriteDPI": 96
+        }
+      },
+      {
+        "id": "pixel_0.5",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPixelSize",
+          "scaleFactor": 0.5
+        }
+      },
+      {
+        "id": "pixel_1",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPixelSize",
+          "scaleFactor": 1
+        }
+      },
+      {
+        "id": "pixel_2",
+        "viewport": {
+          "x": 1920,
+          "y": 1080
+        },
+        "dpi": 96,
+        "config": {
+          "referencePixelsPerUnit": 100,
+          "scaleMode": "ConstantPixelSize",
+          "scaleFactor": 2
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,535 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "9574ed245ed15b69bd06b90df63cb64165a93244156ddda042d8f5d47b727308",
+  "status": "OFFLINE_TRACE_ONLY",
+  "runs": [
+    {
+      "id": "ending_01",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000025"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000028"
+        },
+        {
+          "commandId": "cmd_00001079",
+          "choiceId": "choice_00000030"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000004"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000009"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000022"
+        },
+        {
+          "commandId": "cmd_00000808",
+          "choiceId": "choice_00000023"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000048"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000050"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000054"
+        }
+      ],
+      "expectedLabel": "bad_ending",
+      "scoresPWH": [
+        1,
+        1,
+        0
+      ],
+      "screenshot": "ending_01_1920x1080.png"
+    },
+    {
+      "id": "ending_02",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000025"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000028"
+        },
+        {
+          "commandId": "cmd_00001079",
+          "choiceId": "choice_00000030"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000006"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000007"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000013"
+        },
+        {
+          "commandId": "cmd_00000693",
+          "choiceId": "choice_00000014"
+        },
+        {
+          "commandId": "cmd_00000725",
+          "choiceId": "choice_00000017"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000048"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000050"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000054"
+        }
+      ],
+      "expectedLabel": "plague_ending",
+      "scoresPWH": [
+        6,
+        1,
+        0
+      ],
+      "screenshot": "ending_02_1920x1080.png"
+    },
+    {
+      "id": "ending_03",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000027"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000032"
+        },
+        {
+          "commandId": "cmd_00001176",
+          "choiceId": "choice_00000033"
+        },
+        {
+          "commandId": "cmd_00001227",
+          "choiceId": "choice_00000043"
+        },
+        {
+          "commandId": "cmd_00001386",
+          "choiceId": "choice_00000045"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000004"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000009"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000022"
+        },
+        {
+          "commandId": "cmd_00000808",
+          "choiceId": "choice_00000023"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000048"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000050"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000054"
+        }
+      ],
+      "expectedLabel": "war_ending",
+      "scoresPWH": [
+        1,
+        5,
+        0
+      ],
+      "screenshot": "ending_03_1920x1080.png"
+    },
+    {
+      "id": "ending_04",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000025"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000028"
+        },
+        {
+          "commandId": "cmd_00001079",
+          "choiceId": "choice_00000030"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000004"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000009"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000022"
+        },
+        {
+          "commandId": "cmd_00000808",
+          "choiceId": "choice_00000023"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000047"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000051"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000053"
+        }
+      ],
+      "expectedLabel": "hunger_ending",
+      "scoresPWH": [
+        1,
+        1,
+        6
+      ],
+      "screenshot": "ending_04_1920x1080.png"
+    },
+    {
+      "id": "ending_05",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000027"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000032"
+        },
+        {
+          "commandId": "cmd_00001176",
+          "choiceId": "choice_00000033"
+        },
+        {
+          "commandId": "cmd_00001227",
+          "choiceId": "choice_00000043"
+        },
+        {
+          "commandId": "cmd_00001386",
+          "choiceId": "choice_00000045"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000006"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000007"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000013"
+        },
+        {
+          "commandId": "cmd_00000693",
+          "choiceId": "choice_00000014"
+        },
+        {
+          "commandId": "cmd_00000725",
+          "choiceId": "choice_00000017"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000048"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000050"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000054"
+        }
+      ],
+      "expectedLabel": "plaguewar_ending",
+      "scoresPWH": [
+        6,
+        5,
+        0
+      ],
+      "screenshot": "ending_05_1920x1080.png"
+    },
+    {
+      "id": "ending_06",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000025"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000028"
+        },
+        {
+          "commandId": "cmd_00001079",
+          "choiceId": "choice_00000030"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000006"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000007"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000013"
+        },
+        {
+          "commandId": "cmd_00000693",
+          "choiceId": "choice_00000014"
+        },
+        {
+          "commandId": "cmd_00000725",
+          "choiceId": "choice_00000017"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000047"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000051"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000053"
+        }
+      ],
+      "expectedLabel": "plaguehunger_ending",
+      "scoresPWH": [
+        6,
+        1,
+        6
+      ],
+      "screenshot": "ending_06_1920x1080.png"
+    },
+    {
+      "id": "ending_07",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000027"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000032"
+        },
+        {
+          "commandId": "cmd_00001176",
+          "choiceId": "choice_00000033"
+        },
+        {
+          "commandId": "cmd_00001227",
+          "choiceId": "choice_00000043"
+        },
+        {
+          "commandId": "cmd_00001386",
+          "choiceId": "choice_00000045"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000004"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000009"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000022"
+        },
+        {
+          "commandId": "cmd_00000808",
+          "choiceId": "choice_00000023"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000047"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000051"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000053"
+        }
+      ],
+      "expectedLabel": "warhunger_ending",
+      "scoresPWH": [
+        1,
+        5,
+        6
+      ],
+      "screenshot": "ending_07_1920x1080.png"
+    },
+    {
+      "id": "ending_08",
+      "choices": [
+        {
+          "commandId": "cmd_00000170",
+          "choiceId": "choice_00000003"
+        },
+        {
+          "commandId": "cmd_00000928",
+          "choiceId": "choice_00000027"
+        },
+        {
+          "commandId": "cmd_00001046",
+          "choiceId": "choice_00000032"
+        },
+        {
+          "commandId": "cmd_00001176",
+          "choiceId": "choice_00000033"
+        },
+        {
+          "commandId": "cmd_00001227",
+          "choiceId": "choice_00000043"
+        },
+        {
+          "commandId": "cmd_00001386",
+          "choiceId": "choice_00000045"
+        },
+        {
+          "commandId": "cmd_00000337",
+          "choiceId": "choice_00000006"
+        },
+        {
+          "commandId": "cmd_00000458",
+          "choiceId": "choice_00000007"
+        },
+        {
+          "commandId": "cmd_00000586",
+          "choiceId": "choice_00000010"
+        },
+        {
+          "commandId": "cmd_00000663",
+          "choiceId": "choice_00000013"
+        },
+        {
+          "commandId": "cmd_00000693",
+          "choiceId": "choice_00000014"
+        },
+        {
+          "commandId": "cmd_00000725",
+          "choiceId": "choice_00000017"
+        },
+        {
+          "commandId": "cmd_00001502",
+          "choiceId": "choice_00000047"
+        },
+        {
+          "commandId": "cmd_00001655",
+          "choiceId": "choice_00000051"
+        },
+        {
+          "commandId": "cmd_00001753",
+          "choiceId": "choice_00000053"
+        }
+      ],
+      "expectedLabel": "harem_ending",
+      "scoresPWH": [
+        6,
+        5,
+        6
+      ],
+      "screenshot": "ending_08_1920x1080.png"
+    }
+  ]
+}

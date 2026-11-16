@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "layoutCases": 512,
+  "scalerCases": 53,
+  "scalerOracle": "source-derived, not Unity runtime measurements",
+  "errors": []
+}

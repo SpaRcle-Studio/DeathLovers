@@ -1,0 +1,2 @@
+id	source	target	format	usage
+DejaVuSans.ttf	C:/Work/Programs/RenPy/renpy-8.4.1-sdk/renpy/common/DejaVuSans.ttf	Resources/DeathLovers/Fonts/DejaVuSans.ttf or native triangle UI	ttf	screens.rpy:1322 skip triangle; SDK asset, excluded from 193 game files; preserve font license if copied

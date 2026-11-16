@@ -1,0 +1,172 @@
+file	line	character	state	image	status
+script.rpy	400	ch_p	normal	plague normal	resolved
+script.rpy	406	ch_p	cinema	plague cinema	resolved
+script.rpy	408	ch_p	normal sig	plague normalsig	resolved
+script.rpy	499	ch_p	happy sig	plague happysig	resolved
+script.rpy	513	ch_p	normal sig	plague normalsig	resolved
+script.rpy	519	ch_p	serious sig	plague serioussig	resolved
+script.rpy	549	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	564	ch_p	normal sig	plague normalsig	resolved
+script.rpy	572	ch_p	serious sig	plague serioussig	resolved
+script.rpy	580	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	593	ch_p	normal sig	plague normalsig	resolved
+script.rpy	619	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	621	ch_p	normal sig	plague normalsig	resolved
+script.rpy	623	ch_p	normal	plague normal	resolved
+script.rpy	626	ch_p	serious	plague serious	resolved
+script.rpy	633	ch_p	normal	plague normal	resolved
+script.rpy	654	ch_p	serious	plague serious	resolved
+script.rpy	670	ch_p	normal	plague normal	resolved
+script.rpy	693	ch_p	happy	plague happy	resolved
+script.rpy	722	ch_p	cinema	plague cinema	resolved
+script.rpy	735	ch_p	normal	plague normal	resolved
+script.rpy	754	ch_p	happy	plague happy	resolved
+script.rpy	766	ch_p	serious	plague serious	resolved
+script.rpy	793	ch_p	happy	plague happy	resolved
+script.rpy	802	ch_p	serious	plague serious	resolved
+script.rpy	810	ch_p	normal	plague normal	resolved
+script.rpy	812	ch_p	sad sig	plague sadsig	resolved
+script.rpy	814	ch_p	sad sig	plague sadsig	resolved
+script.rpy	826	ch_p	normal sig	plague normalsig	resolved
+script.rpy	835	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	846	ch_p	serious sig	plague serioussig	resolved
+script.rpy	854	ch_p	normal sig	plague normalsig	resolved
+script.rpy	860	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	869	ch_p	happy sig	plague happysig	resolved
+script.rpy	873	ch_p	normal sig	plague normalsig	resolved
+script.rpy	892	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	899	ch_p	normal sig	plague normalsig	resolved
+script.rpy	903	ch_p	happy sig	plague happysig	resolved
+script.rpy	916	ch_p	cinema sig	plague cinemasig	resolved
+script.rpy	918	ch_p	normal sig	plague normalsig	resolved
+script.rpy	924	ch_p	happy sig	plague happysig	resolved
+script.rpy	935	ch_p	normal sig	plague normalsig	resolved
+script.rpy	944	ch_p	nervous	plague nervous	resolved
+script.rpy	957	ch_p	happy	plague happy	resolved
+script.rpy	974	ch_p	normal sig	plague normalsig	resolved
+script.rpy	987	ch_p	happy sig	plague happysig	resolved
+script.rpy	994	ch_p	normal sig	plague normalsig	resolved
+script.rpy	1007	ch_p	happy sig	plague happysig	resolved
+script.rpy	1008	ch_p	hidden	empty	resolved
+script.rpy	1037	ch_p	sad sig	plague sadsig	resolved
+script.rpy	1042	ch_p	serious sig	plague serioussig	resolved
+script.rpy	1049	ch_p	hidden	empty	resolved
+script.rpy	1078	ch_p	serious sig	plague serioussig	resolved
+script.rpy	1091	ch_p	happy sig	plague happysig	resolved
+script.rpy	1100	ch_p	normal sig	plague normalsig	resolved
+script.rpy	1105	ch_p	hidden	empty	resolved
+script.rpy	1109	ch_p	sad sig	plague sadsig	resolved
+script.rpy	1119	ch_p	hidden	empty	resolved
+script.rpy	1125	ch_p	hidden	empty	resolved
+script.rpy	1224	ch_w	back	war back	resolved
+script.rpy	1230	ch_w	stare	war stare	resolved
+script.rpy	1237	ch_w	headsup	war headsup	resolved
+script.rpy	1272	ch_w	normal	war normal	resolved
+script.rpy	1278	ch_w	headsup	war headsup	resolved
+script.rpy	1292	ch_w	normal	war normal	resolved
+script.rpy	1296	ch_w	headsup	war headsup	resolved
+script.rpy	1307	ch_w	point	war point	resolved
+script.rpy	1314	ch_w	point angry	war point angry	resolved
+script.rpy	1316	ch_w	stare	war stare	resolved
+script.rpy	1322	ch_w	point angry	war point angry	resolved
+script.rpy	1332	ch_w	stare	war stare	resolved
+script.rpy	1337	ch_w	normal	war normal	resolved
+script.rpy	1347	ch_w	point	war point	resolved
+script.rpy	1353	ch_w	point angry	war point angry	resolved
+script.rpy	1355	ch_w	normal	war normal	resolved
+script.rpy	1363	ch_w	normal	war normal	resolved
+script.rpy	1367	ch_w	stare	war stare	resolved
+script.rpy	1383	ch_w	normal	war normal	resolved
+script.rpy	1393	ch_w	stare	war stare	resolved
+script.rpy	1396	ch_w	normal	war normal	resolved
+script.rpy	1398	ch_w	point	war point	resolved
+script.rpy	1400	ch_w	point angry	war point angry	resolved
+script.rpy	1404	ch_w	headsup	war headsup	resolved
+script.rpy	1418	ch_w	normal	war normal	resolved
+script.rpy	1422	ch_w	point	war point	resolved
+script.rpy	1427	ch_w	normal	war normal	resolved
+script.rpy	1432	ch_w	headsup	war headsup	resolved
+script.rpy	1446	ch_w	stare	war stare	resolved
+script.rpy	1463	ch_w	hidden	empty	resolved
+script.rpy	1496	ch_w	headsup	war headsup	resolved
+script.rpy	1510	ch_w	point	war point	resolved
+script.rpy	1515	ch_w	normal	war normal	resolved
+script.rpy	1519	ch_w	point	war point	resolved
+script.rpy	1521	ch_w	headsup	war headsup	resolved
+script.rpy	1529	ch_w	stare	war stare	resolved
+script.rpy	1539	ch_w	point	war point	resolved
+script.rpy	1550	ch_w	normal	war normal	resolved
+script.rpy	1561	ch_w	stare	war stare	resolved
+script.rpy	1575	ch_w	normal	war normal	resolved
+script.rpy	1580	ch_w	point	war point	resolved
+script.rpy	1583	ch_w	point angry	war point angry	resolved
+script.rpy	1596	ch_w	headsup	war headsup	resolved
+script.rpy	1611	ch_w	headsup	war headsup	resolved
+script.rpy	1614	ch_w	point	war point	resolved
+script.rpy	1634	ch_w	headsup	war headsup	resolved
+script.rpy	1637	ch_w	point	war point	resolved
+script.rpy	1644	ch_w	point angry	war point angry	resolved
+script.rpy	1654	ch_w	point	war point	resolved
+script.rpy	1659	ch_w	point angry	war point angry	resolved
+script.rpy	1671	ch_w	stare	war stare	resolved
+script.rpy	1682	ch_w	point angry	war point angry	resolved
+script.rpy	1690	ch_w	hidden	empty	resolved
+script.rpy	1734	ch_w	stare	war stare	resolved
+script.rpy	1754	ch_w	point	war point	resolved
+script.rpy	1760	ch_w	point angry	war point angry	resolved
+script.rpy	1767	ch_w	hidden	empty	resolved
+script.rpy	1794	ch_w	hidden	empty	resolved
+script.rpy	1829	ch_w	stare	war stare	resolved
+script.rpy	1837	ch_w	point	war point	resolved
+script.rpy	1843	ch_w	point angry	war point angry	resolved
+script.rpy	1853	ch_w	hidden	empty	resolved
+script.rpy	1863	ch_w	hidden	empty	resolved
+script.rpy	1874	ch_w	hidden	empty	resolved
+script.rpy	1951	ch_h	normal	hunger normal	resolved
+script.rpy	1997	ch_h	laughing nervous	hunger laughing nervous	resolved
+script.rpy	1999	ch_h	laughing nervous shy	hunger laughing nervous shy	resolved
+script.rpy	2014	ch_h	normal shy	hunger normal shy	resolved
+script.rpy	2023	ch_h	laughing nervous	hunger laughing nervous	resolved
+script.rpy	2031	ch_h	normal	hunger normal	resolved
+script.rpy	2043	ch_h	dissapointed	hunger dissapointed	resolved
+script.rpy	2045	ch_h	normal shy	hunger normal shy	resolved
+script.rpy	2059	ch_h	laughing	hunger laughing	resolved
+script.rpy	2065	ch_h	normal	hunger normal	resolved
+script.rpy	2081	ch_h	fear	hunger fear	resolved
+script.rpy	2090	ch_h	dissapointed	hunger dissapointed	resolved
+script.rpy	2112	ch_h	laughing nervous	hunger laughing nervous	resolved
+script.rpy	2126	ch_h	laughing	hunger laughing	resolved
+script.rpy	2133	ch_h	normal	hunger normal	resolved
+script.rpy	2153	ch_h	laughing	hunger laughing	resolved
+script.rpy	2165	ch_h	normal	hunger normal	resolved
+script.rpy	2169	ch_h	laughing	hunger laughing	resolved
+script.rpy	2175	ch_h	normal	hunger normal	resolved
+script.rpy	2203	ch_h	dissapointed	hunger dissapointed	resolved
+script.rpy	2205	ch_h	normal	hunger normal	resolved
+script.rpy	2210	ch_h	fear	hunger fear	resolved
+script.rpy	2215	ch_h	dissapointed	hunger dissapointed	resolved
+script.rpy	2219	ch_h	normal	hunger normal	resolved
+script.rpy	2231	ch_h	normal shy	hunger normal shy	resolved
+script.rpy	2243	ch_h	laughing nervous shy	hunger laughing nervous shy	resolved
+script.rpy	2255	ch_h	normal	hunger normal	resolved
+script.rpy	2271	ch_h	angry	hunger angry	resolved
+script.rpy	2279	ch_h	laughing nervous	hunger laughing nervous	resolved
+script.rpy	2294	ch_h	laughing	hunger laughing	resolved
+script.rpy	2309	ch_h	normal	hunger normal	resolved
+script.rpy	2332	ch_h	normal shy	hunger normal shy	resolved
+script.rpy	2353	ch_h	normal	hunger normal	resolved
+script.rpy	2375	ch_h	fear shy	hunger fear shy	resolved
+script.rpy	2377	ch_h	normal	hunger normal	resolved
+script.rpy	2394	ch_h	laughing	hunger laughing	resolved
+script.rpy	2401	ch_h	normal	hunger normal	resolved
+script.rpy	2408	ch_h	laughing	hunger laughing	resolved
+script.rpy	2419	ch_h	hidden	empty	resolved
+script.rpy	2437	ch_h	laughing	hunger laughing	resolved
+script.rpy	2442	ch_h	normal	hunger normal	resolved
+script.rpy	2456	ch_h	laughing	hunger laughing	resolved
+script.rpy	2458	ch_h	laughing nervous shy	hunger laughing nervous shy	resolved
+script.rpy	2466	ch_h	normal shy	hunger normal shy	resolved
+script.rpy	2481	ch_h	hidden	empty	resolved
+script.rpy	2490	ch_h	angry	hunger angry	resolved
+script.rpy	2504	ch_h	dissapointed	hunger dissapointed	resolved
+script.rpy	2514	ch_h	hidden	empty	resolved

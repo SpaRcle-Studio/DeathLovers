@@ -1,0 +1,57 @@
+id	source	file	line
+alice blush	images/alice/blush.png	images.rpy	1
+alice doubt	images/alice/doubt.png	images.rpy	2
+alice embarrassed	images/alice/embarrassed.png	images.rpy	3
+alice happy	images/alice/happy.png	images.rpy	4
+alice idle	images/alice/idle.png	images.rpy	5
+alice teasing	images/alice/teasing.png	images.rpy	6
+alice worried	images/alice/worried.png	images.rpy	7
+hunger normal	images/hunger/normal.png	images.rpy	9
+hunger normal shy	images/hunger/normal_shy.png	images.rpy	10
+hunger angry	images/hunger/angry.png	images.rpy	11
+hunger dissapointed	images/hunger/dissapointed.png	images.rpy	12
+hunger fear	images/hunger/fear.png	images.rpy	13
+hunger fear shy	images/hunger/fear_shy.png	images.rpy	14
+hunger laughing	images/hunger/laughing.png	images.rpy	15
+hunger laughing nervous	images/hunger/laughing_nervous.png	images.rpy	16
+hunger laughing nervous shy	images/hunger/laughing_nervous_shy.png	images.rpy	17
+hunger empty	images/empty.png	images.rpy	18
+war back	images/war/war_back.png	images.rpy	20
+war headsup	images/war/war_headsup.png	images.rpy	21
+war normal	images/war/war_normal.png	images.rpy	22
+war point	images/war/war_point.png	images.rpy	23
+war point angry	images/war/war_pointangry.png	images.rpy	24
+war stare	images/war/war_stare.png	images.rpy	25
+war empty	images/empty.png	images.rpy	26
+plague normal	images/plague/conq_normal.png	images.rpy	28
+plague normalsig	images/plague/conq_normalsig.png	images.rpy	29
+plague cinema	images/plague/conq_cinema.png	images.rpy	30
+plague cinemasig	images/plague/conq_cinemasig.png	images.rpy	31
+plague happy	images/plague/conq_happy.png	images.rpy	32
+plague happysig	images/plague/conq_happysig.png	images.rpy	33
+plague nervous	images/plague/conq_nervous.png	images.rpy	34
+plague nervoussig	images/plague/conq_nervoussig.png	images.rpy	35
+plague serious	images/plague/conq_serious.png	images.rpy	36
+plague serioussig	images/plague/conq_serioussig.png	images.rpy	37
+plague sad	images/plague/conq_sad.png	images.rpy	38
+plague sadsig	images/plague/conq_sadsig.png	images.rpy	39
+plague empty	images/empty.png	images.rpy	40
+bg city	images/background/city.png	images.rpy	43
+bg office	images/background/office.png	images.rpy	44
+bg darkness	images/background/darkness.png	images.rpy	45
+bg god	images/background/god.png	images.rpy	46
+bg cgall	images/background/cgall.png	images.rpy	47
+bg gate	images/background/gate.png	images.rpy	48
+bg diner	images/background/diner.png	images.rpy	49
+bg waroff	images/background/waroff.png	images.rpy	50
+bg dumpster	images/background/dumpster.png	images.rpy	51
+bg gpt	images/background/gpt.png	images.rpy	52
+bg corridor	images/background/corridor.png	images.rpy	53
+bg hungerend	images/background/hungerend.png	images.rpy	55
+bg warend	images/background/warend.png	images.rpy	56
+bg plagueend	images/background/plagueend.png	images.rpy	57
+bg warhungerend	images/background/warhungerend.png	images.rpy	58
+bg warplagueend	images/background/warplagueend.png	images.rpy	59
+bg plaguehunger	images/background/plaguehungerend.png	images.rpy	60
+bg allend	images/background/allend.png	images.rpy	61
+bg badend	images/background/badend.png	images.rpy	62

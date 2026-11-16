@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "entryLabel": "start",
+  "sourceFiles": ["script.rpy"],
+  "referenceFiles": ["SOURCE_FILES.tsv", "SOURCE_REVISIONS.md", "ASSET_MANIFEST.tsv", "SCENE_REFERENCES.tsv", "FILE_ALIASES.tsv", "IMAGE_DEFINITIONS.tsv", "VARIABLES.md", "DEFECTS.md"],
+  "excludedSourceFiles": {
+    "audio.rpy": "Audio/typewriter implementation is reimplemented in AS at stage 05; resource registry retained.",
+    "characters.rpy": "Presentation declarations become character registry; nvl_text_label is internal NVL implementation, not story.",
+    "character_data.py": "Controller implementation is reimplemented in AS; never host-executed.",
+    "debug.rpy": "Unreachable development entry; excluded from release story.",
+    "gui.rpy": "GUI constants are Reference/UI_REFERENCE and stage 08 input.",
+    "images.rpy": "Image declarations are resolved through Reference registry.",
+    "options.rpy": "Startup/profile configuration belongs to stage 08; splash behavior remains D008.",
+    "parallax.renpy": "Empty source file.",
+    "screens.rpy": "UI definitions belong to AS stage 08, not story commands.",
+    "shaders.rpy": "Text effect implementations are presentation input for stage 05; not story statements."
+  },
+  "builtins": ["builtin:black"],
+  "scenes": {},
+  "unreachable": {
+    "cmd_00000180": "script.rpy:286: location calls chain into the ending and full_restart, so control never resumes in the start continuation.",
+    "cmd_00000181": "script.rpy:287: guarded jump in the unreachable start continuation after chained location calls.",
+    "cmd_00000182": "script.rpy:289: return after the unreachable start continuation.",
+    "cmd_00000815": "script.rpy:1142: landfill paths call the next unvisited location or jump to ending; no path returns here.",
+    "cmd_00001393": "script.rpy:1899: office navigation calls the next unvisited location; third visit jumps to ending.",
+    "cmd_00001394": "script.rpy:1901: redundant office return after terminating branches/navigation.",
+    "cmd_00001395": "script.rpy:1902: redundant final office return after terminating branches/navigation.",
+    "cmd_00001885": "script.rpy:2570: canteen navigates onward or jumps to ending on third visit.",
+    "cmd_00001939": "script.rpy:2642: return after unconditional full_restart in plague ending.",
+    "cmd_00001968": "script.rpy:2678: return after unconditional full_restart in war ending.",
+    "cmd_00001993": "script.rpy:2710: return after unconditional full_restart in hunger ending.",
+    "cmd_00002018": "script.rpy:2742: return after unconditional full_restart in plague-war ending.",
+    "cmd_00002048": "script.rpy:2777: return after unconditional full_restart in plague-hunger ending.",
+    "cmd_00002083": "script.rpy:2819: return after unconditional full_restart in war-hunger ending.",
+    "cmd_00002129": "script.rpy:2872: return after unconditional full_restart in harem ending.",
+    "cmd_00002158": "script.rpy:2914: return after unconditional full_restart in bad ending."
+  },
+  "characters": {
+    "ch_narrator": {"states": []},
+    "ch_oth": {"states": []},
+    "ch_news": {"states": []},
+    "ch_r": {"states": []},
+    "ch_death": {"states": []},
+    "ch_god": {"states": []},
+    "nvl_narrator": {"states": []},
+    "ch_p": {"states": ["normal", "normal sig", "cinema", "cinema sig", "happy", "happy sig", "nervous", "nervous sig", "serious", "serious sig", "sad", "sad sig", "hidden"]},
+    "ch_w": {"states": ["normal", "back", "headsup", "point", "point angry", "stare", "hidden"]},
+    "ch_h": {"states": ["normal", "normal shy", "angry", "dissapointed", "fear", "fear shy", "laughing", "laughing nervous", "laughing nervous shy", "hidden"]}
+  }
+}

@@ -1,0 +1,272 @@
+{
+	"Root": {
+		"scalers": [
+			{
+				"id": "match_1920_1080_0",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1920_1080_0.5",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1920_1080_1",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_1920_1080",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_1920_1080",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1280_720_0",
+				"scaleFactor": 0.666666687,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1280_720_0.5",
+				"scaleFactor": 0.666666687,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1280_720_1",
+				"scaleFactor": 0.666666687,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_1280_720",
+				"scaleFactor": 0.666666687,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_1280_720",
+				"scaleFactor": 0.666666687,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1366_768_0",
+				"scaleFactor": 0.711458325,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1366_768_0.5",
+				"scaleFactor": 0.711284697,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1366_768_1",
+				"scaleFactor": 0.711111128,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_1366_768",
+				"scaleFactor": 0.711111128,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_1366_768",
+				"scaleFactor": 0.711458325,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1440_0",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1440_0.5",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1440_1",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_2560_1440",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_2560_1440",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1024_768_0",
+				"scaleFactor": 0.533333361,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1024_768_0.5",
+				"scaleFactor": 0.615840316,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_1024_768_1",
+				"scaleFactor": 0.711111128,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_1024_768",
+				"scaleFactor": 0.533333361,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_1024_768",
+				"scaleFactor": 0.711111128,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1080_0",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1080_0.5",
+				"scaleFactor": 1.15470052,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "match_2560_1080_1",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Expand_2560_1080",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "Shrink_2560_1080",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "physical_Inches_0",
+				"scaleFactor": 96.0,
+				"referencePixelsPerUnit": 1.04166663
+			},
+			{
+				"id": "physical_Inches_96",
+				"scaleFactor": 96.0,
+				"referencePixelsPerUnit": 1.04166663
+			},
+			{
+				"id": "physical_Inches_144",
+				"scaleFactor": 144.0,
+				"referencePixelsPerUnit": 1.04166663
+			},
+			{
+				"id": "physical_Inches_192",
+				"scaleFactor": 192.0,
+				"referencePixelsPerUnit": 1.04166663
+			},
+			{
+				"id": "physical_Centimeters_0",
+				"scaleFactor": 37.7952766,
+				"referencePixelsPerUnit": 2.64583325
+			},
+			{
+				"id": "physical_Centimeters_96",
+				"scaleFactor": 37.7952766,
+				"referencePixelsPerUnit": 2.64583325
+			},
+			{
+				"id": "physical_Centimeters_144",
+				"scaleFactor": 56.6929131,
+				"referencePixelsPerUnit": 2.64583325
+			},
+			{
+				"id": "physical_Centimeters_192",
+				"scaleFactor": 75.5905533,
+				"referencePixelsPerUnit": 2.64583325
+			},
+			{
+				"id": "physical_Millimeters_0",
+				"scaleFactor": 3.77952766,
+				"referencePixelsPerUnit": 26.458334
+			},
+			{
+				"id": "physical_Millimeters_96",
+				"scaleFactor": 3.77952766,
+				"referencePixelsPerUnit": 26.458334
+			},
+			{
+				"id": "physical_Millimeters_144",
+				"scaleFactor": 5.6692915,
+				"referencePixelsPerUnit": 26.458334
+			},
+			{
+				"id": "physical_Millimeters_192",
+				"scaleFactor": 7.55905533,
+				"referencePixelsPerUnit": 26.458334
+			},
+			{
+				"id": "physical_Points_0",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 75.0
+			},
+			{
+				"id": "physical_Points_96",
+				"scaleFactor": 1.33333337,
+				"referencePixelsPerUnit": 75.0
+			},
+			{
+				"id": "physical_Points_144",
+				"scaleFactor": 2.0,
+				"referencePixelsPerUnit": 75.0
+			},
+			{
+				"id": "physical_Points_192",
+				"scaleFactor": 2.66666675,
+				"referencePixelsPerUnit": 75.0
+			},
+			{
+				"id": "physical_Picas_0",
+				"scaleFactor": 16.0,
+				"referencePixelsPerUnit": 6.25
+			},
+			{
+				"id": "physical_Picas_96",
+				"scaleFactor": 16.0,
+				"referencePixelsPerUnit": 6.25
+			},
+			{
+				"id": "physical_Picas_144",
+				"scaleFactor": 24.0,
+				"referencePixelsPerUnit": 6.25
+			},
+			{
+				"id": "physical_Picas_192",
+				"scaleFactor": 32.0,
+				"referencePixelsPerUnit": 6.25
+			},
+			{
+				"id": "pixel_0.5",
+				"scaleFactor": 0.5,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "pixel_1",
+				"scaleFactor": 1.0,
+				"referencePixelsPerUnit": 100.0
+			},
+			{
+				"id": "pixel_2",
+				"scaleFactor": 2.0,
+				"referencePixelsPerUnit": 100.0
+			}
+		],
+		"cases": []
+	}
+}
