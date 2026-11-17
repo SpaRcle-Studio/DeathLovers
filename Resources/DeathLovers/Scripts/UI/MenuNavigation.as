@@ -23,6 +23,11 @@ class MenuNavigation : ScriptBehaviour
     GameObject@ transitionBlocker;
     GameObject@ submenu;
     GameObject@ modal;
+    GameObject@ quickMenu;
+    GameObject@ readingHistory;
+    GameObject@ mainMenuButton;
+    UIButton@ rollbackButton;
+    bool pendingMainMenu = false;
     UIButton@ submenuOrigin;
     UIButton@ modalOrigin;
     AudioSource@ music;
@@ -77,6 +82,21 @@ class MenuNavigation : ScriptBehaviour
         sessionStart.SetEnabled(false);
         confirm.SetEnabled(false);
         notify.SetEnabled(false);
+        @quickMenu = Child(novel, "QuickMenu");
+        @readingHistory = Child(novel, "ReadingHistory");
+        @mainMenuButton = Child(Child(main, "Navigation"), "ReturnMainMenu");
+        quickMenu.SetEnabled(false);
+        readingHistory.SetEnabled(false);
+        mainMenuButton.SetEnabled(false);
+        @rollbackButton = Button(quickMenu, "Rollback");
+        Button(quickMenu, "Save").SetInteractable(false);
+        Button(quickMenu, "QuickSave").SetInteractable(false);
+        Button(quickMenu, "QuickLoad").SetInteractable(false);
+        cast<Sprite@>(Child(readingHistory, "Backdrop").GetComponent("Sprite")).SetMaterial("DeathLovers/Materials/RuntimeBlack.mat");
+        GameObject@ historyViewport = Child(readingHistory, "Viewport");
+        UIScrollRect@ historyScroll = cast<UIScrollRect@>(historyViewport.GetComponent("UIScrollRect"));
+        historyScroll.SetViewport(historyViewport);
+        historyScroll.SetContent(Child(historyViewport, "Content"));
         @music = cast<AudioSource@>(Child(gameObject, "MenuMusic").GetComponent("AudioSource"));
         music.SetSpatialize(SpatializeMode::Off);
         music.SetPitch(1.0f);
@@ -197,6 +217,7 @@ class MenuNavigation : ScriptBehaviour
             modal.SetEnabled(false);
             @modal = null;
             pendingQuit = false;
+            pendingMainMenu = false;
             if (modalOrigin !is null)
             {
                 modalOrigin.Focus();
@@ -238,6 +259,8 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         @modalOrigin = origin;
+        pendingMainMenu = false;
+        Text(Child(confirm, "Content"), "Message", "Выйти из игры?");
         @modal = confirm;
         pendingQuit = true;
         confirm.SetEnabled(true);
@@ -289,6 +312,12 @@ class MenuNavigation : ScriptBehaviour
 
     void ConfirmYes()
     {
+        if (CanNavigate() && pendingMainMenu && modal is confirm)
+        {
+            pendingMainMenu = false;
+            ReturnToMainMenu();
+            return;
+        }
         if (CanNavigate() && pendingQuit && modal is confirm)
         {
             ApplicationManager::Instance().GetApplication().GetEngine().RequestQuit();
@@ -438,8 +467,111 @@ class MenuNavigation : ScriptBehaviour
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(true);
     }
 
+    void RollbackStory()
+    {
+        runtime.Rollback();
+    }
+
+    void ToggleSkip()
+    {
+        runtime.skipEnabled = !runtime.skipEnabled;
+        runtime.autoEnabled = false;
+    }
+
+    void ToggleAuto()
+    {
+        runtime.autoEnabled = !runtime.autoEnabled;
+        runtime.skipEnabled = false;
+        runtime.autoDelay = 0;
+    }
+
+    void UnavailableSave()
+    {
+        ShowNotify("Сохранения пока недоступны.", Button(quickMenu, "Save"));
+    }
+
+    void ReadingOptions()
+    {
+        ToggleGameMenu();
+        inputBarrier = 0;
+        OpenPreferences();
+    }
+
+    void OpenHistory()
+    {
+        if (!inGame || modal !is null || !CanNavigate())
+        {
+            return;
+        }
+        runtime.skipEnabled = false;
+        runtime.autoEnabled = false;
+        String content;
+        JsonValue@ entries = runtime.state.Get("history");
+        for (uint i = 0; i < entries.GetCount(); ++i)
+        {
+            JsonValue@ entry = entries.At(i);
+            DialogueProgram line;
+            line.Compile(entry.Get("text").GetString(), false);
+            String name = runtime.speakers.Get(entry.Get("speakerId").GetString()).Get("name").GetString();
+            content = content + (name == "" ? "" : name + ":\n") + line.plain + "\n\n";
+        }
+        GameObject@ viewport = Child(readingHistory, "Viewport");
+        GameObject@ body = Child(viewport, "Content");
+        TextMesh@ text = cast<TextMesh@>(body.GetComponent("TextMesh"));
+        text.horizontalAlignment = TextAlignmentHorizontal::Left;
+        text.verticalAlignment = TextAlignmentVertical::Top;
+        text.SetMaterial("DeathLovers/Materials/RuntimeText.mat");
+        text.SetText(content);
+        readingHistory.SetEnabled(true);
+        float height = text.GetTextBounds().h + 60;
+        cast<TransformRect@>(body.GetTransform()).SetSize(runtime.view.Vec(1200, height > 850 ? height : 850));
+        cast<UIScrollRect@>(viewport.GetComponent("UIScrollRect")).SetNormalizedPosition(runtime.view.Vec(0, 1));
+        @modal = readingHistory;
+        Button(readingHistory, "Back").Focus();
+        inputBarrier = 0.1f;
+    }
+
+    void CloseHistory()
+    {
+        readingHistory.SetEnabled(false);
+        @modal = null;
+        inputBarrier = 0.1f;
+        runtime.inputBarrier = 0.1f;
+        runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");
+    }
+
+    void RequestMainMenu()
+    {
+        if (!inGame || modal !is null || !CanNavigate())
+        {
+            return;
+        }
+        pendingMainMenu = true;
+        pendingQuit = false;
+        @modalOrigin = gameMenuOpen ? cast<UIButton@>(mainMenuButton.GetComponent("UIButton")) : Button(quickMenu, "MainMenu");
+        Text(Child(confirm, "Content"), "Message", "Вернуться в главное меню? Несохранённый прогресс будет потерян.");
+        @modal = confirm;
+        confirm.SetEnabled(true);
+        Button(Child(confirm, "Content"), "No").Focus();
+        inputBarrier = 0.1f;
+    }
+
     void Update(float dt)
     {
+        quickMenu.SetEnabled(inGame && !gameMenuOpen && modal is null);
+        mainMenuButton.SetEnabled(inGame);
+        if (runtime !is null && runtime.state !is null)
+        {
+            rollbackButton.SetInteractable(runtime.CanRollback());
+        }
+        MenuSession::skipActive = inGame && !gameMenuOpen && modal is null && runtime !is null &&
+            (runtime.skipEnabled || Input::Instance().GetKey(KeyCode::LCtrl) || Input::Instance().GetKey(KeyCode::RCtrl));
+        MenuSession::autoActive = inGame && runtime !is null && runtime.autoEnabled;
+        if (modal is readingHistory && CanNavigate() && Input::Instance().GetKeyDown(KeyCode::Escape))
+        {
+            CloseHistory();
+            return;
+        }
         if (fadingScreen !is null)
         {
             fadeTime += dt;
@@ -519,6 +651,8 @@ class MenuNavigation : ScriptBehaviour
 
     void AdvanceStory()
     {
+        runtime.skipEnabled = false;
+        runtime.autoEnabled = false;
         runtime.Advance();
     }
 

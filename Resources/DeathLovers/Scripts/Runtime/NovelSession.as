@@ -27,6 +27,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     String startupError = "Не удалось создать интерфейс новеллы. Подробности в журнале движка.";
     float inputBarrier = 0;
     bool wasPaused = false;
+    bool skipEnabled = false;
+    bool autoEnabled = false;
+    float autoDelay = 0;
+    float skipDelay = 0;
+    uint rollbackCount = 0;
+    String rollbackLastCommand;
 
     void Configure(MenuNavigation@ navigation, Component@ receiver)
     {
@@ -96,6 +102,11 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool NewGame()
     {
+        skipEnabled = false;
+        autoEnabled = false;
+        autoDelay = 0;
+        rollbackCount = 0;
+        rollbackLastCommand = "";
         @commands = story.Get("commands");
         if (story.Get("schemaVersion").GetInt() != 1 || !commands.Has(story.Get("entryCommandId").GetString()))
         {
@@ -159,7 +170,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool Paused()
     {
-        return !menu.inGame || menu.gameMenuOpen || !Input::Instance().IsAppFocused();
+        return !menu.inGame || menu.gameMenuOpen || menu.modal !is null || !Input::Instance().IsAppFocused();
     }
 
     JsonValue@ Command()
@@ -384,6 +395,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         state.Set("presentation", p);
         Phase("WaitingText");
         view.Dialogue(p, program, speakers.Get(speakerId));
+        autoDelay = 0;
+        RememberInteraction();
     }
 
     void Character(JsonValue@ command)
@@ -502,6 +515,11 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             p.Set("choices", options);
             state.Set("presentation", p);
             Phase("WaitingChoice");
+            RememberInteraction();
+            if (!MenuSession::profile.settings.skip_after_choices)
+            {
+                skipEnabled = false;
+            }
             view.Choices(options, true);
             inputBarrier = 0.1f;
             return;
@@ -560,6 +578,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         else if (type == "RollbackBarrier")
         {
+            rollbackCount = 0;
+            rollbackLastCommand = "";
             state.Set("rollbackBoundaryId", command.Get("id"));
             state.Set("rollbackCheckpoints", RuntimeValues::Array());
         }
@@ -699,6 +719,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             return;
         }
+        skipEnabled = false;
+        autoEnabled = false;
         inputBarrier = 0.1f;
         JsonValue@ p = state.Get("presentation");
         if (PhaseName() == "WaitingTimer" && p.Get("inputWait").GetBool())
@@ -746,6 +768,166 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         Go(option.Get("target"));
     }
 
+    void RememberInteraction()
+    {
+        JsonValue@ core = RuntimeValues::Object();
+        for (uint i = 0; i < state.GetCount(); ++i)
+        {
+            String key = state.GetKey(i);
+            if (key != "rollbackCheckpoints")
+            {
+                core.Set(key, state.Get(key));
+            }
+        }
+        core.Set("rollbackCheckpoints", RuntimeValues::Array());
+        if (PhaseName() == "WaitingText")
+        {
+            JsonValue@ p = core.Get("presentation");
+            p.Set("visibleIndex", RuntimeValues::IntValue(program.plain.graphemeCount()));
+            p.Set("tokenIndex", RuntimeValues::IntValue(program.tokens.GetCount()));
+            p.Set("fullyShown", RuntimeValues::BoolValue(true));
+            p.Set("inputWait", RuntimeValues::BoolValue(false));
+            RuntimeValues::PutNumber(p, "remainingPause", 0);
+            core.Set("presentation", p);
+        }
+        JsonValue@ checkpoints = state.Get("rollbackCheckpoints");
+        checkpoints.Append(core);
+        state.Set("rollbackCheckpoints", checkpoints.GetCount() > 100 ? RuntimeValues::Tail(checkpoints, 1) : checkpoints);
+        rollbackCount = checkpoints.GetCount() > 100 ? 100 : checkpoints.GetCount();
+        rollbackLastCommand = state.Get("currentCommandId").GetString();
+    }
+
+    bool CanRollback()
+    {
+        if (state is null)
+        {
+            return false;
+        }
+        uint count = rollbackCount;
+        if (count > 0 && rollbackLastCommand == state.Get("currentCommandId").GetString())
+        {
+            --count;
+        }
+        return count > 0;
+    }
+
+    void Rollback()
+    {
+        if (Paused() || inputBarrier > 0 || !CanRollback())
+        {
+            return;
+        }
+        skipEnabled = false;
+        autoEnabled = false;
+        autoDelay = 0;
+        JsonValue@ checkpoints = state.Get("rollbackCheckpoints");
+        uint count = checkpoints.GetCount();
+        if (checkpoints.At(count - 1).Get("currentCommandId").GetString() == state.Get("currentCommandId").GetString())
+        {
+            --count;
+        }
+        JsonValue@ target = checkpoints.At(count - 1);
+        JsonValue@ remaining = RuntimeValues::Array();
+        for (uint i = 0; i < count; ++i)
+        {
+            remaining.Append(checkpoints.At(i));
+        }
+        target.Set("rollbackCheckpoints", remaining);
+        JsonValue@ presentationState = target.Get("presentation");
+        JsonValue@ transition = presentationState.Get("transition");
+        transition.Set("elapsed", transition.Get("duration"));
+        presentationState.Set("transition", transition);
+        JsonValue@ characters = presentationState.Get("characters");
+        for (uint i = 0; i < characters.GetCount(); ++i)
+        {
+            String id = characters.GetKey(i);
+            JsonValue@ character = characters.Get(id);
+            character.Set("transitionElapsed", character.Get("transitionDuration"));
+            character.Set("bounceActive", RuntimeValues::BoolValue(false));
+            characters.Set(id, character);
+        }
+        presentationState.Set("characters", characters);
+        target.Set("presentation", presentationState);
+        JsonValue@ channels = target.Get("audio");
+        JsonValue@ sfx = channels.Get("Sfx");
+        sfx.Set("completed", RuntimeValues::BoolValue(true));
+        channels.Set("Sfx", sfx);
+        JsonValue@ voice = channels.Get("Voice");
+        voice.Set("completed", RuntimeValues::BoolValue(true));
+        channels.Set("Voice", voice);
+        target.Set("audio", channels);
+        audio.StopTyping();
+        if (!RestoreDebugCheckpoint(target))
+        {
+            RuntimeValues::PutString(state, "diagnostic", "NovelSession::Rollback() : snapshot restore failed. " + audio.diagnostic);
+            menu.ShowNotify("Не удалось восстановить точку отката.", menu.rollbackButton);
+        }
+    }
+
+    bool IsRead(const String &in id)
+    {
+        for (uint i = 0; i < MenuSession::profile.readCommandIds.GetCount(); ++i)
+        {
+            if (MenuSession::profile.readCommandIds.At(i).GetString() == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void ReadingTick(float dt)
+    {
+        bool skip = skipEnabled || Input::Instance().GetKey(KeyCode::LCtrl) || Input::Instance().GetKey(KeyCode::RCtrl);
+        skipDelay -= dt;
+        JsonValue@ p = state.Get("presentation");
+        if (skip && PhaseName() == "WaitingText")
+        {
+            autoEnabled = false;
+            if (!MenuSession::profile.settings.skip_unseen && !IsRead(state.Get("currentCommandId").GetString()))
+            {
+                skipEnabled = false;
+                return;
+            }
+            audio.StopTyping();
+            if (skipDelay <= 0)
+            {
+                skipDelay = 1.0f / 30;
+                if (p.Get("fullyShown").GetBool())
+                {
+                    FinishSay();
+                }
+                else
+                {
+                    p.Set("inputWait", RuntimeValues::BoolValue(false));
+                    state.Set("presentation", p);
+                    TextTick(0, true);
+                }
+            }
+        }
+        else if (skip && PhaseName() == "WaitingTimer" && !p.Get("inputWait").GetBool())
+        {
+            Go(Command().Get("next"));
+        }
+        else if (skip && PhaseName() == "WaitingTransition" && MenuSession::profile.settings.skip_transitions)
+        {
+            JsonValue@ transition = p.Get("transition");
+            transition.Set("elapsed", transition.Get("duration"));
+            p.Set("transition", transition);
+            state.Set("presentation", p);
+        }
+        else if (autoEnabled && PhaseName() == "WaitingText" && p.Get("fullyShown").GetBool() && !p.Get("inputWait").GetBool())
+        {
+            autoDelay += dt;
+            float delay = MenuSession::profile.settings.afm_time * (float(program.plain.graphemeCount()) / 250 + 1);
+            if (autoDelay >= delay)
+            {
+                autoDelay = 0;
+                FinishSay();
+            }
+        }
+    }
+
     void Update(float dt)
     {
         if (state is null || !menu.inGame)
@@ -772,6 +954,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         RuntimeValues::PutNumber(state, "playTimeSeconds", state.Get("playTimeSeconds").GetNumber() + dt);
         Animate(dt);
+        if (Input::Instance().GetKeyDown(KeyCode::PageUp) || Input::Instance().GetMouseWheel() > 0)
+        {
+            Rollback();
+            return;
+        }
+        ReadingTick(dt);
         if (!menu.gameObject.GetScene().IsUIInputConsumed() && (Input::Instance().GetKeyDown(KeyCode::Space) || Input::Instance().GetKeyDown(KeyCode::Enter)))
         {
             Advance();
@@ -850,6 +1038,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return false;
         }
         @state = snapshot.Clone();
+        JsonValue@ checkpoints = state.Get("rollbackCheckpoints");
+        rollbackCount = checkpoints.GetCount();
+        rollbackLastCommand = rollbackCount > 0 ? checkpoints.At(rollbackCount - 1).Get("currentCommandId").GetString() : "";
+        skipEnabled = false;
+        autoEnabled = false;
+        autoDelay = 0;
         inputBarrier = 0.1f;
         RestorePresentation();
         view.FocusNarrative(PhaseName() == "WaitingChoice");

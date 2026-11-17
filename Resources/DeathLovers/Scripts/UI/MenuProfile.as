@@ -33,5 +33,7 @@ class MenuProfile
 namespace MenuSession
 {
     MenuProfile profile;
+    bool skipActive = false;
+    bool autoActive = false;
     String activeScreen = "MainMenu";
 }

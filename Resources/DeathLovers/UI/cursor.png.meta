@@ -8,3 +8,9 @@ use numeric depth: false
 		-i:1
 	-v:addressMode
 		-s:ClampToEdge
+	-v:imageType
+		-s:UI
+	-v:mipLevels
+		-i:1
+	-v:addressMode
+		-s:ClampToEdge

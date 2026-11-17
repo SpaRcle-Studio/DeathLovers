@@ -19,7 +19,9 @@ class MenuButtonVisual : ScriptBehaviour
     void Update(float dt)
     {
         UIControlState state = control.GetState();
-        bool selected = gameObject.GetName() == MenuSession::activeScreen;
+        bool readingSelected = (gameObject.GetName() == "Skip" && MenuSession::skipActive) ||
+            (gameObject.GetName() == "Auto" && MenuSession::autoActive);
+        bool selected = gameObject.GetName() == MenuSession::activeScreen || readingSelected;
         if (state == previous && selected == wasSelected)
         {
             return;
@@ -30,7 +32,7 @@ class MenuButtonVisual : ScriptBehaviour
         TextStyle color;
         color.begin = 0;
         color.end = label.GetGraphemeCount();
-        bool active = state == UIControlState::Hovered || state == UIControlState::Selected || state == UIControlState::Pressed;
+        bool active = readingSelected || state == UIControlState::Hovered || state == UIControlState::Selected || state == UIControlState::Pressed;
         color.color.x = active ? 0.4f : selected ? 1.0f : 0.533333f;
         color.color.y = active ? 0.878431f : selected ? 1.0f : 0.533333f;
         color.color.z = active ? 0.756863f : selected ? 1.0f : 0.533333f;

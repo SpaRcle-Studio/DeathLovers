@@ -10,3 +10,9 @@ use numeric depth: false
 		-s:ClampToEdge
 	-v:filter
 		-s:NEAREST
+	-v:imageType
+		-s:UI
+	-v:mipLevels
+		-i:1
+	-v:addressMode
+		-s:ClampToEdge

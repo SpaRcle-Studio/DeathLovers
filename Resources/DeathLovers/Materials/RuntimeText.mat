@@ -27,4 +27,12 @@ use numeric depth: false
 											-f:1
 										-v:z
 											-f:1
+							-k:i
+								-o:d
+									-v:id
+										-s:outlineWidth
+									-v:type
+										-s:Float
+									-v:value
+										-f:3
 						-a:samplers
