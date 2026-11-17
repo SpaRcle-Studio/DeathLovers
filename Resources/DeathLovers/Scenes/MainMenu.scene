@@ -81,6 +81,13 @@ use numeric depth: false
 									-v:behaviourName
 										-s:MenuNavigation
 									-o:data
+										-o:pendingMainMenu
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:false
 										-o:gameMenuOpen
 											-v:type
 												-s:Arithmetic.bool
@@ -295,7 +302,6 @@ use numeric depth: false
 														-i:706100051
 													-v:name
 														-s:QuickMenu
-													-a:components
 													-a:children
 														-k:i
 															-o:d
@@ -304,8 +310,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100004
-																	-v:name
-																		-s:Rollback
 																	-a:components
 																		-k:i
 																			-o:d
@@ -337,9 +341,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -360,39 +373,48 @@ use numeric depth: false
 																						-i:706100003
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Rollback
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
 																		-o:ptr
-																			-o:translation
-																				-v:x
-																					-f:0
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:90
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:90
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -400,8 +422,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100008
-																	-v:name
-																		-s:History
 																	-a:components
 																		-k:i
 																			-o:d
@@ -433,9 +453,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -456,7 +485,23 @@ use numeric depth: false
 																						-i:706100007
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:History
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -464,31 +509,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:90
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:110
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:90
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:200
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -496,8 +539,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100012
-																	-v:name
-																		-s:Skip
 																	-a:components
 																		-k:i
 																			-o:d
@@ -529,9 +570,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -552,7 +602,23 @@ use numeric depth: false
 																						-i:706100011
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Skip
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -560,31 +626,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:200
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:120
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:200
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:320
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -592,8 +656,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100016
-																	-v:name
-																		-s:Auto
 																	-a:components
 																		-k:i
 																			-o:d
@@ -625,9 +687,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -648,7 +719,23 @@ use numeric depth: false
 																						-i:706100015
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Auto
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -656,31 +743,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:320
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:80
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:320
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:400
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -688,8 +773,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100020
-																	-v:name
-																		-s:Save
 																	-a:components
 																		-k:i
 																			-o:d
@@ -721,9 +804,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -744,7 +836,23 @@ use numeric depth: false
 																						-i:706100019
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Save
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -752,31 +860,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:400
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:140
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:400
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:540
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -784,8 +890,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100024
-																	-v:name
-																		-s:QuickSave
 																	-a:components
 																		-k:i
 																			-o:d
@@ -817,9 +921,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -840,7 +953,23 @@ use numeric depth: false
 																						-i:706100023
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:QuickSave
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -848,31 +977,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:540
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:100
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:540
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:640
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -880,8 +1007,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100028
-																	-v:name
-																		-s:QuickLoad
 																	-a:components
 																		-k:i
 																			-o:d
@@ -913,9 +1038,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -936,7 +1070,23 @@ use numeric depth: false
 																						-i:706100027
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:QuickLoad
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -944,31 +1094,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:640
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:100
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:640
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:740
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -976,8 +1124,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100032
-																	-v:name
-																		-s:Options
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1009,9 +1155,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -1032,7 +1187,23 @@ use numeric depth: false
 																						-i:706100031
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Options
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -1040,31 +1211,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:740
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:100
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:740
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:840
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -1072,8 +1241,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100036
-																	-v:name
-																		-s:MainMenu
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1105,9 +1272,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -1128,7 +1304,23 @@ use numeric depth: false
 																						-i:706100035
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:MainMenu
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -1136,31 +1328,29 @@ use numeric depth: false
 																			-o:translation
 																				-v:x
 																					-f:840
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:170
 																				-v:y
 																					-f:40
+																			-o:offsetMin
+																				-v:x
+																					-f:840
+																				-v:y
+																					-f:-40
+																			-o:offsetMax
+																				-v:x
+																					-f:1010
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 													-o:transform
 														-v:type
 															-s:TransformRect
@@ -1175,20 +1365,24 @@ use numeric depth: false
 																	-f:1010
 																-v:y
 																	-f:40
+															-o:offsetMin
+																-v:x
+																	-f:455
+																-v:y
+																	-f:-1080
+															-o:offsetMax
+																-v:x
+																	-f:1465
+																-v:y
+																	-f:-1040
 															-o:anchors
 																-o:min
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
 																-o:max
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
 															-o:pivot
-																-v:x
-																	-f:0
 																-v:y
 																	-f:1
 															-v:localPriority
@@ -1202,7 +1396,6 @@ use numeric depth: false
 														-i:706100050
 													-v:name
 														-s:ReadingHistory
-													-a:components
 													-a:children
 														-k:i
 															-o:d
@@ -1211,8 +1404,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100038
-																	-v:name
-																		-s:Backdrop
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1221,35 +1412,37 @@ use numeric depth: false
 																				-o:ptr
 																					-v:entityId
 																						-i:706100037
-																	-a:children
+																					-o:material
+																						-v:type
+																							-s:FileMaterial
+																						-o:ptr
+																							-v:materialPath
+																								-s:Engine/Materials/UI/ui.mat
+																	-v:name
+																		-s:Backdrop
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
 																		-o:ptr
-																			-o:translation
-																				-v:x
-																					-f:0
-																				-v:y
-																					-f:0
 																			-o:size
 																				-v:x
 																					-f:1920
 																				-v:y
 																					-f:1080
+																			-o:offsetMin
+																				-v:y
+																					-f:-1080
+																			-o:offsetMax
+																				-v:x
+																					-f:1920
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
 																			-v:localPriority
@@ -1261,8 +1454,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100040
-																	-v:name
-																		-s:Title
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1279,9 +1470,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -1293,7 +1493,8 @@ use numeric depth: false
 																						-s:Center
 																					-v:verticalAlignment
 																						-s:Middle
-																	-a:children
+																	-v:name
+																		-s:Title
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -1308,24 +1509,26 @@ use numeric depth: false
 																					-f:1200
 																				-v:y
 																					-f:50
+																			-o:offsetMin
+																				-v:x
+																					-f:360
+																				-v:y
+																					-f:-70
+																			-o:offsetMax
+																				-v:x
+																					-f:1560
+																				-v:y
+																					-f:-20
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -1333,8 +1536,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100045
-																	-v:name
-																		-s:Viewport
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1352,6 +1553,8 @@ use numeric depth: false
 																						-i:706100042
 																					-v:horizontal
 																						-b:false
+																	-v:name
+																		-s:Viewport
 																	-a:children
 																		-k:i
 																			-o:d
@@ -1360,8 +1563,6 @@ use numeric depth: false
 																				-o:ptr
 																					-v:entityId
 																						-i:706100044
-																					-v:name
-																						-s:Content
 																					-a:components
 																						-k:i
 																							-o:d
@@ -1378,53 +1579,54 @@ use numeric depth: false
 																												-v:type
 																													-s:MaterialData
 																												-o:ptr
+																													-a:shaderDefines
 																													-o:defaultShader
 																														-v:shaderPath
 																															-s:DeathLovers/Shaders/RuntimeText.srsl
+																														-a:uniforms
+																														-a:samplers
+																															-k:i
+																																-o:d
+																																	-v:id
+																																		-s:diffuse
+																																	-v:type
+																																		-s:Sampler2D
 																									-o:font
 																										-v:id
 																											-s:DeathLovers/Fonts/Pangolin.font
-																									-v:text
-																										-s:
 																									-v:fontSize
 																										-f:30
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
 																										-s:Middle
-																					-a:children
+																					-v:name
+																						-s:Content
 																					-o:transform
 																						-v:type
 																							-s:TransformRect
 																						-o:ptr
-																							-o:translation
-																								-v:x
-																									-f:0
-																								-v:y
-																									-f:0
 																							-o:size
 																								-v:x
 																									-f:1200
 																								-v:y
 																									-f:850
+																							-o:offsetMin
+																								-v:y
+																									-f:-850
+																							-o:offsetMax
+																								-v:x
+																									-f:1200
 																							-o:anchors
 																								-o:min
-																									-v:x
-																										-f:0
 																									-v:y
 																										-f:1
 																								-o:max
-																									-v:x
-																										-f:0
 																									-v:y
 																										-f:1
 																							-o:pivot
-																								-v:x
-																									-f:0
 																								-v:y
 																									-f:1
-																							-v:localPriority
-																								-i:1
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -1439,24 +1641,26 @@ use numeric depth: false
 																					-f:1200
 																				-v:y
 																					-f:850
+																			-o:offsetMin
+																				-v:x
+																					-f:360
+																				-v:y
+																					-f:-940
+																			-o:offsetMax
+																				-v:x
+																					-f:1560
+																				-v:y
+																					-f:-90
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
-																			-v:localPriority
-																				-i:1
 														-k:i
 															-o:d
 																-v:type
@@ -1464,8 +1668,6 @@ use numeric depth: false
 																-o:ptr
 																	-v:entityId
 																		-i:706100049
-																	-v:name
-																		-s:Back
 																	-a:components
 																		-k:i
 																			-o:d
@@ -1497,9 +1699,18 @@ use numeric depth: false
 																								-v:type
 																									-s:MaterialData
 																								-o:ptr
+																									-a:shaderDefines
 																									-o:defaultShader
 																										-v:shaderPath
 																											-s:DeathLovers/Shaders/RuntimeText.srsl
+																										-a:uniforms
+																										-a:samplers
+																											-k:i
+																												-o:d
+																													-v:id
+																														-s:diffuse
+																													-v:type
+																														-s:Sampler2D
 																					-o:font
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
@@ -1520,7 +1731,23 @@ use numeric depth: false
 																						-i:706100048
 																					-v:behaviourName
 																						-s:MenuButtonVisual
-																	-a:children
+																					-o:data
+																						-o:previous
+																							-v:type
+																								-s:Enum.UIControlState
+																							-v:scriptType
+																								-s:UIControlState
+																							-v:value
+																								-i:4
+																						-o:wasSelected
+																							-v:type
+																								-s:Arithmetic.bool
+																							-v:scriptType
+																								-s:bool
+																							-v:value
+																								-b:false
+																	-v:name
+																		-s:Back
 																	-o:transform
 																		-v:type
 																			-s:TransformRect
@@ -1535,20 +1762,24 @@ use numeric depth: false
 																					-f:200
 																				-v:y
 																					-f:60
+																			-o:offsetMin
+																				-v:x
+																					-f:860
+																				-v:y
+																					-f:-1040
+																			-o:offsetMax
+																				-v:x
+																					-f:1060
+																				-v:y
+																					-f:-980
 																			-o:anchors
 																				-o:min
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																				-o:max
-																					-v:x
-																						-f:0
 																					-v:y
 																						-f:1
 																			-o:pivot
-																				-v:x
-																					-f:0
 																				-v:y
 																					-f:1
 																			-v:localPriority
@@ -1557,30 +1788,25 @@ use numeric depth: false
 														-v:type
 															-s:TransformRect
 														-o:ptr
-															-o:translation
-																-v:x
-																	-f:0
-																-v:y
-																	-f:0
 															-o:size
 																-v:x
 																	-f:1920
 																-v:y
 																	-f:1080
+															-o:offsetMin
+																-v:y
+																	-f:-1080
+															-o:offsetMax
+																-v:x
+																	-f:1920
 															-o:anchors
 																-o:min
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
 																-o:max
-																	-v:x
-																		-f:0
 																	-v:y
 																		-f:1
 															-o:pivot
-																-v:x
-																	-f:0
 																-v:y
 																	-f:1
 															-v:localPriority
@@ -2697,8 +2923,6 @@ use numeric depth: false
 																				-o:ptr
 																					-v:entityId
 																						-i:706100056
-																					-v:name
-																						-s:ReturnMainMenu
 																					-a:components
 																						-k:i
 																							-o:d
@@ -2730,9 +2954,18 @@ use numeric depth: false
 																												-v:type
 																													-s:MaterialData
 																												-o:ptr
+																													-a:shaderDefines
 																													-o:defaultShader
 																														-v:shaderPath
 																															-s:DeathLovers/Shaders/RuntimeText.srsl
+																														-a:uniforms
+																														-a:samplers
+																															-k:i
+																																-o:d
+																																	-v:id
+																																		-s:diffuse
+																																	-v:type
+																																		-s:Sampler2D
 																									-o:font
 																										-v:id
 																											-s:DeathLovers/Fonts/Pangolin.font
@@ -2753,39 +2986,48 @@ use numeric depth: false
 																										-i:706100055
 																									-v:behaviourName
 																										-s:MenuButtonVisual
-																					-a:children
+																									-o:data
+																										-o:previous
+																											-v:type
+																												-s:Enum.UIControlState
+																											-v:scriptType
+																												-s:UIControlState
+																											-v:value
+																												-i:4
+																										-o:wasSelected
+																											-v:type
+																												-s:Arithmetic.bool
+																											-v:scriptType
+																												-s:bool
+																											-v:value
+																												-b:false
+																					-v:name
+																						-s:ReturnMainMenu
 																					-o:transform
 																						-v:type
 																							-s:TransformRect
 																						-o:ptr
-																							-o:translation
-																								-v:x
-																									-f:0
-																								-v:y
-																									-f:0
 																							-o:size
 																								-v:x
-																									-f:330
+																									-f:150.035
 																								-v:y
-																									-f:70
+																									-f:26.1279
+																							-o:offsetMin
+																								-v:y
+																									-f:-26.1279
+																							-o:offsetMax
+																								-v:x
+																									-f:150.035
 																							-o:anchors
 																								-o:min
-																									-v:x
-																										-f:0
 																									-v:y
 																										-f:1
 																								-o:max
-																									-v:x
-																										-f:0
 																									-v:y
 																										-f:1
 																							-o:pivot
-																								-v:x
-																									-f:0
 																								-v:y
 																									-f:1
-																							-v:localPriority
-																								-i:1
 																		-k:i
 																			-o:d
 																				-v:type
@@ -2900,7 +3142,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-27.5
+																									-f:-59.6279
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -2910,10 +3152,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-55
+																									-f:-87.1279
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
+																								-v:y
+																									-f:-32.1279
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3037,7 +3281,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-88.5
+																									-f:-120.628
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -3047,12 +3291,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-116
+																									-f:-148.128
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
 																								-v:y
-																									-f:-61
+																									-f:-93.128
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3176,7 +3420,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-149.5
+																									-f:-181.628
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -3186,12 +3430,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-177
+																									-f:-209.128
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
 																								-v:y
-																									-f:-122
+																									-f:-154.128
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3315,7 +3559,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-210.5
+																									-f:-242.628
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -3325,12 +3569,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-238
+																									-f:-270.128
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
 																								-v:y
-																									-f:-183
+																									-f:-215.128
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3452,7 +3696,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-271.5
+																									-f:-303.628
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -3462,12 +3706,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-299
+																									-f:-331.128
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
 																								-v:y
-																									-f:-244
+																									-f:-276.128
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3591,7 +3835,7 @@ use numeric depth: false
 																								-v:x
 																									-f:75.0174
 																								-v:y
-																									-f:-332.5
+																									-f:-364.628
 																							-o:size
 																								-v:x
 																									-f:150.035
@@ -3601,12 +3845,12 @@ use numeric depth: false
 																								-v:x
 																									-f:-9.91821e-05
 																								-v:y
-																									-f:-360
+																									-f:-392.128
 																							-o:offsetMax
 																								-v:x
 																									-f:150.035
 																								-v:y
-																									-f:-305
+																									-f:-337.128
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3624,17 +3868,17 @@ use numeric depth: false
 																				-v:x
 																					-f:150.035
 																				-v:y
-																					-f:360
+																					-f:392.128
 																			-o:offsetMin
 																				-v:x
 																					-f:-75.0175
 																				-v:y
-																					-f:-18
+																					-f:-19.6064
 																			-o:offsetMax
 																				-v:x
 																					-f:75.0175
 																				-v:y
-																					-f:342
+																					-f:372.522
 																			-o:anchors
 																				-o:min
 																					-v:x
