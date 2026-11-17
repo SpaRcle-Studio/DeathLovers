@@ -7,6 +7,8 @@ interface IMenuSessionStarter
     bool StartSession();
 }
 
+#include "../Runtime/NovelSession.as"
+
 class MenuNavigation : ScriptBehaviour
 {
     GameObject@ novel;
@@ -25,6 +27,11 @@ class MenuNavigation : ScriptBehaviour
     UIButton@ modalOrigin;
     AudioSource@ music;
     IMenuSessionStarter@ sessionStarter;
+    NovelSession@ runtime;
+    bool gameMenuOpen = false;
+    bool developmentRuntime = true;
+    String runtimeProbeReport = "AWAITING_USER_RUN";
+    TextMesh@ runtimeProbeText;
     bool inGame = false;
     bool pendingQuit = false;
     bool syncing = false;
@@ -87,6 +94,13 @@ class MenuNavigation : ScriptBehaviour
         strike.end = 21;
         strike.strike = true;
         title.AddStyle(strike);
+        @runtime = NovelSession();
+        runtime.Configure(this, gameObject.GetComponent("Behaviour"));
+        @sessionStarter = runtime;
+        if (developmentRuntime && runtime.configured)
+        {
+            BuildRuntimeProbe();
+        }
         Button(Child(main, "Navigation"), "Start").Focus();
     }
 
@@ -149,6 +163,11 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
+        if (inGame && gameMenuOpen)
+        {
+            ToggleGameMenu();
+            return;
+        }
         if (sessionStarter !is null && sessionStarter.StartSession())
         {
             inGame = true;
@@ -157,11 +176,17 @@ class MenuNavigation : ScriptBehaviour
             inputBarrier = 0.1f;
             return;
         }
-        Open(sessionStart, "Start");
+        String error = runtime is null ? "Исполнитель новеллы не инициализирован. Подробности в журнале движка." : runtime.startupError;
+        ShowNotify(error, Button(Child(main, "Navigation"), "Start"));
     }
 
     void Back()
     {
+        if (inGame && gameMenuOpen && modal is null && submenu is null && CanNavigate())
+        {
+            ToggleGameMenu();
+            return;
+        }
         if (!CanNavigate() || (modal is null && submenu is null))
         {
             return;
@@ -222,6 +247,13 @@ class MenuNavigation : ScriptBehaviour
 
     void ReturnToMainMenu()
     {
+        if (runtime !is null)
+        {
+            runtime.End();
+        }
+        gameMenuOpen = false;
+        Text(Child(main, "Navigation"), "Start", "Начать");
+        Child(novel, "Background").SetEnabled(true);
         if (fadingScreen !is null)
         {
             fadingScreen.SetSubtreeOpacity(1.0f);
@@ -446,12 +478,141 @@ class MenuNavigation : ScriptBehaviour
         }
         if (modal is null && CanNavigate() && Input::Instance().GetKeyDown(KeyCode::Escape))
         {
-            Back();
+            if (inGame && submenu is null)
+            {
+                ToggleGameMenu();
+            }
+            else
+            {
+                Back();
+            }
+        }
+        if (runtime !is null)
+        {
+            runtime.Update(dt);
+        }
+    }
+
+    void ToggleGameMenu()
+    {
+        if (!inGame || !CanNavigate() || modal !is null || submenu !is null)
+        {
+            return;
+        }
+        gameMenuOpen = !gameMenuOpen;
+        main.SetEnabled(gameMenuOpen);
+        Text(Child(main, "Navigation"), "Start", "Продолжить");
+        Child(novel, "Background").SetEnabled(gameMenuOpen);
+        runtime.view.root.SetEnabled(!gameMenuOpen);
+        MenuSession::activeScreen = gameMenuOpen ? "GameMenu" : "Story";
+        inputBarrier = 0.1f;
+        runtime.inputBarrier = 0.1f;
+        if (gameMenuOpen)
+        {
+            Button(Child(main, "Navigation"), "Preferences").Focus();
+        }
+        else
+        {
+            runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");
+        }
+    }
+
+    void AdvanceStory()
+    {
+        runtime.Advance();
+    }
+
+    void Choose0()
+    {
+        runtime.Choose(0);
+    }
+
+    void Choose1()
+    {
+        runtime.Choose(1);
+    }
+
+    void Choose2()
+    {
+        runtime.Choose(2);
+    }
+
+    void Choose3()
+    {
+        runtime.Choose(3);
+    }
+
+    void Choose4()
+    {
+        runtime.Choose(4);
+    }
+
+    void Choose5()
+    {
+        runtime.Choose(5);
+    }
+
+    void Choose6()
+    {
+        runtime.Choose(6);
+    }
+
+    void Choose7()
+    {
+        runtime.Choose(7);
+    }
+
+    void BuildRuntimeProbe()
+    {
+        GameObject@ probe = runtime.view.Rect(novel, "RuntimeProbe", 360, 0, 1170, 100);
+        for (uint i = 0; i < 3; ++i)
+        {
+            String name = i == 0 ? "Fixture" : i == 1 ? "RestoreTwice" : "Trace";
+            GameObject@ button = runtime.view.Rect(probe, name, float(i) * 350, 0, 340, 40);
+            runtime.view.Label(button, name);
+            UIButton@ control = cast<UIButton@>(button.GetOrCreateComponent("UIButton"));
+            control.SetClickReceiver(gameObject.GetComponent("Behaviour"), i == 0 ? "StartRuntimeFixture" : i == 1 ? "VerifyRuntimeSnapshot" : "ShowRuntimeTrace");
+        }
+        @runtimeProbeText = runtime.view.Label(runtime.view.Rect(probe, "Result", 0, 45, 1170, 50), "AWAITING_USER_RUN");
+    }
+
+    void StartRuntimeFixture()
+    {
+        if (developmentRuntime)
+        {
+            runtimeProbeText.SetText(runtime.StartFixture() ? "Fixture started" : "Fixture load failed");
+        }
+    }
+
+    void VerifyRuntimeSnapshot()
+    {
+        if (developmentRuntime)
+        {
+            JsonValue@ result = runtime.VerifyRestoreTwice();
+            runtimeProbeReport = result.ToJson();
+            runtimeProbeText.SetText(result.Get("status").GetString());
+        }
+    }
+
+    void ShowRuntimeTrace()
+    {
+        if (developmentRuntime && runtime.trace !is null)
+        {
+            runtimeProbeReport = runtime.trace.ToJson();
+            runtimeProbeText.SetText("Trace in runtimeProbeReport: " + RuntimeValues::Index(runtime.trace.GetCount()) + " commands");
+            if (inGame && !gameMenuOpen)
+            {
+                runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");
+            }
         }
     }
 
     void OnDestroy()
     {
+        if (runtime !is null)
+        {
+            runtime.End();
+        }
         if (music !is null)
         {
             music.Stop();

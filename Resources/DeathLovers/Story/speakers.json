@@ -1,0 +1,12 @@
+{
+  "ch_narrator": {"name":"", "color":[1,1,1], "voice":"audio/voice/narrator.wav", "multiplier":1},
+  "ch_oth": {"name":"", "color":[1,0.4,0], "voice":"audio/voice/voice.wav", "multiplier":1},
+  "ch_news": {"name":"Новости", "color":[0.3098039,0.1764706,0.9019608], "voice":"audio/voice/news.wav", "multiplier":1},
+  "ch_r": {"name":"Ревекка", "color":[1,1,1], "voice":"audio/voice/revecca.wav", "multiplier":1},
+  "ch_death": {"name":"Смерть", "color":[1,1,1], "voice":"audio/voice/death.wav", "multiplier":1},
+  "ch_god": {"name":"Бог", "color":[1,0.9411765,0], "voice":"audio/voice/god.wav", "multiplier":1.25},
+  "ch_p": {"name":"Чума", "color":[0.7019608,0.7490196,0.2901961], "voice":"audio/voice/plague.wav", "multiplier":1},
+  "ch_w": {"name":"Война", "color":[0.5019608,0.1294118,0.1294118], "voice":"audio/voice/war.wav", "multiplier":1},
+  "ch_h": {"name":"Голод", "color":[0.5333333,0.6509804,0.7254902], "voice":"audio/voice/hunger.wav", "multiplier":1},
+  "nvl_narrator": {"name":"", "color":[1,1,1], "voice":"audio/voice/deathnarrator.wav", "multiplier":1.25}
+}

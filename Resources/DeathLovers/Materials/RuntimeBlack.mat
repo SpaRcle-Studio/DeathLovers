@@ -1,0 +1,32 @@
+sra format
+use tabs: true
+use numeric depth: false
+-r:Root
+	-o:asset
+		-v:type
+			-s:FileMaterialResource
+		-o:ptr
+			-o:data
+				-v:type
+					-s:MaterialData
+				-o:ptr
+					-o:defaultShader
+						-v:shaderPath
+							-s:Engine/Shaders/UI/sliced.srsl
+						-a:uniforms
+							-k:i
+								-o:d
+									-v:id
+										-s:color
+									-v:type
+										-s:Vec4
+									-o:value
+										-v:x
+											-f:0
+										-v:y
+											-f:0
+										-v:z
+											-f:0
+										-v:w
+											-f:1
+						-a:samplers

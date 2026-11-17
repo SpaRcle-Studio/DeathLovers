@@ -81,6 +81,27 @@ use numeric depth: false
 									-v:behaviourName
 										-s:MenuNavigation
 									-o:data
+										-o:gameMenuOpen
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:false
+										-o:developmentRuntime
+											-v:type
+												-s:Arithmetic.bool
+											-v:scriptType
+												-s:bool
+											-v:value
+												-b:false
+										-o:runtimeProbeReport
+											-v:type
+												-s:String.String
+											-v:scriptType
+												-s:String
+											-v:value
+												-s:AWAITING_USER_RUN
 										-o:inGame
 											-v:type
 												-s:Arithmetic.bool
@@ -14414,7 +14435,7 @@ use numeric depth: false
 																						-v:id
 																							-s:DeathLovers/Fonts/Pangolin.font
 																					-v:text
-																						-s:Технический экран: запуск сессии будет подключён в этапе 06.
+																						-s:Не удалось запустить новеллу. Подробности в журнале движка.
 																					-v:fontSize
 																						-f:36
 																					-v:verticalAlignment
@@ -15569,9 +15590,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.933335
+													-f:0.883406
 												-v:y
-													-f:0.933335
+													-f:0.883406
 												-v:z
 													-f:1
 											-v:localPriority
@@ -15700,33 +15721,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:859.5
+									-f:770
 								-v:y
 									-f:555
 							-o:size
 								-v:x
-									-f:1792
+									-f:1696.14
 								-v:y
-									-f:1157.14
+									-f:1222.54
 							-o:offsetMin
 								-v:x
-									-f:-36.5019
+									-f:-78.0693
 								-v:y
-									-f:-23.5702
+									-f:-56.2708
 							-o:offsetMax
 								-v:x
-									-f:1755.5
+									-f:1618.07
 								-v:y
-									-f:1133.57
+									-f:1166.27
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.959261
+									-f:0.907945
 								-v:y
-									-f:0.959261
+									-f:0.907945
 								-v:z
-									-f:0.959261
+									-f:0.907945
 							-v:localPriority
 								-i:0
