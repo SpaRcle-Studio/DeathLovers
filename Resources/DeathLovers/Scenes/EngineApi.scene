@@ -3518,33 +3518,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:812
+									-f:771.5
 								-v:y
-									-f:345.5
+									-f:454
 							-o:size
 								-v:x
-									-f:2207.58
+									-f:1877.17
 								-v:y
-									-f:939.309
+									-f:1104.64
 							-o:offsetMin
 								-v:x
-									-f:-291.79
+									-f:-167.083
 								-v:y
-									-f:-124.155
+									-f:-98.3221
 							-o:offsetMax
 								-v:x
-									-f:1915.79
+									-f:1710.08
 								-v:y
-									-f:815.155
+									-f:1006.32
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.735647
+									-f:0.821984
 								-v:y
-									-f:0.735647
+									-f:0.821984
 								-v:z
-									-f:0.735647
+									-f:0.821984
 							-v:localPriority
 								-i:0

@@ -360,6 +360,8 @@ use numeric depth: false
 																						-s:Назад
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -472,6 +474,8 @@ use numeric depth: false
 																						-s:История
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -589,6 +593,8 @@ use numeric depth: false
 																						-s:Пропуск
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -706,6 +712,8 @@ use numeric depth: false
 																						-s:Авто
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -823,6 +831,8 @@ use numeric depth: false
 																						-s:Сохранить
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -940,6 +950,8 @@ use numeric depth: false
 																						-s:Б.Сохр
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -1057,6 +1069,8 @@ use numeric depth: false
 																						-s:Б.Загр
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -1174,6 +1188,8 @@ use numeric depth: false
 																						-s:Опции
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -1291,6 +1307,8 @@ use numeric depth: false
 																						-s:Главное меню
 																					-v:fontSize
 																						-f:21
+																					-v:characterSpacing
+																						-f:2
 																					-v:horizontalAlignment
 																						-s:Center
 																					-v:verticalAlignment
@@ -1784,6 +1802,8 @@ use numeric depth: false
 																					-f:1
 																			-v:localPriority
 																				-i:2
+													-v:isEnabled
+														-b:false
 													-o:transform
 														-v:type
 															-s:TransformRect
@@ -2690,6 +2710,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:75
+																									-v:horizontalAlignment
+																										-s:Center
 																									-v:verticalAlignment
 																										-s:Middle
 																						-k:i
@@ -2842,8 +2864,6 @@ use numeric depth: false
 																			-s:TransformRect
 																		-o:ptr
 																			-o:translation
-																				-v:x
-																					-f:30
 																				-v:y
 																					-f:-80
 																			-o:size
@@ -2853,12 +2873,12 @@ use numeric depth: false
 																					-f:93.3139
 																			-o:offsetMin
 																				-v:x
-																					-f:-570
+																					-f:-600
 																				-v:y
 																					-f:-173.314
 																			-o:offsetMax
 																				-v:x
-																					-f:630
+																					-f:600
 																				-v:y
 																					-f:-80
 																			-o:anchors
@@ -2972,7 +2992,9 @@ use numeric depth: false
 																									-v:text
 																										-s:Главное меню
 																									-v:fontSize
-																										-f:21
+																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3009,15 +3031,15 @@ use numeric depth: false
 																						-o:ptr
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
-																									-f:26.1279
+																									-f:41.0581
 																							-o:offsetMin
 																								-v:y
-																									-f:-26.1279
+																									-f:-41.0581
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3095,6 +3117,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3140,24 +3164,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-59.6279
+																									-f:-74.5581
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-87.1279
+																									-f:-102.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-32.1279
+																									-f:-47.0581
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3234,6 +3258,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3279,24 +3305,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-120.628
+																									-f:-135.558
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-148.128
+																									-f:-163.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-93.128
+																									-f:-108.058
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3373,6 +3399,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3418,24 +3446,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-181.628
+																									-f:-196.558
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-209.128
+																									-f:-224.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-154.128
+																									-f:-169.058
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3512,6 +3540,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3557,24 +3587,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-242.628
+																									-f:-257.558
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-270.128
+																									-f:-285.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-215.128
+																									-f:-230.058
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3649,6 +3679,8 @@ use numeric depth: false
 																										-s:Помощь
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3694,24 +3726,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-303.628
+																									-f:-318.558
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-331.128
+																									-f:-346.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-276.128
+																									-f:-291.058
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3788,6 +3820,8 @@ use numeric depth: false
 																										-b:false
 																									-v:fontSize
 																										-f:33
+																									-v:characterSpacing
+																										-f:2
 																									-v:horizontalAlignment
 																										-s:Center
 																									-v:verticalAlignment
@@ -3833,24 +3867,24 @@ use numeric depth: false
 																						-o:ptr
 																							-o:translation
 																								-v:x
-																									-f:75.0174
+																									-f:112.11
 																								-v:y
-																									-f:-364.628
+																									-f:-379.558
 																							-o:size
 																								-v:x
-																									-f:150.035
+																									-f:224.221
 																								-v:y
 																									-f:55
 																							-o:offsetMin
 																								-v:x
-																									-f:-9.91821e-05
+																									-f:-0.000495911
 																								-v:y
-																									-f:-392.128
+																									-f:-407.058
 																							-o:offsetMax
 																								-v:x
-																									-f:150.035
+																									-f:224.22
 																								-v:y
-																									-f:-337.128
+																									-f:-352.058
 																							-o:anchors
 																								-o:min
 																									-v:y
@@ -3866,19 +3900,19 @@ use numeric depth: false
 																		-o:ptr
 																			-o:size
 																				-v:x
-																					-f:150.035
+																					-f:224.221
 																				-v:y
-																					-f:392.128
+																					-f:407.058
 																			-o:offsetMin
 																				-v:x
-																					-f:-75.0175
+																					-f:-112.11
 																				-v:y
-																					-f:-19.6064
+																					-f:-20.3529
 																			-o:offsetMax
 																				-v:x
-																					-f:75.0175
+																					-f:112.11
 																				-v:y
-																					-f:372.522
+																					-f:386.705
 																			-o:anchors
 																				-o:min
 																					-v:x
@@ -16413,6 +16447,8 @@ use numeric depth: false
 																						-s:Center
 																					-v:spacing
 																						-f:45
+																					-v:paddingTop
+																						-f:35
 																					-v:controlChildWidth
 																						-b:true
 																					-v:controlChildHeight
@@ -16481,6 +16517,8 @@ use numeric depth: false
 																										-s:Вы уверены, что хотите выйти?
 																									-v:fontSize
 																										-f:36
+																									-v:horizontalAlignment
+																										-s:Center
 																									-v:verticalAlignment
 																										-s:Middle
 																						-k:i
@@ -16512,234 +16550,351 @@ use numeric depth: false
 																					-s:GameObject
 																				-o:ptr
 																					-v:entityId
-																						-i:705000319
+																						-i:3147886584624546781
 																					-a:components
 																						-k:i
 																							-o:d
 																								-v:type
-																									-s:UIButton
+																									-s:LayoutGroup
 																								-o:ptr
 																									-v:entityId
-																										-i:705000315
-																									-a:onClickEvents
+																										-i:2312537579917226110
+																									-v:direction
+																										-s:Horizontal
+																									-v:childAlignHorizontal
+																										-s:Center
+																									-v:spacing
+																										-f:-300
+																									-v:paddingTop
+																										-f:-10
+																					-v:name
+																						-s:Qestion
+																					-a:children
+																						-k:i
+																							-o:d
+																								-v:type
+																									-s:GameObject
+																								-o:ptr
+																									-v:entityId
+																										-i:2899403303658752890
+																									-a:components
 																										-k:i
 																											-o:d
-																												-o:object
-																													-v:entityId
-																														-i:705000001
-																												-v:method
-																													-s:ConfirmYes
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:TextMesh
-																								-o:ptr
-																									-v:entityId
-																										-i:705000316
-																									-o:material
-																										-v:type
-																											-s:UniqueMaterial
-																										-o:ptr
-																											-o:data
 																												-v:type
-																													-s:MaterialData
+																													-s:UIButton
 																												-o:ptr
-																													-a:shaderDefines
-																													-o:defaultShader
-																														-v:shaderPath
-																															-s:Engine/Shaders/UI/text-mesh.srsl
-																														-a:uniforms
-																															-k:i
-																																-o:d
-																																	-v:id
-																																		-s:outlineWidth
-																																	-v:type
-																																		-s:Float
-																																	-v:value
-																																		-f:3
-																														-a:samplers
-																															-k:i
-																																-o:d
-																																	-v:id
-																																		-s:diffuse
-																																	-v:type
-																																		-s:Sampler2D
-																									-o:font
-																										-v:id
-																											-s:DeathLovers/Fonts/Pangolin.font
-																									-v:text
-																										-s:Да
-																									-v:wordWrap
-																										-b:false
-																									-v:fontSize
-																										-f:33
-																									-v:horizontalAlignment
-																										-s:Center
-																									-v:verticalAlignment
-																										-s:Middle
+																													-v:entityId
+																														-i:3630543917485559359
+																													-a:onClickEvents
+																														-k:i
+																															-o:d
+																																-o:object
+																																	-v:entityId
+																																		-i:705000001
+																																-v:method
+																																	-s:ConfirmYes
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:TextMesh
+																												-o:ptr
+																													-v:entityId
+																														-i:4269188778483695419
+																													-o:material
+																														-v:type
+																															-s:UniqueMaterial
+																														-o:ptr
+																															-o:data
+																																-v:type
+																																	-s:MaterialData
+																																-o:ptr
+																																	-a:shaderDefines
+																																	-o:defaultShader
+																																		-v:shaderPath
+																																			-s:Engine/Shaders/UI/text-mesh.srsl
+																																		-a:uniforms
+																																			-k:i
+																																				-o:d
+																																					-v:id
+																																						-s:outlineWidth
+																																					-v:type
+																																						-s:Float
+																																					-v:value
+																																						-f:3
+																																		-a:samplers
+																																			-k:i
+																																				-o:d
+																																					-v:id
+																																						-s:diffuse
+																																					-v:type
+																																						-s:Sampler2D
+																													-o:font
+																														-v:id
+																															-s:DeathLovers/Fonts/Pangolin.font
+																													-v:text
+																														-s:Да
+																													-a:styles
+																														-k:i
+																															-o:d
+																																-v:end
+																																	-i:2
+																																-o:color
+																																	-v:x
+																																		-f:0.4
+																																	-v:y
+																																		-f:0.878431
+																																	-v:z
+																																		-f:0.756863
+																																	-v:w
+																																		-f:1
+																													-v:wordWrap
+																														-b:false
+																													-v:fontSize
+																														-f:33
+																													-v:horizontalAlignment
+																														-s:Center
+																													-v:verticalAlignment
+																														-s:Middle
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:LayoutElement
+																												-o:ptr
+																													-v:entityId
+																														-i:4210459306140161239
+																													-v:preferredHeight
+																														-f:55
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:Behaviour
+																												-o:ptr
+																													-v:entityId
+																														-i:2436780451307495657
+																													-v:behaviourName
+																														-s:MenuButtonVisual
+																													-o:data
+																														-o:previous
+																															-v:type
+																																-s:Enum.UIControlState
+																															-v:scriptType
+																																-s:UIControlState
+																															-v:value
+																																-i:3
+																														-o:wasSelected
+																															-v:type
+																																-s:Arithmetic.bool
+																															-v:scriptType
+																																-s:bool
+																															-v:value
+																																-b:false
+																									-v:name
+																										-s:Yes
+																									-o:transform
+																										-v:type
+																											-s:TransformRect
+																										-o:ptr
+																											-o:translation
+																												-v:x
+																													-f:250
+																												-v:y
+																													-f:-27.5
+																											-o:size
+																												-v:x
+																													-f:50
+																												-v:y
+																													-f:55
+																											-o:offsetMin
+																												-v:x
+																													-f:225
+																												-v:y
+																													-f:-55
+																											-o:offsetMax
+																												-v:x
+																													-f:275
+																											-o:anchors
+																												-o:min
+																													-v:y
+																														-f:1
+																												-o:max
+																													-v:y
+																														-f:1
 																						-k:i
 																							-o:d
 																								-v:type
-																									-s:LayoutElement
+																									-s:GameObject
 																								-o:ptr
 																									-v:entityId
-																										-i:705000317
-																									-v:preferredHeight
-																										-f:55
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:Behaviour
-																								-o:ptr
-																									-v:entityId
-																										-i:705000318
-																									-v:behaviourName
-																										-s:MenuButtonVisual
-																									-o:data
-																										-o:previous
-																											-v:type
-																												-s:Enum.UIControlState
-																											-v:scriptType
-																												-s:UIControlState
-																											-v:value
-																												-i:4
-																										-o:wasSelected
-																											-v:type
-																												-s:Arithmetic.bool
-																											-v:scriptType
-																												-s:bool
-																											-v:value
-																												-b:false
-																					-v:name
-																						-s:Yes
+																										-i:3401301902586960778
+																									-a:components
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:UIButton
+																												-o:ptr
+																													-v:entityId
+																														-i:4304566850932444890
+																													-a:onClickEvents
+																														-k:i
+																															-o:d
+																																-o:object
+																																	-v:entityId
+																																		-i:705000001
+																																-v:method
+																																	-s:Back
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:TextMesh
+																												-o:ptr
+																													-v:entityId
+																														-i:3372401842740652315
+																													-o:material
+																														-v:type
+																															-s:UniqueMaterial
+																														-o:ptr
+																															-o:data
+																																-v:type
+																																	-s:MaterialData
+																																-o:ptr
+																																	-a:shaderDefines
+																																	-o:defaultShader
+																																		-v:shaderPath
+																																			-s:Engine/Shaders/UI/text-mesh.srsl
+																																		-a:uniforms
+																																			-k:i
+																																				-o:d
+																																					-v:id
+																																						-s:outlineWidth
+																																					-v:type
+																																						-s:Float
+																																					-v:value
+																																						-f:3
+																																		-a:samplers
+																																			-k:i
+																																				-o:d
+																																					-v:id
+																																						-s:diffuse
+																																					-v:type
+																																						-s:Sampler2D
+																													-o:font
+																														-v:id
+																															-s:DeathLovers/Fonts/Pangolin.font
+																													-v:text
+																														-s:Нет
+																													-a:styles
+																														-k:i
+																															-o:d
+																																-v:end
+																																	-i:3
+																																-o:color
+																																	-v:x
+																																		-f:0.533333
+																																	-v:y
+																																		-f:0.533333
+																																	-v:z
+																																		-f:0.533333
+																																	-v:w
+																																		-f:1
+																													-v:wordWrap
+																														-b:false
+																													-v:fontSize
+																														-f:33
+																													-v:horizontalAlignment
+																														-s:Center
+																													-v:verticalAlignment
+																														-s:Middle
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:LayoutElement
+																												-o:ptr
+																													-v:entityId
+																														-i:2932521293425114413
+																													-v:preferredHeight
+																														-f:55
+																										-k:i
+																											-o:d
+																												-v:type
+																													-s:Behaviour
+																												-o:ptr
+																													-v:entityId
+																														-i:3965836292365571869
+																													-v:behaviourName
+																														-s:MenuButtonVisual
+																													-o:data
+																														-o:previous
+																															-v:type
+																																-s:Enum.UIControlState
+																															-v:scriptType
+																																-s:UIControlState
+																															-v:value
+																																-i:0
+																														-o:wasSelected
+																															-v:type
+																																-s:Arithmetic.bool
+																															-v:scriptType
+																																-s:bool
+																															-v:value
+																																-b:false
+																									-v:name
+																										-s:No
+																									-o:transform
+																										-v:type
+																											-s:TransformRect
+																										-o:ptr
+																											-o:translation
+																												-v:x
+																													-f:750
+																												-v:y
+																													-f:-27.5
+																											-o:size
+																												-v:x
+																													-f:50
+																												-v:y
+																													-f:55
+																											-o:offsetMin
+																												-v:x
+																													-f:725
+																												-v:y
+																													-f:-55
+																											-o:offsetMax
+																												-v:x
+																													-f:775
+																											-o:anchors
+																												-o:min
+																													-v:y
+																														-f:1
+																												-o:max
+																													-v:y
+																														-f:1
 																					-o:transform
 																						-v:type
 																							-s:TransformRect
 																						-o:ptr
+																							-o:translation
+																								-v:x
+																									-f:500
+																								-v:y
+																									-f:-192.291
 																							-o:size
+																								-v:x
+																									-f:1000
+																								-v:y
+																									-f:115.419
+																							-o:offsetMin
+																								-v:y
+																									-f:-250.001
+																							-o:offsetMax
+																								-v:x
+																									-f:1000
+																								-v:y
+																									-f:-134.581
 																							-o:anchors
 																								-o:min
-																								-o:max
-																									-v:x
-																										-f:1
 																									-v:y
 																										-f:1
-																		-k:i
-																			-o:d
-																				-v:type
-																					-s:GameObject
-																				-o:ptr
-																					-v:entityId
-																						-i:705000324
-																					-a:components
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:UIButton
-																								-o:ptr
-																									-v:entityId
-																										-i:705000320
-																									-a:onClickEvents
-																										-k:i
-																											-o:d
-																												-o:object
-																													-v:entityId
-																														-i:705000001
-																												-v:method
-																													-s:Back
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:TextMesh
-																								-o:ptr
-																									-v:entityId
-																										-i:705000321
-																									-o:material
-																										-v:type
-																											-s:UniqueMaterial
-																										-o:ptr
-																											-o:data
-																												-v:type
-																													-s:MaterialData
-																												-o:ptr
-																													-a:shaderDefines
-																													-o:defaultShader
-																														-v:shaderPath
-																															-s:Engine/Shaders/UI/text-mesh.srsl
-																														-a:uniforms
-																															-k:i
-																																-o:d
-																																	-v:id
-																																		-s:outlineWidth
-																																	-v:type
-																																		-s:Float
-																																	-v:value
-																																		-f:3
-																														-a:samplers
-																															-k:i
-																																-o:d
-																																	-v:id
-																																		-s:diffuse
-																																	-v:type
-																																		-s:Sampler2D
-																									-o:font
-																										-v:id
-																											-s:DeathLovers/Fonts/Pangolin.font
-																									-v:text
-																										-s:Нет
-																									-v:wordWrap
-																										-b:false
-																									-v:fontSize
-																										-f:33
-																									-v:horizontalAlignment
-																										-s:Center
-																									-v:verticalAlignment
-																										-s:Middle
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:LayoutElement
-																								-o:ptr
-																									-v:entityId
-																										-i:705000322
-																									-v:preferredHeight
-																										-f:55
-																						-k:i
-																							-o:d
-																								-v:type
-																									-s:Behaviour
-																								-o:ptr
-																									-v:entityId
-																										-i:705000323
-																									-v:behaviourName
-																										-s:MenuButtonVisual
-																									-o:data
-																										-o:previous
-																											-v:type
-																												-s:Enum.UIControlState
-																											-v:scriptType
-																												-s:UIControlState
-																											-v:value
-																												-i:4
-																										-o:wasSelected
-																											-v:type
-																												-s:Arithmetic.bool
-																											-v:scriptType
-																												-s:bool
-																											-v:value
-																												-b:false
-																					-v:name
-																						-s:No
-																					-o:transform
-																						-v:type
-																							-s:TransformRect
-																						-o:ptr
-																							-o:size
-																							-o:anchors
-																								-o:min
 																								-o:max
-																									-v:x
-																										-f:1
 																									-v:y
 																										-f:1
 																	-o:transform
@@ -17229,9 +17384,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.883406
+													-f:0.978342
 												-v:y
-													-f:0.883406
+													-f:0.978342
 												-v:z
 													-f:1
 											-v:localPriority
@@ -17360,33 +17515,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:770
+									-f:795.5
 								-v:y
-									-f:555
+									-f:467.5
 							-o:size
 								-v:x
-									-f:1696.14
+									-f:1878.42
 								-v:y
-									-f:1222.54
+									-f:1103.91
 							-o:offsetMin
 								-v:x
-									-f:-78.0693
+									-f:-143.708
 								-v:y
-									-f:-56.2708
+									-f:-84.4544
 							-o:offsetMax
 								-v:x
-									-f:1618.07
+									-f:1734.71
 								-v:y
-									-f:1166.27
+									-f:1019.45
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.907945
+									-f:0.84699
 								-v:y
-									-f:0.907945
+									-f:0.84699
 								-v:z
-									-f:0.907945
+									-f:0.84699
 							-v:localPriority
 								-i:0

@@ -6,6 +6,8 @@ use numeric depth: false
 		-v:type
 			-s:RenderSettings
 		-o:ptr
+			-v:appName
+				-s:DeathLovers
 			-a:presets
 				-k:i
 					-o:d
@@ -201,6 +203,11 @@ use numeric depth: false
 				-k:i
 					-o:d
 						-o:graphics
+							-o:framerateLimit
+								-v:has
+									-b:true
+								-v:value
+									-i:60
 							-v:shadowsInstancing
 								-b:false
 							-v:postProcess
@@ -213,6 +220,8 @@ use numeric depth: false
 								-s:None
 							-v:shadowsQuality
 								-s:None
+							-v:colorBufferQuality
+								-s:Medium
 							-v:volumetricClouds
 								-s:None
 							-v:volumetricFog

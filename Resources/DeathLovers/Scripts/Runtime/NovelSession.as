@@ -639,7 +639,6 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             MenuSession::profile.readCommandIds.Append(RuntimeValues::StringValue(id));
         }
-        audio.StopTyping();
         Go(Command().Get("next"));
     }
 
@@ -705,7 +704,6 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         view.Progress(p);
         if (finished)
         {
-            audio.StopTyping();
             if (program.noWait && !fast)
             {
                 FinishSay();

@@ -68,6 +68,7 @@ class NovelView
         text.SetMaterial("DeathLovers/Materials/RuntimeText.mat");
         text.SetFontPath("DeathLovers/Fonts/Pangolin.font");
         text.fontSize = 33.0f;
+        text.characterSpacing = 2.f;
         text.SetText(value);
         return text;
     }
@@ -135,13 +136,13 @@ class NovelView
         @speaker = Label(Rect(adv, "Speaker", 360, 12, 1200, 50), "");
         @dialogue = Label(Rect(adv, "Text", 360, 62, 1200, 190), "");
         @indicator = Label(Rect(adv, "Complete", 1580, 220, 100, 50), "▼");
-        @nvl = Rect(root, "NVL", 360, 15, 1170, 1010);
+        @nvl = Rect(root, "NVL", 360, 15, 1175, 1010);
         Priority(nvl, 30);
         nvl.GetOrCreateComponent("RectMask2D");
         @nvlScroll = cast<UIScrollRect@>(nvl.GetOrCreateComponent("UIScrollRect"));
         nvlScroll.horizontal = false;
         nvlScroll.focusable = false;
-        @nvlContent = Rect(nvl, "Content", 0, 0, 1170, 1010);
+        @nvlContent = Rect(nvl, "Content", 2.5, 0, 1170, 1010);
         nvlScroll.SetContent(nvlContent);
         nvlScroll.SetViewport(nvl);
         @previous = null;

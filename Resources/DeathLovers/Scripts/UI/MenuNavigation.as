@@ -264,7 +264,7 @@ class MenuNavigation : ScriptBehaviour
         @modal = confirm;
         pendingQuit = true;
         confirm.SetEnabled(true);
-        Button(Child(confirm, "Content"), "No").Focus();
+        Button(Child(Child(confirm, "Content"), "Qestion"), "No").Focus();
         inputBarrier = 0.1f;
     }
 
@@ -549,10 +549,10 @@ class MenuNavigation : ScriptBehaviour
         pendingMainMenu = true;
         pendingQuit = false;
         @modalOrigin = gameMenuOpen ? cast<UIButton@>(mainMenuButton.GetComponent("UIButton")) : Button(quickMenu, "MainMenu");
-        Text(Child(confirm, "Content"), "Message", "Вернуться в главное меню? Несохранённый прогресс будет потерян.");
+        Text(Child(confirm, "Content"), "Message", "Вернуться в главное меню?\nНесохранённый прогресс будет потерян.");
         @modal = confirm;
         confirm.SetEnabled(true);
-        Button(Child(confirm, "Content"), "No").Focus();
+        Button(Child(Child(confirm, "Content"), "Qestion"), "No").Focus();
         inputBarrier = 0.1f;
     }
 
