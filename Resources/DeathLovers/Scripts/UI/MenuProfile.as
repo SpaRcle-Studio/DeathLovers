@@ -22,12 +22,7 @@ class MenuProfile
     uint schemaVersion = 1;
     bool firstRun = false;
     MenuSettings settings;
-    JsonValue readCommandIds;
-
-    MenuProfile()
-    {
-        readCommandIds.MakeArray();
-    }
+    Vector<String> readCommandIds;
 }
 
 namespace MenuSession

@@ -2,10 +2,12 @@
 // Created by Codex on 16.11.2026.
 //
 
+#include "../Runtime/NovelState.as"
+
 interface IStoryDebugRuntime
 {
-    JsonValue@ CaptureDebugState();
-    bool RestoreDebugCheckpoint(JsonValue@ state);
+    NovelState@ CaptureDebugState();
+    bool RestoreDebugCheckpoint(NovelState@ state);
     bool HasDebugCommand(const String &in commandId);
 }
 
@@ -58,17 +60,17 @@ class StoryDebugPanel : ScriptBehaviour
         {
             return;
         }
-        JsonValue@ state = runtime.CaptureDebugState();
-        if (state is null || !state.IsValid())
+        NovelState@ state = runtime.CaptureDebugState();
+        if (state is null)
         {
             diagnostic = "DEBUG_STATE: runtime did not supply a valid snapshot";
             display.SetText(diagnostic);
             return;
         }
-        String text = "ID: " + state.Get("currentCommandId").GetString();
-        text = text + "\nPhase: " + state.Get("phase").GetString();
-        text = text + "\nStack: " + state.Get("callStack").ToJson();
-        text = text + "\nVariables: " + state.Get("variables").ToJson();
+        String text = "ID: " + state.core.currentCommandId;
+        text = text + "\nPhase: " + state.core.phase;
+        text = text + "\nStack: " + SerializeScriptValue(state.core.callStack);
+        text = text + "\nVariables: " + SerializeScriptValue(state.core.variables);
         text = text + "\n" + diagnostic;
         display.SetText(text);
     }
@@ -82,42 +84,10 @@ class StoryDebugPanel : ScriptBehaviour
         display.SetText(resources.ToJson());
     }
 
-    bool CompleteCheckpoint(JsonValue@ state)
+    bool CompleteCheckpoint(NovelState@ state)
     {
-        if (state is null || !state.IsValid() || state.GetKind() != JsonValueKind::Object)
-        {
-            return false;
-        }
-        if (!state.Has("schemaVersion") || state.Get("schemaVersion").GetInt() != 1 ||
-            !state.Has("contentVersion") || state.Get("contentVersion").GetString() != contentVersion ||
-            !state.Has("currentCommandId") || !state.Has("phase") ||
-            !state.Has("callStack") || !state.Has("variables") ||
-            !state.Has("presentation") || !state.Has("audio") ||
-            !state.Has("history") || !state.Has("rollbackBoundaryId") ||
-            !state.Has("playTimeSeconds") || !state.Has("activeEndingId"))
-        {
-            return false;
-        }
-        JsonValue@ variables = state.Get("variables");
-        if (variables.GetKind() != JsonValueKind::Object || variables.GetCount() != 7 ||
-            !variables.Has("var_offices_visited") || !variables.Has("var_canteen_visited") ||
-            !variables.Has("var_landfill_visited") || !variables.Has("var_roots") ||
-            !variables.Has("var_hunger_score") || !variables.Has("var_war_score") ||
-            !variables.Has("var_plague_score"))
-        {
-            return false;
-        }
-        JsonValue@ presentation = state.Get("presentation");
-        if (presentation.GetKind() != JsonValueKind::Object ||
-            !presentation.Has("background") || !presentation.Has("characters") ||
-            !presentation.Has("mode") || !presentation.Has("speakerId") ||
-            !presentation.Has("text") || !presentation.Has("visibleIndex") ||
-            !presentation.Has("remainingPause") || !presentation.Has("choices") ||
-            !presentation.Has("transition"))
-        {
-            return false;
-        }
-        return runtime.HasDebugCommand(state.Get("currentCommandId").GetString());
+        return state !is null && state.core.schemaVersion == 2 && state.core.contentVersion == contentVersion &&
+            runtime.HasDebugCommand(state.core.currentCommandId);
     }
 
     void RestoreCheckpoint()
@@ -132,7 +102,14 @@ class StoryDebugPanel : ScriptBehaviour
             Refresh();
             return;
         }
-        JsonValue@ state = checkpoints.Get(selectedCheckpoint);
+        NovelState state;
+        String encoded = checkpoints.Get(selectedCheckpoint).GetString();
+        if (encoded == "" || !DeserializeScriptValue(encoded, state))
+        {
+            diagnostic = "CHECKPOINT_INCOMPLETE: regenerate typed fixture for this contentVersion";
+            Refresh();
+            return;
+        }
         if (!CompleteCheckpoint(state))
         {
             diagnostic = "CHECKPOINT_INCOMPLETE: session unchanged; regenerate fixture for this contentVersion";
@@ -140,7 +117,7 @@ class StoryDebugPanel : ScriptBehaviour
             return;
         }
         // Runtime validates all typed fields/resources before atomic application.
-        if (!runtime.RestoreDebugCheckpoint(state.Clone()))
+        if (!runtime.RestoreDebugCheckpoint(state))
         {
             diagnostic = "CHECKPOINT_REJECTED: runtime validation failed; session unchanged";
         }
@@ -157,12 +134,12 @@ class StoryDebugPanel : ScriptBehaviour
         {
             return;
         }
-        JsonValue@ state = runtime.CaptureDebugState();
-        if (sink is null || state is null || !state.IsValid())
+        NovelState@ state = runtime.CaptureDebugState();
+        if (sink is null || state is null)
         {
             diagnostic = "SNAPSHOT_UNAVAILABLE: connect application-data storage sink";
         }
-        else if (!sink.SaveDebugSnapshot("story-debug", state.ToJson()))
+        else if (!sink.SaveDebugSnapshot("story-debug", SerializeScriptValue(state)))
         {
             diagnostic = "SNAPSHOT_WRITE_FAILED: inspect storage diagnostics";
         }

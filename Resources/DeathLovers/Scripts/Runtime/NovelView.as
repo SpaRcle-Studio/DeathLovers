@@ -12,6 +12,7 @@ class NovelVisualSlot
     UIButton@ button;
     String resource;
     String caption;
+    bool waitingTexture = false;
     NovelVisualSlot@ next;
 }
 
@@ -196,28 +197,29 @@ class NovelView
     void Texture(NovelVisualSlot@ slot, const String &in id, const String &in path, bool visible = true)
     {
         bool enabled = visible && id != "" && id != "hidden" && id != "builtin:black";
-        slot.object.SetEnabled(enabled);
         if (enabled && slot.resource != id)
         {
             slot.image.SetTexturePath(path);
             slot.resource = id;
         }
+        slot.waitingTexture = enabled && !slot.image.IsTextureReady();
+        slot.object.SetEnabled(enabled && !slot.waitingTexture);
     }
 
-    void Dialogue(JsonValue@ p, DialogueProgram@ program, JsonValue@ definition)
+    void Dialogue(NovelPresentationState@ p, DialogueProgram@ program, NovelSpeaker@ definition)
     {
-        bool isNvl = p.Get("mode").GetString() == "NVL";
-        adv.SetEnabled(!isNvl && p.Get("dialogueVisible").GetBool());
-        nvl.SetEnabled(isNvl && p.Get("dialogueVisible").GetBool());
+        bool isNvl = p.mode == "NVL";
+        adv.SetEnabled(!isNvl && p.dialogueVisible);
+        nvl.SetEnabled(isNvl && p.dialogueVisible);
         if (!isNvl)
         {
             program.Paint(dialogue);
-            speaker.SetText(definition.Get("name").GetString());
+            speaker.SetText(definition.name);
             TextStyle color;
             color.end = speaker.GetGraphemeCount();
-            color.color.x = float(definition.Get("color").At(0).GetNumber());
-            color.color.y = float(definition.Get("color").At(1).GetNumber());
-            color.color.z = float(definition.Get("color").At(2).GetNumber());
+            color.color.x = float(definition.color.x);
+            color.color.y = float(definition.color.y);
+            color.color.z = float(definition.color.z);
             if (color.end > 0)
             {
                 speaker.AddStyle(color);
@@ -225,20 +227,19 @@ class NovelView
         }
         else
         {
-            JsonValue@ lines = p.Get("nvl");
-            uint first = lines.GetCount() > 6 ? lines.GetCount() - 6 : 0;
-            uint visibleLines = lines.GetCount() - first;
+            uint first = p.nvl.size() > 6 ? p.nvl.size() - 6 : 0;
+            uint visibleLines = p.nvl.size() - first;
             float contentHeight = visibleLines > 0 ? float(visibleLines) * 188 - 15 : 0;
             TransformRect@ contentRect = cast<TransformRect@>(nvlContent.GetTransform());
             contentRect.SetSize(Vec(1170, contentHeight > 1010 ? contentHeight : 1010));
             for (uint i = 0; i < 6; ++i)
             {
                 NovelVisualSlot@ slot = At(nvlEntries, i);
-                slot.object.SetEnabled(first + i < lines.GetCount());
-                if (first + i < lines.GetCount())
+                slot.object.SetEnabled(first + i < p.nvl.size());
+                if (first + i < p.nvl.size())
                 {
                     DialogueProgram line;
-                    line.Compile(lines.At(first + i).Get("text").GetString(), false);
+                    line.Compile(p.nvl[first + i].text, false);
                     line.Paint(slot.text);
                 }
             }
@@ -247,12 +248,12 @@ class NovelView
         Progress(p);
     }
 
-    void Progress(JsonValue@ p)
+    void Progress(NovelPresentationState@ p)
     {
-        uint count = uint(p.Get("visibleIndex").GetInt());
-        if (p.Get("mode").GetString() == "NVL")
+        uint count = uint(p.visibleIndex);
+        if (p.mode == "NVL")
         {
-            uint total = p.Get("nvl").GetCount();
+            uint total = p.nvl.size();
             if (total > 0)
             {
                 At(nvlEntries, total > 6 ? 5 : total - 1).text.SetVisibleGraphemeCount(count);
@@ -262,7 +263,7 @@ class NovelView
         {
             dialogue.SetVisibleGraphemeCount(count);
         }
-        indicator.SetText(p.Get("inputWait").GetBool() ? "…" : p.Get("fullyShown").GetBool() ? "▼" : "");
+        indicator.SetText(p.inputWait ? "…" : p.fullyShown ? "▼" : "");
     }
 
     void Effects(float time)
@@ -301,7 +302,7 @@ class NovelView
         }
     }
 
-    void Choices(JsonValue@ options, bool active)
+    void Choices(const Vector<NovelChoice> &in options, bool active)
     {
         choicesActive = active;
         advanceButton.SetInteractable(!active);
@@ -310,15 +311,15 @@ class NovelView
         for (uint i = 0; i < 8; ++i)
         {
             NovelVisualSlot@ slot = At(choices, i);
-            slot.object.SetEnabled(active && i < options.GetCount());
-            if (active && i < options.GetCount())
+            slot.object.SetEnabled(active && i < options.size());
+            if (active && i < options.size())
             {
                 TransformRect@ rect = cast<TransformRect@>(slot.object.GetTransform());
                 TransformRect@ labelRect = cast<TransformRect@>(slot.text.GetGameObject().GetTransform());
                 slot.resource = "";
                 DialogueProgram label;
-                label.Compile(options.At(i).Get("normalizedText").GetString(), false);
-                slot.caption = options.At(i).Get("normalizedText").GetString();
+                label.Compile(options[i].normalizedText, false);
+                slot.caption = options[i].normalizedText;
                 label.Paint(slot.text);
                 float textHeight = slot.text.GetTextBounds().h;
                 float height = textHeight + 24;
@@ -334,7 +335,7 @@ class NovelView
         }
         totalHeight = totalHeight > 0 ? totalHeight - 33 : 0;
         cast<TransformRect@>(choiceRoot.GetTransform()).SetAnchoredPosition(Vec(360, -(540 - totalHeight * 0.5f)));
-        if (active && options.GetCount() > 0)
+        if (active && options.size() > 0)
         {
             choices.button.Focus();
         }

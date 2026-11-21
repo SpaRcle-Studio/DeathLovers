@@ -2,6 +2,9 @@
 // Created by Codex on 15.11.2026.
 //
 
+#include "../Runtime/NovelState.as"
+#include "../Runtime/RuntimeValues.as"
+
 class EngineApiProbe : ScriptBehaviour
 {
     TextMesh@ display;
@@ -65,31 +68,76 @@ class EngineApiProbe : ScriptBehaviour
         JsonValue document;
         Check(document.LoadResource("DeathLovers/Tests/engine-api.json"));
         Check(document.Get("schemaVersion").GetInt() == 1);
-        JsonValue@ state = document.Get("state");
-        Check(state.Get("score").GetInt() == 7);
-        Check(state.Get("enabled").GetBool());
-        Check(state.Get("fraction").GetNumber() == 0.25);
-        Check(state.Get("empty").GetKind() == JsonValueKind::Null);
-        JsonValue@ copy = state.Clone();
-        JsonValue replacement;
-        replacement.SetInt(99);
-        JsonValue@ items = copy.Get("items");
-        Check(items.SetAt(0, replacement));
-        Check(copy.Set("items", items));
-        Check(state.Get("items").At(0).GetInt() == 1);
-        Check(copy.Get("items").At(0).GetInt() == 99);
-        JsonValue restored;
-        Check(restored.Parse(copy.ToJson()));
-        Check(restored.Get("items").At(2).Get("nested").At(0).GetBool());
-        Check(restored.Get("empty").GetKind() == JsonValueKind::Null);
-        if (failures == 0)
-        {
-            status.SetText("JSON: 13 checks prepared and passed in this run");
-        }
-        else
-        {
-            status.SetText("JSON FAIL: inspect failures and parser diagnostics");
-        }
+        JsonValue@ fixture = document.Get("state");
+        Check(fixture.Get("score").GetInt() == 7);
+        Check(fixture.Get("enabled").GetBool());
+        double fraction = fixture.Get("fraction").GetNumber();
+        Check(fraction > 0.249999 && fraction < 0.250001);
+        Check(fixture.Get("empty").GetKind() == JsonValueKind::Null);
+
+        NovelState source;
+        source.core.schemaVersion = 2;
+        source.core.currentCommandId = "probe";
+        source.core.callStack.pushBack("return");
+        Value integer;
+        int64 score = 7;
+        integer.set(score);
+        source.core.variables.set("score", integer);
+        Value boolean;
+        bool enabled = true;
+        boolean.set(enabled);
+        source.core.variables.set("enabled", boolean);
+        Value text;
+        String title = "Кириллица";
+        text.set(title);
+        source.core.variables.set("title", text);
+        NovelHistoryEntry entry;
+        entry.commandId = "probe";
+        entry.text = "Original";
+        source.core.history.pushBack(entry);
+        NovelCharacter character;
+        character.resourceId = "original";
+        source.core.presentation.characters.set("ch_p", character);
+        source.rollbackCheckpoints.pushBack(source.core);
+
+        NovelState copy;
+        copy = source;
+        score = 99;
+        copy.core.variables.at("score").set(score);
+        copy.core.history[0].text = "Changed";
+        copy.core.presentation.characters.at("ch_p").resourceId = "changed";
+        copy.core.callStack[0] = "changed";
+        int64 originalScore = 0;
+        Check(source.core.variables.at("score").get(originalScore) && originalScore == 7);
+        Check(source.core.history[0].text == "Original");
+        Check(source.core.presentation.characters.at("ch_p").resourceId == "original");
+        Check(source.core.callStack[0] == "return");
+        Check(copy.rollbackCheckpoints[0].history[0].text == "Original");
+
+        String encoded = SerializeScriptValue(source);
+        NovelState restored;
+        Check(DeserializeScriptValue(encoded, restored));
+        Check(restored.core.variables.at("score").get(originalScore) && originalScore == 7);
+        bool restoredBool = false;
+        String restoredTitle;
+        Check(restored.core.variables.at("enabled").get(restoredBool) && restoredBool);
+        Check(restored.core.variables.at("title").get(restoredTitle) && restoredTitle == title);
+        Check(restored.core.history.size() == 1 && restored.core.history[0].text == "Original");
+        Check(restored.core.presentation.characters.at("ch_p").resourceId == "original");
+        Check(restored.rollbackCheckpoints.size() == 1 && restored.rollbackCheckpoints[0].callStack[0] == "return");
+        restored.core.history[0].text = "Changed";
+        Check(DeserializeScriptValue(encoded, restored));
+        Check(restored.core.history[0].text == "Original");
+        Check(restored.rollbackCheckpoints[0].history[0].text == "Original");
+        Check(!DeserializeScriptValue("{broken", restored));
+        NovelState empty;
+        Check(DeserializeScriptValue(SerializeScriptValue(empty), restored));
+        Check(restored.core.variables.size() == 0 && restored.core.history.size() == 0 &&
+            restored.rollbackCheckpoints.size() == 0 && restored.core.presentation.characters.size() == 0);
+        Check(RuntimeValues::Number("-1.25e2") < -124.999f && RuntimeValues::Number("-1.25e2") > -125.001f);
+        Check(RuntimeValues::Number("invalid") > -0.000001f && RuntimeValues::Number("invalid") < 0.000001f);
+        status.SetText(failures == 0 ? "Typed snapshots and external JSON: passed in this run" :
+            "Typed snapshot/JSON FAIL: inspect failures and engine diagnostics");
     }
 
     void SetFormattedText()
@@ -264,7 +312,7 @@ class EngineApiProbe : ScriptBehaviour
         AudioMixer::Instance().SetMasterVolume(0.5f);
         AudioMixer::Instance().SetGroupVolume("Effects", 0.8f);
         AudioMixer::Instance().SetGroupVolume("Interface", 0.5f);
-        if (audio.GetVolume() != 0.75f)
+        if (audio.GetVolume() < 0.749999f || audio.GetVolume() > 0.750001f)
         {
             ++failures;
         }

@@ -3,12 +3,15 @@
 //
 
 #include "RuntimeValues.as"
+#include "NovelState.as"
 
 class DialogueProgram
 {
     String plain;
-    JsonValue@ tokens;
-    JsonValue@ spans;
+    Vector<DialogueToken> tokens;
+    Vector<DialogueSpan> spans;
+    uint tokenCount = 0;
+    uint spanCount = 0;
     String diagnostic;
     bool noWait = false;
 
@@ -106,12 +109,15 @@ class DialogueProgram
 
     void Token(const String &in kind, uint index, float value, float cps)
     {
-        JsonValue@ token = RuntimeValues::Object();
-        RuntimeValues::PutString(token, "kind", kind);
-        token.Set("index", RuntimeValues::IntValue(index));
-        RuntimeValues::PutNumber(token, "value", value);
-        RuntimeValues::PutNumber(token, "cps", cps);
-        tokens.Append(token);
+        if (tokenCount >= tokens.size())
+        {
+            tokens.resize(tokenCount + 1);
+        }
+        DialogueToken@ token = tokens[tokenCount++];
+        token.kind = kind;
+        token.index = index;
+        token.value = value;
+        token.cps = cps;
     }
 
     void Compile(const String &in source, bool autoWait)
@@ -119,9 +125,10 @@ class DialogueProgram
         plain = "";
         diagnostic = "";
         noWait = false;
-        @tokens = RuntimeValues::Array();
-        @spans = RuntimeValues::Array();
-        JsonValue@ stack = RuntimeValues::Array();
+        tokenCount = 0;
+        spanCount = 0;
+        tokens.reserve(source.length());
+        spans.reserve(16);
         String text = autoWait ? AutoWaits(source) : source;
         uint visible = 0;
         float cps = 1;
@@ -154,14 +161,14 @@ class DialogueProgram
                 {
                     String closing = tag.substring(1, tag.length() - 1);
                     bool found = false;
-                    for (int j = int(stack.GetCount()) - 1; j >= 0; --j)
+                    for (int j = int(spanCount) - 1; j >= 0; --j)
                     {
-                        JsonValue@ span = stack.At(uint(j));
-                        if (!span.Get("closed").GetBool() && span.Get("name").GetString() == closing)
+                        DialogueSpan@ span = spans[uint(j)];
+                        if (!span.closed && span.name == closing)
                         {
-                            span.Set("end", RuntimeValues::IntValue(visible));
-                            span.Set("closed", RuntimeValues::BoolValue(true));
-                            stack.SetAt(uint(j), span);
+                            span.end = visible;
+                            span.closed = true;
+
                             found = true;
                             break;
                         }
@@ -177,33 +184,37 @@ class DialogueProgram
                     {
                         diagnostic = diagnostic + " Unsupported tag: " + tag;
                     }
-                    JsonValue@ span = RuntimeValues::Object();
-                    RuntimeValues::PutString(span, "name", name);
-                    RuntimeValues::PutString(span, "tag", tag);
-                    span.Set("begin", RuntimeValues::IntValue(visible));
-                    span.Set("end", RuntimeValues::IntValue(0));
-                    span.Set("closed", RuntimeValues::BoolValue(false));
-                    float currentSize = 33;
-                    for (uint j = 0; j < stack.GetCount(); ++j)
+                    if (spanCount >= spans.size())
                     {
-                        JsonValue@ open = stack.At(j);
-                        if (!open.Get("closed").GetBool() && open.Get("name").GetString() == "size")
+                        spans.resize(spanCount + 1);
+                    }
+                    DialogueSpan@ span = spans[spanCount];
+                    span.name = name;
+                    span.tag = tag;
+                    span.begin = visible;
+                    span.end = 0;
+                    span.closed = false;
+                    float currentSize = 33;
+                    for (uint j = 0; j < spanCount; ++j)
+                    {
+                        DialogueSpan@ open = spans[j];
+                        if (!open.closed && open.name == "size")
                         {
-                            String sizeTag = open.Get("tag").GetString();
+                            String sizeTag = open.tag;
                             currentSize += RuntimeValues::Number(sizeTag.substring(5, sizeTag.length() - 5));
                         }
                     }
                     float delta = name == "size" ? RuntimeValues::Number(tag.substring(5, tag.length() - 5)) : 0;
-                    RuntimeValues::PutNumber(span, "relativeSize", currentSize > 0 ? (currentSize + delta) / currentSize : 1);
-                    stack.Append(span);
+                    span.relativeSize = currentSize > 0 ? (currentSize + delta) / currentSize : 1;
+                    ++spanCount;
                 }
                 cps = 1;
-                for (uint j = 0; j < stack.GetCount(); ++j)
+                for (uint j = 0; j < spanCount; ++j)
                 {
-                    JsonValue@ span = stack.At(j);
-                    if (span.Get("name").GetString() == "cps" && !span.Get("closed").GetBool())
+                    DialogueSpan@ span = spans[j];
+                    if (span.name == "cps" && !span.closed)
                     {
-                        String value = span.Get("tag").GetString();
+                        String value = span.tag;
                         if (RuntimeValues::Starts(value, "cps=*"))
                         {
                             cps *= RuntimeValues::Number(value.substring(5, value.length() - 5));
@@ -223,28 +234,27 @@ class DialogueProgram
             }
             i += bytes;
         }
-        for (uint j = 0; j < stack.GetCount(); ++j)
+        for (uint j = 0; j < spanCount; ++j)
         {
-            JsonValue@ span = stack.At(j);
-            if (!span.Get("closed").GetBool())
+            DialogueSpan@ span = spans[j];
+            if (!span.closed)
             {
-                span.Set("end", RuntimeValues::IntValue(visible));
+                span.end = visible;
             }
-            spans.Append(span);
         }
     }
 
     void Paint(TextMesh@ target)
     {
         target.SetText(plain);
-        for (uint i = 0; i < spans.GetCount(); ++i)
+        for (uint i = 0; i < spanCount; ++i)
         {
-            JsonValue@ span = spans.At(i);
-            String name = span.Get("name").GetString();
-            String tag = span.Get("tag").GetString();
+            DialogueSpan@ span = spans[i];
+            String name = span.name;
+            String tag = span.tag;
             TextStyle style;
-            style.begin = uint(span.Get("begin").GetInt());
-            style.end = uint(span.Get("end").GetInt());
+            style.begin = uint(span.begin);
+            style.end = uint(span.end);
             if (style.begin >= style.end || name == "cps")
             {
                 continue;
@@ -255,7 +265,7 @@ class DialogueProgram
             style.strike = name == "s";
             if (name == "size")
             {
-                style.relativeSize = float(span.Get("relativeSize").GetNumber());
+                style.relativeSize = float(span.relativeSize);
             }
             if (RuntimeValues::Starts(tag, "alpha=*"))
             {

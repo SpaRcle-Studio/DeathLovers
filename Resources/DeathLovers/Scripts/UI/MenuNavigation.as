@@ -506,13 +506,12 @@ class MenuNavigation : ScriptBehaviour
         runtime.skipEnabled = false;
         runtime.autoEnabled = false;
         String content;
-        JsonValue@ entries = runtime.state.Get("history");
-        for (uint i = 0; i < entries.GetCount(); ++i)
+        for (uint i = 0; i < runtime.state.core.history.size(); ++i)
         {
-            JsonValue@ entry = entries.At(i);
+            NovelHistoryEntry@ entry = runtime.state.core.history[i];
             DialogueProgram line;
-            line.Compile(entry.Get("text").GetString(), false);
-            String name = runtime.speakers.Get(entry.Get("speakerId").GetString()).Get("name").GetString();
+            line.Compile(entry.text, false);
+            String name = runtime.speakers.at(entry.speakerId).name;
             content = content + (name == "" ? "" : name + ":\n") + line.plain + "\n\n";
         }
         GameObject@ viewport = Child(readingHistory, "Viewport");
@@ -722,18 +721,18 @@ class MenuNavigation : ScriptBehaviour
     {
         if (developmentRuntime)
         {
-            JsonValue@ result = runtime.VerifyRestoreTwice();
-            runtimeProbeReport = result.ToJson();
-            runtimeProbeText.SetText(result.Get("status").GetString());
+            NovelRestoreReport@ result = runtime.VerifyRestoreTwice();
+            runtimeProbeReport = SerializeScriptValue(result);
+            runtimeProbeText.SetText(result.status);
         }
     }
 
     void ShowRuntimeTrace()
     {
-        if (developmentRuntime && runtime.trace !is null)
+        if (developmentRuntime)
         {
-            runtimeProbeReport = runtime.trace.ToJson();
-            runtimeProbeText.SetText("Trace in runtimeProbeReport: " + RuntimeValues::Index(runtime.trace.GetCount()) + " commands");
+            runtimeProbeReport = SerializeScriptValue(runtime.trace);
+            runtimeProbeText.SetText("Trace in runtimeProbeReport: " + RuntimeValues::Index(runtime.trace.size()) + " commands");
             if (inGame && !gameMenuOpen)
             {
                 runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");

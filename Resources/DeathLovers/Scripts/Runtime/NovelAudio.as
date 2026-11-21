@@ -3,6 +3,7 @@
 //
 
 #include "RuntimeValues.as"
+#include "NovelState.as"
 
 class NovelAudioSlot
 {
@@ -15,7 +16,7 @@ class NovelAudio
 {
     NovelAudioSlot@ buses;
     NovelAudioSlot@ voices;
-    JsonValue@ paths;
+    Map<String, String> paths;
     String diagnostic;
     bool soundedThisFrame = false;
 
@@ -31,13 +32,13 @@ class NovelAudio
 
     void Build(GameObject@ parent, JsonValue@ manifest)
     {
-        @paths = RuntimeValues::Object();
+        paths.clear();
         JsonValue@ assets = manifest.Get("assets");
         for (uint i = 0; i < assets.GetCount(); ++i)
         {
             JsonValue@ asset = assets.At(i);
             String path = asset.Get("target").GetString();
-            RuntimeValues::PutString(paths, asset.Get("id").GetString(), path.substring(10, path.length() - 10));
+            paths.set(asset.Get("id").GetString(), path.substring(10, path.length() - 10));
         }
         NovelAudioSlot music;
         music.id = "Music";
@@ -72,12 +73,12 @@ class NovelAudio
 
     String Path(const String &in id)
     {
-        if (!paths.Has(id))
+        if (!paths.contains(id))
         {
             diagnostic = "NovelAudio::Path() : unknown manifest resource " + id;
             return "";
         }
-        return paths.Get(id).GetString();
+        return paths.at(id);
     }
 
     NovelAudioSlot@ Bus(const String &in id)
@@ -92,21 +93,7 @@ class NovelAudio
         return null;
     }
 
-    JsonValue@ EmptyState()
-    {
-        JsonValue@ result = RuntimeValues::Object();
-        for (NovelAudioSlot@ slot = buses; slot !is null; @slot = slot.next)
-        {
-            JsonValue channel;
-            channel.Parse("{\"resourceId\":\"\",\"loop\":false,\"position\":0,\"gain\":1,\"targetGain\":1,\"fadeFrom\":1,\"fadeRemaining\":0,\"fadeDuration\":0,\"stopAfterFade\":false,\"completed\":true}");
-            result.Set(slot.id, channel);
-        }
-        result.Set("voiceIndex", RuntimeValues::IntValue(0));
-        RuntimeValues::PutNumber(result, "voiceCooldown", 0);
-        return result;
-    }
-
-    bool Command(JsonValue@ audio, JsonValue@ command)
+    bool Command(NovelAudioState@ audio, JsonValue@ command)
     {
         String bus = command.Get("bus").GetString();
         NovelAudioSlot@ slot = Bus(bus);
@@ -115,7 +102,7 @@ class NovelAudio
             diagnostic = "NovelAudio::Command() : unknown bus " + bus;
             return false;
         }
-        JsonValue@ channel = audio.Get(bus);
+        NovelAudioChannel@ channel = audio.Channel(bus);
         float duration = float(command.Get("fadeSeconds").GetNumber());
         bool stop = command.Get("action").GetString() == "stop";
         if (!stop)
@@ -135,84 +122,86 @@ class NovelAudio
                 diagnostic = "NovelAudio::Command() : Play failed " + id;
                 return false;
             }
-            RuntimeValues::PutString(channel, "resourceId", id);
-            channel.Set("loop", command.Get("loop"));
-            RuntimeValues::PutNumber(channel, "position", 0);
-            RuntimeValues::PutNumber(channel, "gain", duration > 0 ? 0 : 1);
-            channel.Set("completed", RuntimeValues::BoolValue(false));
+            channel.resourceId = id;
+            channel.loop = command.Get("loop").GetBool();
+            channel.position = 0;
+            channel.gain = duration > 0 ? 0 : 1;
+            channel.completed = false;
         }
-        RuntimeValues::PutNumber(channel, "fadeFrom", channel.Get("gain").GetNumber());
-        RuntimeValues::PutNumber(channel, "targetGain", stop ? 0 : 1);
-        RuntimeValues::PutNumber(channel, "fadeDuration", duration);
-        RuntimeValues::PutNumber(channel, "fadeRemaining", duration);
-        channel.Set("stopAfterFade", RuntimeValues::BoolValue(stop));
+        channel.fadeFrom = channel.gain;
+        channel.targetGain = stop ? 0 : 1;
+        channel.fadeDuration = duration;
+        channel.fadeRemaining = duration;
+        channel.stopAfterFade = stop;
         if (stop && duration <= 0)
         {
             slot.source.Stop();
-            channel.Set("completed", RuntimeValues::BoolValue(true));
-            RuntimeValues::PutNumber(channel, "gain", 0);
+            channel.completed = true;
+            channel.gain = 0;
         }
-        audio.Set(bus, channel);
+
         return true;
     }
 
-    void Update(JsonValue@ audio, float dt)
+    void Update(NovelAudioState@ audio, float dt)
     {
         soundedThisFrame = false;
-        float cooldown = float(audio.Get("voiceCooldown").GetNumber()) - dt;
-        RuntimeValues::PutNumber(audio, "voiceCooldown", cooldown > 0 ? cooldown : 0);
+        float cooldown = float(audio.voiceCooldown) - dt;
+        audio.voiceCooldown = cooldown > 0 ? cooldown : 0;
         for (NovelAudioSlot@ slot = buses; slot !is null; @slot = slot.next)
         {
-            JsonValue@ channel = audio.Get(slot.id);
-            float remaining = float(channel.Get("fadeRemaining").GetNumber());
+            NovelAudioChannel@ channel = audio.Channel(slot.id);
+            float remaining = float(channel.fadeRemaining);
             if (remaining > 0 && dt > 0)
             {
                 remaining = remaining > dt ? remaining - dt : 0;
-                float progress = 1.0f - remaining / float(channel.Get("fadeDuration").GetNumber());
-                float gain = float(channel.Get("fadeFrom").GetNumber()) * (1 - progress) + float(channel.Get("targetGain").GetNumber()) * progress;
+                float progress = 1.0f - remaining / float(channel.fadeDuration);
+                float gain = float(channel.fadeFrom) * (1 - progress) + float(channel.targetGain) * progress;
                 slot.source.SetVolume(gain);
-                RuntimeValues::PutNumber(channel, "gain", gain);
-                RuntimeValues::PutNumber(channel, "fadeRemaining", remaining);
-                if (remaining <= 0 && channel.Get("stopAfterFade").GetBool())
+                channel.gain = gain;
+                channel.fadeRemaining = remaining;
+                if (remaining <= 0 && channel.stopAfterFade)
                 {
                     slot.source.Stop();
                 }
             }
-            RuntimeValues::PutNumber(channel, "position", slot.source.GetPlaybackPosition());
-            channel.Set("completed", RuntimeValues::BoolValue(!slot.source.IsPlaying()));
-            audio.Set(slot.id, channel);
+            channel.position = slot.source.GetPlaybackPosition();
+            channel.completed = !slot.source.IsPlaying();
         }
     }
 
-    void Type(JsonValue@ audio, JsonValue@ speaker, float cps)
+    void Type(NovelAudioState@ audio, NovelSpeaker@ speaker, float cps)
     {
-        if (soundedThisFrame || cps <= 0 || !MenuSession::profile.settings.pixel_voice || audio.Get("voiceCooldown").GetNumber() > 0)
+        if (soundedThisFrame || cps <= 0 || !MenuSession::profile.settings.pixel_voice || audio.voiceCooldown > 0)
         {
             return;
         }
-        String path = Path(speaker.Get("voice").GetString());
-        if (path == "")
+        if (speaker.voicePath == "")
         {
             return;
         }
-        uint index = uint(audio.Get("voiceIndex").GetInt());
+        uint index = uint(audio.voiceIndex);
         NovelAudioSlot@ slot = voices;
         for (uint i = 0; i < index; ++i)
         {
             @slot = slot.next;
         }
         slot.source.Stop();
-        slot.source.SetPath(path);
+        if (slot.id != speaker.voice)
+        {
+            slot.source.SetPath(speaker.voicePath);
+            slot.id = speaker.voice;
+        }
         slot.source.SetLoop(false);
         slot.source.SetVolume(1);
         slot.source.Play();
-        float interval = 0.075f * float(speaker.Get("multiplier").GetNumber());
+        float interval = 0.075f * float(speaker.multiplier);
         if (1.0f / cps > interval)
         {
             interval = 1.0f / cps;
         }
-        audio.Set("voiceIndex", RuntimeValues::IntValue((index + 1) % 10));
-        RuntimeValues::PutNumber(audio, "voiceCooldown", interval);
+        audio.voiceIndex = (index + 1) % 10;
+        audio.voiceCooldown = interval;
         soundedThisFrame = true;
     }
 
@@ -233,26 +222,26 @@ class NovelAudio
         }
     }
 
-    bool Restore(JsonValue@ audio)
+    bool Restore(NovelAudioState@ audio)
     {
         StopTyping();
         for (NovelAudioSlot@ slot = buses; slot !is null; @slot = slot.next)
         {
-            JsonValue@ channel = audio.Get(slot.id);
+            NovelAudioChannel@ channel = audio.Channel(slot.id);
             slot.source.Stop();
-            if (channel.Get("completed").GetBool() || channel.Get("resourceId").GetString() == "")
+            if (channel.completed || channel.resourceId == "")
             {
                 continue;
             }
-            String path = Path(channel.Get("resourceId").GetString());
+            String path = Path(channel.resourceId);
             if (path == "")
             {
                 return false;
             }
             slot.source.SetPath(path);
-            slot.source.SetLoop(channel.Get("loop").GetBool());
-            slot.source.SetVolume(float(channel.Get("gain").GetNumber()));
-            if (!slot.source.Play() || (channel.Get("position").GetNumber() > 0 && !slot.source.Seek(float(channel.Get("position").GetNumber()))))
+            slot.source.SetLoop(channel.loop);
+            slot.source.SetVolume(float(channel.gain));
+            if (!slot.source.Play() || (channel.position > 0 && !slot.source.Seek(float(channel.position))))
             {
                 diagnostic = "NovelAudio::Restore() : playback/seek failed; stage 03 dependency";
                 slot.source.Stop();
