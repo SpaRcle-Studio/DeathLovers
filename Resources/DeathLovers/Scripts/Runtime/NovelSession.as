@@ -123,8 +123,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         rollbackCount = 0;
         rollbackLastCommand = "";
         @commands = story.Get("commands");
-        if (story.Get("schemaVersion").GetInt() != 1 || !commands.Has(story.Get("entryCommandId").GetString()))
-        {
+        if (story.Get("schemaVersion").GetInt() != 1) {
+            Debug::Instance().Error("NovelSession::NewGame() : ivalid version!");
+            return false;
+        }
+        if (!commands.Has(story.Get("entryCommandId").GetString())) {
+            Debug::Instance().Error("NovelSession::NewGame() : ivalid entry command!");
             return false;
         }
         endingTargets.clear();
@@ -154,6 +158,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             Value@ initial = RuntimeValues::FromJson(registry.Get(id).Get("initial"));
             if (!initial.hasValue())
             {
+                Debug::Instance().Error("NovelSession::NewGame() : ivalid initial value!");
                 return false;
             }
             state.core.variables.set(id, initial);

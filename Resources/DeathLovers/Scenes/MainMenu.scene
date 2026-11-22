@@ -8712,6 +8712,20 @@ use numeric depth: false
 															-s:TransformRect
 														-o:ptr
 															-o:size
+																-v:x
+																	-f:2
+																-v:y
+																	-f:2
+															-o:offsetMin
+																-v:x
+																	-f:-1
+																-v:y
+																	-f:-1
+															-o:offsetMax
+																-v:x
+																	-f:1
+																-v:y
+																	-f:1
 															-o:anchors
 																-o:min
 																-o:max
@@ -9916,6 +9930,20 @@ use numeric depth: false
 															-s:TransformRect
 														-o:ptr
 															-o:size
+																-v:x
+																	-f:2
+																-v:y
+																	-f:2
+															-o:offsetMin
+																-v:x
+																	-f:-1
+																-v:y
+																	-f:-1
+															-o:offsetMax
+																-v:x
+																	-f:1
+																-v:y
+																	-f:1
 															-o:anchors
 																-o:min
 																-o:max
@@ -12326,6 +12354,20 @@ use numeric depth: false
 															-s:TransformRect
 														-o:ptr
 															-o:size
+																-v:x
+																	-f:2
+																-v:y
+																	-f:2
+															-o:offsetMin
+																-v:x
+																	-f:-1
+																-v:y
+																	-f:-1
+															-o:offsetMax
+																-v:x
+																	-f:1
+																-v:y
+																	-f:1
 															-o:anchors
 																-o:min
 																-o:max
@@ -14120,6 +14162,20 @@ use numeric depth: false
 															-s:TransformRect
 														-o:ptr
 															-o:size
+																-v:x
+																	-f:2
+																-v:y
+																	-f:2
+															-o:offsetMin
+																-v:x
+																	-f:-1
+																-v:y
+																	-f:-1
+															-o:offsetMax
+																-v:x
+																	-f:1
+																-v:y
+																	-f:1
 															-o:anchors
 																-o:min
 																-o:max
@@ -15322,6 +15378,20 @@ use numeric depth: false
 															-s:TransformRect
 														-o:ptr
 															-o:size
+																-v:x
+																	-f:2
+																-v:y
+																	-f:2
+															-o:offsetMin
+																-v:x
+																	-f:-1
+																-v:y
+																	-f:-1
+															-o:offsetMax
+																-v:x
+																	-f:1
+																-v:y
+																	-f:1
 															-o:anchors
 																-o:min
 																-o:max
@@ -16390,9 +16460,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.958462
+													-f:0.951156
 												-v:y
-													-f:0.958462
+													-f:0.951156
 												-v:z
 													-f:1
 											-v:localPriority
@@ -16521,33 +16591,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:763.5
+									-f:712.5
 								-v:y
-									-f:467.5
+									-f:443
 							-o:size
 								-v:x
-									-f:1840.25
+									-f:1826.22
 								-v:y
-									-f:1126.81
+									-f:1135.46
 							-o:offsetMin
 								-v:x
-									-f:-156.624
+									-f:-200.61
 								-v:y
-									-f:-95.9025
+									-f:-124.73
 							-o:offsetMax
 								-v:x
-									-f:1683.62
+									-f:1625.61
 								-v:y
-									-f:1030.9
+									-f:1010.73
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.82978
+									-f:0.7803
 								-v:y
-									-f:0.82978
+									-f:0.7803
 								-v:z
-									-f:0.82978
+									-f:0.7803
 							-v:localPriority
 								-i:0
