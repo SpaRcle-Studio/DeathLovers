@@ -26,9 +26,11 @@ class LoadingScreen : ScriptBehaviour
 
     void Update(float dt)
     {
+        Application@ application = ApplicationManager::Instance().GetApplication();
         if (!statusText.hasValue()) {
             return;
         }
+        TextMesh@ statusTextMesh = statusText.get();
 
         if (!isSystemTextLoaded && preloadTextSystem.hasValue()) {
             auto text = preloadTextSystem.get();
@@ -56,52 +58,53 @@ class LoadingScreen : ScriptBehaviour
             tempText = tempText + StringUtils::Instance().IntToString(loaded);
             tempText = tempText + " / ";
             tempText = tempText + StringUtils::Instance().IntToString(totalGraphemes);
-            statusText.get().SetText(tempText);
+            statusTextMesh.SetText(tempText);
             isTextLoaded = loaded == totalGraphemes;
             return;
         }
 
-        if (!isTexturesQueued) {
-            gGameGlobalData.textures.clear();
-            gGameGlobalData.textures.reserve(128);
-            auto gamePath = StringUtils::Instance().ConcatPath(ResourceManager::Instance().GetResPathRef(), "DeathLovers");
-            VFS::Instance().GetFilesInDirectory(gameResources, gamePath, true, true);
-            for (uint i = 0; i < gameResources.size(); i++) {
-                gameResources[i] = StringUtils::Instance().RemoveSubPath(gameResources[i], ResourceManager::Instance().GetResPathRef());
-                StringView path = gameResources[i];
-                if (path.ends_with(".png") || path.ends_with(".jpg")) {
-                    ResourceRef<Texture> ref;
-                    ref.setId(path);
-                    ref.ForceLoad();
-                    gGameGlobalData.textures.pushBack(ref);
-                    totalResources++;
+        uint loadedResources = 0;
+        if (application.GetPlatformType() != PlatformType::Emscripten) { /// Emscripten has 4GB RAM limits 
+            if (!isTexturesQueued) {
+                gGameGlobalData.textures.clear();
+                gGameGlobalData.textures.reserve(128);
+                auto gamePath = StringUtils::Instance().ConcatPath(ResourceManager::Instance().GetResPathRef(), "DeathLovers");
+                VFS::Instance().GetFilesInDirectory(gameResources, gamePath, true, true);
+                for (uint i = 0; i < gameResources.size(); i++) {
+                    gameResources[i] = StringUtils::Instance().RemoveSubPath(gameResources[i], ResourceManager::Instance().GetResPathRef());
+                    StringView path = gameResources[i];
+                    if (path.ends_with(".png") || path.ends_with(".jpg")) {
+                        ResourceRef<Texture> ref;
+                        ref.setId(path);
+                        ref.ForceLoad();
+                        gGameGlobalData.textures.pushBack(ref);
+                        totalResources++;
+                    }
+                }
+                isTexturesQueued = true;
+            }
+
+            for (uint i = 0; i < gGameGlobalData.textures.size(); i++) {
+                if (!gGameGlobalData.textures[i].hasValue()) {
+                    loadedResources++; /// skip broken resource
+                    continue;
+                }
+                Texture@ pTexture = gGameGlobalData.textures[i].get();
+                if (pTexture.CanBeUsed()) {
+                    loadedResources++;
                 }
             }
-            isTexturesQueued = true;
+
+            tempText = "Loading textures: ";
+            tempText = tempText + StringUtils::Instance().IntToString(loadedResources);
+            tempText = tempText + " / ";
+            tempText = tempText + StringUtils::Instance().IntToString(totalResources);
+            statusTextMesh.SetText(tempText);
         }
 
-        uint loaded = 0;
-        for (uint i = 0; i < gGameGlobalData.textures.size(); i++) {
-            if (!gGameGlobalData.textures[i].hasValue()) {
-                loaded++; /// skip broken resource
-                continue;
-            }
-            Texture@ pTexture = gGameGlobalData.textures[i].get();
-            if (pTexture.CanBeUsed()) {
-                loaded++;
-            }
-        }
-
-        TextMesh@ textMesh = statusText.get();
-        tempText = "Loading textures: ";
-        tempText = tempText + StringUtils::Instance().IntToString(loaded);
-        tempText = tempText + " / ";
-        tempText = tempText + StringUtils::Instance().IntToString(totalResources);
-        textMesh.SetText(tempText);
-
-        if (loaded == totalResources) {
-            textMesh.SetText("Loading scene...");
-            ApplicationManager::Instance().GetApplication().GetEngine().RunSceneGameMode("Resources/DeathLovers/Scenes/MainMenu.scene", false);
+        if (loadedResources == totalResources) {
+            statusTextMesh.SetText("Loading scene...");
+            application.GetEngine().RunSceneGameMode("Resources/DeathLovers/Scenes/MainMenu.scene", false);
         }
     }
 }

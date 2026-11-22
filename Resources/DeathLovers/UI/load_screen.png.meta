@@ -2,6 +2,10 @@ sra format
 use tabs: true
 use numeric depth: false
 -r:Root
+	-v:content
+		-s:Interface
+	-v:compressionPolicy
+		-s:Lossless
 	-v:loadMode
 		-s:Sync
 	-v:imageType

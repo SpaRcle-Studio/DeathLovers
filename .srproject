@@ -11,6 +11,52 @@ use numeric depth: false
 			-v:mainScene
 				-s:DeathLovers/Scenes/LoadingScreen.scene
 			-a:packages
+			-a:buildExcludedPaths
+				-k:i
+					-v:d
+						-s:Engine/Models
+				-k:i
+					-v:d
+						-s:Engine/Fonts/MiamaNuevaEmoji.ttf
+				-k:i
+					-v:d
+						-s:Engine/Fonts/TsunagiGothic.ttf
+				-k:i
+					-v:d
+						-s:Engine/Fonts/seguiemj.ttf
+				-k:i
+					-v:d
+						-s:Engine/Fonts/seguisym.ttf
+				-k:i
+					-v:d
+						-s:Engine/Textures/UI
+				-k:i
+					-v:d
+						-s:Engine/Skyboxes
+				-k:i
+					-v:d
+						-s:Engine/Animations
+				-k:i
+					-v:d
+						-s:Engine/Rig
+				-k:i
+					-v:d
+						-s:as.predefined
+				-k:i
+					-v:d
+						-s:Engine/Textures/moon.png
+				-k:i
+					-v:d
+						-s:Engine/Textures/logo-mobile.png
+				-k:i
+					-v:d
+						-s:Engine/Textures/logo.png
+				-k:i
+					-v:d
+						-s:Engine/Textures/noise.png
+				-k:i
+					-v:d
+						-s:Engine/Textures/dev.sparcles.srengine.png
 			-a:buildProfiles
 				-k:i
 					-o:d
