@@ -33,6 +33,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     float skipDelay = 0;
     uint rollbackCount = 0;
     String rollbackLastCommand;
+    NovelAudioState rollbackAudio;
 
     void Configure(MenuNavigation@ navigation, Component@ receiver)
     {
@@ -810,8 +811,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             state.rollbackCheckpoints.erase(0);
         }
-        state.rollbackCheckpoints.pushBack(state.core);
+        // Write directly into the destination: pushBack makes an additional deep copy in the binding.
+        state.rollbackCheckpoints.resize(state.rollbackCheckpoints.size() + 1);
         NovelCore@ core = state.rollbackCheckpoints[state.rollbackCheckpoints.size() - 1];
+        core = state.core;
         if (PhaseName() == "WaitingText")
         {
             core.presentation.visibleIndex = program.plain.graphemeCount();
@@ -849,13 +852,25 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             --count;
         }
-        NovelState target;
-        target.core = state.rollbackCheckpoints[count - 1];
-        for (uint i = 0; i < count; ++i)
+        // These checkpoints are internal, or were validated when the save was loaded.
+        // Restore just the selected core, without copying/validating the entire rollback history.
+        NovelCore@ checkpoint = state.rollbackCheckpoints[count - 1];
+        rollbackAudio = checkpoint.audio;
+        rollbackAudio.Sfx.completed = true;
+        rollbackAudio.Voice.completed = true;
+        audio.Update(state.core.audio, 0);
+        if (!audio.Restore(rollbackAudio))
         {
-            target.rollbackCheckpoints.pushBack(state.rollbackCheckpoints[i]);
+            audio.Restore(state.core.audio);
+            state.core.diagnostic = "NovelSession::Rollback() : snapshot restore failed. " + audio.diagnostic;
+            menu.ShowNotify("Не удалось восстановить точку отката.", menu.rollbackButton);
+            return;
         }
-        NovelPresentationState@ p = target.core.presentation;
+        state.core = checkpoint;
+        state.core.audio = rollbackAudio;
+        @checkpoint = null;
+        state.rollbackCheckpoints.resize(count);
+        NovelPresentationState@ p = state.core.presentation;
         p.transition.elapsed = p.transition.duration;
         for (uint i = 0; i < 3; ++i)
         {
@@ -866,13 +881,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
                 p.characters.at(id).bounceActive = false;
             }
         }
-        target.core.audio.Sfx.completed = true;
-        target.core.audio.Voice.completed = true;
-        if (!RestoreDebugCheckpoint(target))
-        {
-            state.core.diagnostic = "NovelSession::Rollback() : snapshot restore failed. " + audio.diagnostic;
-            menu.ShowNotify("Не удалось восстановить точку отката.", menu.rollbackButton);
-        }
+        FinishRestore();
     }
 
     bool IsRead(const String &in id)
@@ -1068,6 +1077,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return false;
         }
         @state = candidate;
+        FinishRestore();
+        return true;
+    }
+
+    void FinishRestore()
+    {
         rollbackCount = state.rollbackCheckpoints.size();
         rollbackLastCommand = rollbackCount > 0 ? state.rollbackCheckpoints[rollbackCount - 1].currentCommandId : "";
         skipEnabled = false;
@@ -1076,7 +1091,6 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         inputBarrier = 0.1f;
         RestorePresentation();
         view.FocusNarrative(PhaseName() == "WaitingChoice");
-        return true;
     }
 
     bool ValidateSnapshot(NovelState@ snapshot)
