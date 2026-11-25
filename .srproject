@@ -20,9 +20,6 @@ use numeric depth: false
 						-s:Engine/Fonts/MiamaNuevaEmoji.ttf
 				-k:i
 					-v:d
-						-s:Engine/Fonts/TsunagiGothic.ttf
-				-k:i
-					-v:d
 						-s:Engine/Fonts/seguiemj.ttf
 				-k:i
 					-v:d

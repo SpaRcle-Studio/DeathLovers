@@ -211,9 +211,9 @@ use numeric depth: false
 													-f:64
 											-o:scale
 												-v:x
-													-f:8.58594
+													-f:6.58594
 												-v:y
-													-f:8.58594
+													-f:6.58594
 												-v:z
 													-f:1
 						-k:i
@@ -370,17 +370,17 @@ use numeric depth: false
 								-v:x
 									-f:663
 								-v:y
-									-f:549.5
+									-f:421.5
 							-o:size
 								-v:x
 									-f:1326
 								-v:y
-									-f:1099
+									-f:843
 							-o:offsetMax
 								-v:x
 									-f:1326
 								-v:y
-									-f:1099
+									-f:843
 							-o:anchors
 								-o:min
 								-o:max

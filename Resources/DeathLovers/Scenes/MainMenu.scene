@@ -2378,6 +2378,20 @@ use numeric depth: false
 												-o:ptr
 													-v:entityId
 														-i:705000073
+													-a:components
+														-k:i
+															-o:d
+																-v:type
+																	-s:TextMesh
+																-o:ptr
+																	-v:entityId
+																		-i:709000003
+																	-o:material
+																		-v:type
+																			-s:FileMaterial
+																		-o:ptr
+																			-v:materialPath
+																				-s:Engine/Materials/UI/text-mesh.mat
 													-v:name
 														-s:MainMenu
 													-a:children
@@ -3620,27 +3634,8 @@ use numeric depth: false
 													-s:GameObject
 												-o:ptr
 													-v:entityId
-														-i:705000173
+														-i:709000001
 													-a:components
-														-k:i
-															-o:d
-																-v:type
-																	-s:UIControl
-																-o:ptr
-																	-v:entityId
-																		-i:705000163
-																	-v:focusable
-																		-b:false
-																	-v:modal
-																		-b:true
-																	-a:onCancelEvents
-																		-k:i
-																			-o:d
-																				-o:object
-																					-v:entityId
-																						-i:705000001
-																				-v:method
-																					-s:Back
 														-k:i
 															-o:d
 																-v:type
@@ -3675,6 +3670,58 @@ use numeric depth: false
 																			-s:DeathLovers/UI/main_menu.png
 																	-v:spriteMode
 																		-s:Simple
+													-v:name
+														-s:TabBackground
+													-v:isEnabled
+														-b:false
+													-o:transform
+														-v:type
+															-s:TransformRect
+														-o:ptr
+															-o:size
+															-o:anchors
+																-o:min
+																-o:max
+																	-v:x
+																		-f:1
+																	-v:y
+																		-f:1
+															-v:localPriority
+																-i:90
+										-k:i
+											-o:d
+												-v:type
+													-s:GameObject
+												-o:ptr
+													-v:entityId
+														-i:705000173
+													-a:components
+														-k:i
+															-o:d
+																-v:type
+																	-s:UIControl
+																-o:ptr
+																	-v:entityId
+																		-i:705000163
+																	-v:focusable
+																		-b:false
+																	-v:modal
+																		-b:true
+																	-a:onCancelEvents
+																		-k:i
+																			-o:d
+																				-o:object
+																					-v:entityId
+																						-i:705000001
+																				-v:method
+																					-s:Back
+														-k:i
+															-o:d
+																-v:type
+																	-s:TextMesh
+																-o:ptr
+																	-v:entityId
+																		-i:709000002
 													-v:name
 														-s:Preferences
 													-a:children
@@ -8765,37 +8812,10 @@ use numeric depth: false
 														-k:i
 															-o:d
 																-v:type
-																	-s:Sprite
+																	-s:TextMesh
 																-o:ptr
 																	-v:entityId
 																		-i:705000178
-																	-o:material
-																		-v:type
-																			-s:UniqueMaterial
-																		-o:ptr
-																			-o:data
-																				-v:type
-																					-s:MaterialData
-																				-o:ptr
-																					-a:shaderDefines
-																					-o:defaultShader
-																						-v:shaderPath
-																							-s:Engine/Shaders/UI/sliced.srsl
-																						-a:uniforms
-																						-a:samplers
-																							-k:i
-																								-o:d
-																									-v:id
-																										-s:diffuse
-																									-v:type
-																										-s:Sampler2D
-																									-v:value
-																										-s:DeathLovers/UI/main_menu.png
-																	-o:texture
-																		-v:id
-																			-s:DeathLovers/UI/main_menu.png
-																	-v:spriteMode
-																		-s:Simple
 													-v:name
 														-s:Load
 													-a:children
@@ -9983,37 +10003,10 @@ use numeric depth: false
 														-k:i
 															-o:d
 																-v:type
-																	-s:Sprite
+																	-s:TextMesh
 																-o:ptr
 																	-v:entityId
 																		-i:705000242
-																	-o:material
-																		-v:type
-																			-s:UniqueMaterial
-																		-o:ptr
-																			-o:data
-																				-v:type
-																					-s:MaterialData
-																				-o:ptr
-																					-a:shaderDefines
-																					-o:defaultShader
-																						-v:shaderPath
-																							-s:Engine/Shaders/UI/sliced.srsl
-																						-a:uniforms
-																						-a:samplers
-																							-k:i
-																								-o:d
-																									-v:id
-																										-s:diffuse
-																									-v:type
-																										-s:Sampler2D
-																									-v:value
-																										-s:DeathLovers/UI/main_menu.png
-																	-o:texture
-																		-v:id
-																			-s:DeathLovers/UI/main_menu.png
-																	-v:spriteMode
-																		-s:Simple
 													-v:name
 														-s:About
 													-a:children
@@ -12407,37 +12400,10 @@ use numeric depth: false
 														-k:i
 															-o:d
 																-v:type
-																	-s:Sprite
+																	-s:TextMesh
 																-o:ptr
 																	-v:entityId
 																		-i:705000282
-																	-o:material
-																		-v:type
-																			-s:UniqueMaterial
-																		-o:ptr
-																			-o:data
-																				-v:type
-																					-s:MaterialData
-																				-o:ptr
-																					-a:shaderDefines
-																					-o:defaultShader
-																						-v:shaderPath
-																							-s:Engine/Shaders/UI/sliced.srsl
-																						-a:uniforms
-																						-a:samplers
-																							-k:i
-																								-o:d
-																									-v:id
-																										-s:diffuse
-																									-v:type
-																										-s:Sampler2D
-																									-v:value
-																										-s:DeathLovers/UI/main_menu.png
-																	-o:texture
-																		-v:id
-																			-s:DeathLovers/UI/main_menu.png
-																	-v:spriteMode
-																		-s:Simple
 													-v:name
 														-s:Help
 													-a:children
@@ -16460,9 +16426,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.951156
+													-f:0.940631
 												-v:y
-													-f:0.951156
+													-f:0.940631
 												-v:z
 													-f:1
 											-v:localPriority
@@ -16591,33 +16557,33 @@ use numeric depth: false
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:712.5
+									-f:663
 								-v:y
-									-f:443
+									-f:421.5
 							-o:size
 								-v:x
-									-f:1826.22
+									-f:1806.01
 								-v:y
-									-f:1135.46
+									-f:1148.17
 							-o:offsetMin
 								-v:x
-									-f:-200.61
+									-f:-240.006
 								-v:y
-									-f:-124.73
+									-f:-152.583
 							-o:offsetMax
 								-v:x
-									-f:1625.61
+									-f:1566.01
 								-v:y
-									-f:1010.73
+									-f:995.583
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.7803
+									-f:0.734215
 								-v:y
-									-f:0.7803
+									-f:0.734215
 								-v:z
-									-f:0.7803
+									-f:0.734215
 							-v:localPriority
 								-i:0

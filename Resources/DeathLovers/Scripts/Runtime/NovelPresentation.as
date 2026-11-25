@@ -28,10 +28,12 @@ class NovelPresentation
         float duration = float(transition.duration);
         float progress = duration > 0 ? float(transition.elapsed) / duration : 1;
         progress = progress > 1 ? 1 : progress;
+        view.PreservePrevious(view.background, view.backgroundOld, p.background, transition.from, 0);
         view.Texture(view.background, p.background, p.background == "builtin:black" || view.background.resource == p.background ? "" : audio.Path(p.background));
-        view.Texture(view.backgroundOld, transition.from, progress >= 1 || transition.from == "builtin:black" || view.backgroundOld.resource == transition.from ? "" : audio.Path(transition.from), progress < 1);
-        view.background.image.SetSubtreeOpacity(transition.kind == "fade" ? (progress < 0.5f ? 0 : (progress - 0.5f) * 2) : progress);
-        view.backgroundOld.image.SetSubtreeOpacity(transition.kind == "fade" ? (progress < 0.5f ? 1 - progress * 2 : 0) : 1);
+        bool showOld = progress < 1 || view.background.waitingTexture;
+        view.Texture(view.backgroundOld, transition.from, !showOld || transition.from == "builtin:black" || view.backgroundOld.resource == transition.from ? "" : audio.Path(transition.from), showOld);
+        view.background.image.SetSubtreeOpacity(p.background == "builtin:black" || view.background.waitingTexture ? 0 : transition.kind == "fade" ? (progress < 0.5f ? 0 : (progress - 0.5f) * 2) : progress);
+        view.backgroundOld.image.SetSubtreeOpacity(!showOld || transition.from == "builtin:black" ? 0 : view.background.waitingTexture ? 1 : transition.kind == "fade" ? (progress < 0.5f ? 1 - progress * 2 : 0) : 1 - progress);
         FVector2 offset;
         if (transition.kind == "vpunch" && progress < 1)
         {
@@ -83,6 +85,8 @@ class NovelPresentation
             {
                 slot.waitingTexture = false;
                 slot.next.waitingTexture = false;
+                slot.image.SetSubtreeOpacity(0.0f);
+                slot.next.image.SetSubtreeOpacity(0.0f);
                 slot.object.SetEnabled(false);
                 slot.next.object.SetEnabled(false);
                 continue;
@@ -91,17 +95,23 @@ class NovelPresentation
             float duration = float(character.transitionDuration);
             float progress = duration > 0 ? float(character.transitionElapsed) / duration : 1;
             progress = progress > 1 ? 1 : progress;
+            if (character.resourceId == character.previousResource)
+            {
+                progress = 1;
+            }
+            view.PreservePrevious(slot, slot.next, character.resourceId, character.previousResource, 10 + int(i) * 2);
             view.Texture(slot, character.state == "hidden" ? "hidden" : character.resourceId,
                 character.state == "hidden" || slot.resource == character.resourceId ? "" : audio.Path(character.resourceId));
+            bool showOld = progress < 1 || slot.waitingTexture;
             view.Texture(slot.next, character.previousResource,
-                progress >= 1 || character.previousResource == "hidden" || slot.next.resource == character.previousResource ? "" : audio.Path(character.previousResource), progress < 1);
+                !showOld || character.previousResource == "hidden" || slot.next.resource == character.previousResource ? "" : audio.Path(character.previousResource), showOld);
             PlaceCharacter(slot, character);
-            if (progress < 1)
+            if (showOld)
             {
                 PlaceCharacter(slot.next, character);
             }
-            slot.image.SetSubtreeOpacity(progress);
-            slot.next.image.SetSubtreeOpacity(character.state == "hidden" ? 1 - progress : 1);
+            slot.image.SetSubtreeOpacity(character.state == "hidden" || slot.waitingTexture ? 0 : progress);
+            slot.next.image.SetSubtreeOpacity(!showOld || character.previousResource == "hidden" ? 0 : slot.waitingTexture ? 1 : 1 - progress);
         }
     }
 

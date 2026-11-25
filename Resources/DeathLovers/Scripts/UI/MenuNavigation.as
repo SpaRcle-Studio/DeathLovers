@@ -42,7 +42,8 @@ class MenuNavigation : ScriptBehaviour
     bool syncing = false;
     float inputBarrier = 0;
     float notifyTime = 0;
-    Sprite@ fadingScreen;
+    TextMesh@ fadingScreen;
+    Sprite@ tabBackground;
     GameObject@ fadingFrom;
     float fadeTime = 0;
     bool fadeClosing = false;
@@ -62,9 +63,16 @@ class MenuNavigation : ScriptBehaviour
         cast<TextMesh@>(Child(parent, name).GetComponent("TextMesh")).SetText(value);
     }
 
+    void ScreenOpacity(GameObject@ screen, float opacity)
+    {
+        cast<TextMesh@>(screen.GetComponent("TextMesh")).SetSubtreeOpacity(opacity);
+    }
+
     void Start()
     {
         @novel = Child(gameObject, "Novel");
+        @tabBackground = cast<Sprite@>(Child(novel, "TabBackground").GetComponent("Sprite"));
+        TabBackgroundOpacity(0.0f);
         @main = Child(novel, "MainMenu");
         @preferences = Child(novel, "Preferences");
         @load = Child(novel, "Load");
@@ -129,6 +137,12 @@ class MenuNavigation : ScriptBehaviour
         return inputBarrier <= 0 && fadingScreen is null;
     }
 
+    void TabBackgroundOpacity(float opacity)
+    {
+        tabBackground.SetSubtreeOpacity(opacity);
+        tabBackground.GetGameObject().SetEnabled(opacity > 0.0f);
+    }
+
     void Open(GameObject@ screen, const String &in origin)
     {
         if (!CanNavigate() || modal !is null)
@@ -140,9 +154,11 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         @fadingFrom = submenu is null ? main : submenu;
-        @fadingScreen = cast<Sprite@>(screen.GetComponent("Sprite"));
+        TabBackgroundOpacity(submenu is null ? 0.0f : 1.0f);
+        @fadingScreen = cast<TextMesh@>(screen.GetComponent("TextMesh"));
         fadeTime = 0;
         fadeClosing = false;
+        ScreenOpacity(fadingFrom, 1.0f);
         fadingScreen.SetSubtreeOpacity(0.0f);
         transitionBlocker.SetEnabled(true);
         @submenuOrigin = Button(Child(main, "Navigation"), origin);
@@ -191,6 +207,7 @@ class MenuNavigation : ScriptBehaviour
         if (sessionStarter !is null && sessionStarter.StartSession())
         {
             inGame = true;
+            ScreenOpacity(main, 0.0f);
             main.SetEnabled(false);
             music.Stop();
             inputBarrier = 0.1f;
@@ -227,12 +244,13 @@ class MenuNavigation : ScriptBehaviour
         if (submenu !is null)
         {
             @fadingFrom = submenu;
-            @fadingScreen = cast<Sprite@>(submenu.GetComponent("Sprite"));
+            @fadingScreen = cast<TextMesh@>(submenu.GetComponent("TextMesh"));
             fadeTime = 0;
             fadeClosing = true;
             transitionBlocker.SetEnabled(true);
             inputBarrier = 0.5f;
             @submenu = null;
+            ScreenOpacity(main, 0.0f);
             main.SetEnabled(true);
             MenuSession::activeScreen = "MainMenu";
         }
@@ -275,15 +293,17 @@ class MenuNavigation : ScriptBehaviour
             runtime.End();
         }
         gameMenuOpen = false;
+        TabBackgroundOpacity(0.0f);
         Text(Child(main, "Navigation"), "Start", "Начать");
         Child(novel, "Background").SetEnabled(true);
         if (fadingScreen !is null)
         {
-            fadingScreen.SetSubtreeOpacity(1.0f);
+            fadingScreen.SetSubtreeOpacity(0.0f);
             @fadingScreen = null;
         }
         if (fadingFrom !is null && fadingFrom !is main)
         {
+            ScreenOpacity(fadingFrom, 0.0f);
             fadingFrom.SetEnabled(false);
         }
         @fadingFrom = null;
@@ -295,12 +315,14 @@ class MenuNavigation : ScriptBehaviour
         }
         if (submenu !is null)
         {
+            ScreenOpacity(submenu, 0.0f);
             submenu.SetEnabled(false);
             @submenu = null;
         }
         pendingQuit = false;
         inGame = false;
         MenuSession::activeScreen = "MainMenu";
+        ScreenOpacity(main, 1.0f);
         main.SetEnabled(true);
         if (!music.IsPlaying())
         {
@@ -576,6 +598,8 @@ class MenuNavigation : ScriptBehaviour
             fadeTime += dt;
             float progress = fadeTime < 0.5f ? fadeTime / 0.5f : 1.0f;
             fadingScreen.SetSubtreeOpacity(fadeClosing ? 1.0f - progress : progress);
+            ScreenOpacity(fadeClosing ? main : fadingFrom, fadeClosing ? progress : 1.0f - progress);
+            TabBackgroundOpacity(fadeClosing ? 1.0f - progress : fadingFrom is main ? progress : 1.0f);
             if (progress >= 1.0f)
             {
                 fadingFrom.SetEnabled(false);
@@ -631,6 +655,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         gameMenuOpen = !gameMenuOpen;
+        ScreenOpacity(main, gameMenuOpen ? 1.0f : 0.0f);
         main.SetEnabled(gameMenuOpen);
         Text(Child(main, "Navigation"), "Start", "Продолжить");
         Child(novel, "Background").SetEnabled(gameMenuOpen);

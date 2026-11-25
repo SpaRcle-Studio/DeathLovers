@@ -194,6 +194,25 @@ class NovelView
         root.SetEnabled(false);
     }
 
+    void PreservePrevious(NovelVisualSlot@ slot, NovelVisualSlot@ old, const String &in target, const String &in previous, int order)
+    {
+        if (slot.resource == target || slot.resource != previous || previous == "")
+        {
+            return;
+        }
+        GameObject@ object = slot.object;
+        Sprite@ image = slot.image;
+        String resource = slot.resource;
+        @slot.object = old.object;
+        @slot.image = old.image;
+        slot.resource = old.resource;
+        @old.object = object;
+        @old.image = image;
+        old.resource = resource;
+        Priority(old.object, order);
+        Priority(slot.object, order + 1);
+    }
+
     void Texture(NovelVisualSlot@ slot, const String &in id, const String &in path, bool visible = true)
     {
         bool enabled = visible && id != "" && id != "hidden" && id != "builtin:black";
