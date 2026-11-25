@@ -503,6 +503,75 @@ null
 													-o:value
 														-v:value
 															-b:false
+												-k:property
+													-v:name
+														-s:listedGroup
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:listingDirty
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:true
+												-k:property
+													-v:name
+														-s:quickListingDirty
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:true
+												-k:property
+													-v:name
+														-s:hasQuickSave
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
+												-k:property
+													-v:name
+														-s:listingError
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:previewKeys
+													-v:scriptType
+														-s:Map<String,String>
+													-o:value
+														-a:items
+												-k:property
+													-v:name
+														-s:manualEntries
+													-v:scriptType
+														-s:JsonValue@
+												-k:property
+													-v:name
+														-s:autoEntries
+													-v:scriptType
+														-s:JsonValue@
+												-k:property
+													-v:name
+														-s:quickEntries
+													-v:scriptType
+														-s:JsonValue@
+												-k:property
+													-v:name
+														-s:listingErrors
+													-v:scriptType
+														-s:Map<String,String>
+													-o:value
+														-a:items
 										-o:developmentRuntime
 											-v:type
 												-s:bool

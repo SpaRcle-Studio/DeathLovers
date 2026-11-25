@@ -39,6 +39,94 @@ class NovelSaves
     String candidateStoryResource;
     String autoStateKey;
     bool openAfterYield = false;
+    String listedGroup;
+    bool listingDirty = true;
+    bool quickListingDirty = true;
+    bool hasQuickSave = false;
+    String listingError;
+    Map<String, String> previewKeys;
+    JsonValue@ manualEntries;
+    JsonValue@ autoEntries;
+    JsonValue@ quickEntries;
+    Map<String, String> listingErrors;
+
+    JsonValue@ CachedListing(const String &in storageGroup)
+    {
+        if (storageGroup == "manual") return manualEntries;
+        if (storageGroup == "auto") return autoEntries;
+        return quickEntries;
+    }
+
+    void CacheListing(const String &in storageGroup, JsonValue@ entries)
+    {
+        if (storageGroup == "manual") @manualEntries = entries;
+        else if (storageGroup == "auto") @autoEntries = entries;
+        else @quickEntries = entries;
+    }
+
+    JsonValue@ ReadListing(const String &in storageGroup)
+    {
+        JsonValue@ entries = CachedListing(storageGroup);
+        if (entries is null)
+        {
+            @entries = SaveSystem::Instance().EnumerateSlotPreviews(storageGroup);
+            listingErrors.set(storageGroup, SaveSystem::Instance().GetError());
+            CacheListing(storageGroup, entries);
+        }
+        return entries;
+    }
+
+    void CacheSavedSlot(const String &in storageGroup, const String &in id, SaveSlot@ slot, const String &in png)
+    {
+        JsonValue@ entries = CachedListing(storageGroup);
+        if (entries !is null)
+        {
+            JsonValue updated;
+            updated.MakeArray();
+            for (uint i = 0; i < entries.View().GetCount(); ++i)
+            {
+                if (entries.View().At(i).Get("slotId").GetString() != id)
+                {
+                    updated.Append(entries.View().At(i).Clone());
+                }
+            }
+            JsonValue@ record = slot.GetMetadata().Clone();
+            JsonValue recovered;
+            recovered.SetBool(false);
+            record.Set("recovered", recovered);
+            updated.Append(record);
+            CacheListing(storageGroup, updated);
+            if (listedGroup == storageGroup)
+            {
+                @listing = CachedListing(storageGroup);
+                for (uint i = 0; i < 6; ++i)
+                {
+                    if (SlotId(i) == id)
+                    {
+                        GameObject@ thumbnail = menu.Child(menu.Child(grid, "Slot" + RuntimeValues::Index(i)), "Thumbnail");
+                        cast<Sprite@>(thumbnail.GetComponent("Sprite")).SetTextureData(png);
+                        previewKeys.set(RuntimeValues::Index(i), storageGroup + "/" + id + "/" + record.View().ToJson());
+                    }
+                }
+            }
+        }
+        if (storageGroup == "quick")
+        {
+            hasQuickSave = true;
+            quickListingDirty = false;
+        }
+    }
+
+    void InvalidateListings(bool clearPreviews = true)
+    {
+        listingDirty = true;
+        quickListingDirty = true;
+        if (clearPreviews) previewKeys.clear();
+        @manualEntries = null;
+        @autoEntries = null;
+        @quickEntries = null;
+        listingErrors.clear();
+    }
 
     String Two(uint number)
     {
@@ -138,8 +226,13 @@ class NovelSaves
         {
             return;
         }
-        @listing = SaveSystem::Instance().EnumerateSlots(group);
-        String listingError = SaveSystem::Instance().GetError();
+        if (listingDirty || listedGroup != group)
+        {
+            @listing = ReadListing(group);
+            listingError = listingErrors.contains(group) ? listingErrors.at(group) : "";
+            listedGroup = group;
+            listingDirty = false;
+        }
         menu.Text(menu.load, "StorageStatus", listingError == "" ? "" : "Некоторые сохранения недоступны: " + listingError);
         menu.Text(menu.load, "Title", saveMode ? "Сохранить" : "Загрузить");
         menu.Text(menu.load, "Page", group == "manual" ? RuntimeValues::Index(page) + " / 10" : "");
@@ -159,60 +252,100 @@ class NovelSaves
             menu.Button(slot, "Delete").SetInteractable(!busy && exists);
             GameObject@ thumbnail = menu.Child(slot, "Thumbnail");
             thumbnail.SetEnabled(exists);
+            String previewIndex = RuntimeValues::Index(i);
+            String previewKey;
             if (exists)
             {
-                SaveSystem::Instance().CloseSlot(group, id);
-                SaveSlot@ preview = SaveSystem::Instance().OpenSlot(group, id);
-                if (preview !is null)
+                previewKey = group + "/" + id + "/" + record.ToJson();
+            }
+            if (!exists)
+            {
+                previewKeys.set(previewIndex, "");
+            }
+            else if (!previewKeys.contains(previewIndex) || previewKeys.at(previewIndex) != previewKey)
+            {
+                String png = SaveSystem::Instance().ReadSlotPreviewFile(group, id, "thumbnail.png");
+                if (ThumbnailValid(png))
                 {
-                    cast<Sprite@>(thumbnail.GetComponent("Sprite")).SetTextureData(preview.GetFile("thumbnail.png"));
+                    cast<Sprite@>(thumbnail.GetComponent("Sprite")).SetTextureData(png);
+                    previewKeys.set(previewIndex, previewKey);
                 }
-                SaveSystem::Instance().CloseSlot(group, id);
+                else
+                {
+                    thumbnail.SetEnabled(false);
+                }
             }
         }
-        menu.Button(menu.quickMenu, "QuickLoad").SetInteractable(!busy && Latest("quick") != "");
+        if (quickListingDirty)
+        {
+            JsonValue@ quickEntries;
+            if (group == "quick")
+            {
+                @quickEntries = listing;
+            }
+            else
+            {
+                @quickEntries = ReadListing("quick");
+            }
+            hasQuickSave = quickEntries.View().GetCount() > 0;
+            quickListingDirty = false;
+        }
+        menu.Button(menu.quickMenu, "QuickLoad").SetInteractable(!busy && hasQuickSave);
     }
 
     String Latest(const String &in storageGroup)
     {
-        JsonValue@ entries = SaveSystem::Instance().EnumerateSlots(storageGroup);
+        JsonValue@ entries = SaveSystem::Instance().EnumerateSlotPreviews(storageGroup);
         int64 sequence = -1;
         String id;
         for (uint i = 0; i < entries.View().GetCount(); ++i)
         {
-            if (entries.View().At(i).Get("sequence").GetInt() > sequence && Compatible(entries.View().At(i), storageGroup))
+            JsonValueView@ record = entries.View().At(i);
+            if (record.Get("sequence").GetInt() > sequence)
             {
-                sequence = entries.View().At(i).Get("sequence").GetInt();
-                id = entries.View().At(i).Get("slotId").GetString();
+                sequence = record.Get("sequence").GetInt();
+                id = record.Get("slotId").GetString();
             }
         }
         return id;
     }
 
-    bool Compatible(JsonValueView@ record, const String &in storageGroup)
+    void BeginQuickLoad(const String &in newestId)
     {
-        if (!record.Has("schemaVersion") || record.Get("schemaVersion").GetInt() != 1)
+        if (ReadLoadCandidate("quick", newestId))
         {
-            return false;
+            BeginPreparedLoad();
+            return;
         }
-        String resource = record.Get("storyResource").GetString();
-        if (!AllowedStory(resource))
+        String newestError = diagnostic;
+        JsonValue@ entries = SaveSystem::Instance().EnumerateSlotPreviews("quick");
+        Map<String, bool> checked;
+        checked.set(newestId, true);
+        for (uint attempt = 0; attempt < entries.View().GetCount(); ++attempt)
         {
-            return false;
+            int64 sequence = -1;
+            int selected = -1;
+            for (uint i = 0; i < entries.View().GetCount(); ++i)
+            {
+                JsonValueView@ record = entries.View().At(i);
+                if (!checked.contains(record.Get("slotId").GetString()) && record.Get("sequence").GetInt() > sequence)
+                {
+                    sequence = record.Get("sequence").GetInt();
+                    selected = int(i);
+                }
+            }
+            if (selected < 0) break;
+            String id = entries.View().At(uint(selected)).Get("slotId").GetString();
+            if (ReadLoadCandidate("quick", id))
+            {
+                BeginPreparedLoad();
+                return;
+            }
+            checked.set(id, true);
         }
-        JsonValue source;
-        if (!source.LoadResource(resource) || record.Get("contentVersion").GetString() != source.View().Get("contentVersion").GetString())
-        {
-            return false;
-        }
-        String id = record.Get("slotId").GetString();
-        SaveSystem::Instance().CloseSlot(storageGroup, id);
-        SaveSlot@ slot = SaveSystem::Instance().OpenSlot(storageGroup, id);
-        NovelState test;
-        bool valid = slot !is null && slot.HasState() && ThumbnailValid(slot.GetFile("thumbnail.png")) && DecodeState(slot.GetState(), test) &&
-            NovelSnapshotValidation::Validate(test, source.View(), menu.runtime.definitions.View(), menu.runtime.speakers, menu.runtime.audio.paths);
-        SaveSystem::Instance().CloseSlot(storageGroup, id);
-        return valid;
+        @candidate = null;
+        @candidateStory = null;
+        Error(newestError);
     }
 
     bool AllowedStory(const String &in resource)
@@ -223,7 +356,7 @@ class NovelSaves
 
     int64 NextSequence(const String &in storageGroup)
     {
-        JsonValue@ entries = SaveSystem::Instance().EnumerateSlots(storageGroup);
+        JsonValue@ entries = ReadListing(storageGroup);
         int64 sequence = 0;
         for (uint i = 0; i < entries.View().GetCount(); ++i)
         {
@@ -255,6 +388,7 @@ class NovelSaves
             menu.inputBarrier = 0;
         }
         saveMode = saving;
+        InvalidateListings(false);
         menu.Open(menu.load, "Load");
         Refresh();
     }
@@ -332,6 +466,11 @@ class NovelSaves
         {
             return;
         }
+        if (action == "quickload")
+        {
+            BeginQuickLoad(id);
+            return;
+        }
         if (action == "save")
         {
             queuedGroup = storageGroup;
@@ -344,6 +483,7 @@ class NovelSaves
             Refresh();
             bool removed = SaveSystem::Instance().DeleteSlot(storageGroup, id);
             String error = SaveSystem::Instance().GetError();
+            InvalidateListings();
             busy = false;
             menu.inputBarrier = 0.1f;
             Refresh();
@@ -378,11 +518,11 @@ class NovelSaves
         }
         if (menu.inGame)
         {
-            Confirm("load", "quick", id);
+            Confirm("quickload", "quick", id);
         }
         else
         {
-            BeginLoad("quick", id);
+            BeginQuickLoad(id);
         }
     }
 
@@ -393,39 +533,6 @@ class NovelSaves
         object.Set(key, value);
     }
 
-    bool EqualTree(JsonValueView@ left, JsonValueView@ right, uint depth = 0)
-    {
-        if (depth > 128 || left.GetKind() != right.GetKind() || left.GetCount() != right.GetCount())
-        {
-            return false;
-        }
-        JsonValueKind kind = left.GetKind();
-        if (kind == JsonValueKind::Object)
-        {
-            for (uint i = 0; i < left.GetCount(); ++i)
-            {
-                String key = left.GetKey(i);
-                if (!right.Has(key) || !EqualTree(left.Get(key), right.Get(key), depth + 1))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        if (kind == JsonValueKind::Array)
-        {
-            for (uint i = 0; i < left.GetCount(); ++i)
-            {
-                if (!EqualTree(left.At(i), right.At(i), depth + 1))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return left.ToJson() == right.ToJson();
-    }
-
     bool DecodeState(JsonValueView@ document, NovelState@ result)
     {
         NovelState decoded;
@@ -434,7 +541,7 @@ class NovelSaves
             return false;
         }
         JsonValue canonical;
-        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical.View()))
+        if (!canonical.Parse(SerializeScriptValue(decoded)) || !document.Equals(canonical.View()))
         {
             return false;
         }
@@ -450,7 +557,7 @@ class NovelSaves
             return false;
         }
         JsonValue canonical;
-        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical.View()))
+        if (!canonical.Parse(SerializeScriptValue(decoded)) || !document.Equals(canonical.View()))
         {
             return false;
         }
@@ -574,6 +681,10 @@ class NovelSaves
             saved = SaveSystem::Instance().FlushSlot(storageGroup, id);
         }
         String error = SaveSystem::Instance().GetError();
+        if (saved)
+        {
+            CacheSavedSlot(storageGroup, id, slot, png);
+        }
         EndCapture();
         if (saved)
         {
@@ -606,45 +717,69 @@ class NovelSaves
 
     void BeginLoad(const String &in storageGroup, const String &in id)
     {
+        if (!ReadLoadCandidate(storageGroup, id))
+        {
+            @candidate = null;
+            @candidateStory = null;
+            Error(diagnostic);
+            return;
+        }
+        BeginPreparedLoad();
+    }
+
+    bool ReadLoadCandidate(const String &in storageGroup, const String &in id)
+    {
         SaveSystem::Instance().CloseSlot(storageGroup, id);
         SaveSlot@ slot = SaveSystem::Instance().OpenSlot(storageGroup, id);
         if (slot is null || !slot.GetMetadata().Has("slotId"))
         {
-            Error("Не удалось прочитать сохранение: " + SaveSystem::Instance().GetError());
-            return;
+            diagnostic = "Не удалось прочитать сохранение: " + SaveSystem::Instance().GetError();
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         if (!slot.GetMetadata().Has("schemaVersion") || slot.GetMetadata().Get("schemaVersion").GetInt() != 1 ||
             !slot.HasState() || !ThumbnailValid(slot.GetFile("thumbnail.png")) ||
             slot.GetMetadata().Get("payloadLength").GetInt() > 64 * 1024 * 1024)
         {
-            Error("Сохранение не содержит допустимого игрового состояния или миниатюры 384×216 RGB PNG.");
-            return;
+            diagnostic = "Сохранение не содержит допустимого игрового состояния или миниатюры 384×216 RGB PNG.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         candidateStoryResource = slot.GetMetadata().Get("storyResource").GetString();
         if (!AllowedStory(candidateStoryResource))
         {
-            Error("Неизвестный источник сценария в сохранении.");
-            return;
+            diagnostic = "Неизвестный источник сценария в сохранении.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         @candidateStory = JsonValue();
         if (!candidateStory.LoadResource(candidateStoryResource))
         {
-            Error("Не удалось загрузить реестр сценария.");
-            return;
+            diagnostic = "Не удалось загрузить реестр сценария.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         if (slot.GetMetadata().Get("contentVersion").GetString() != candidateStory.View().Get("contentVersion").GetString())
         {
-            Error("Сохранение несовместимо с этой версией сценария.");
-            return;
+            diagnostic = "Сохранение несовместимо с этой версией сценария.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         @candidate = NovelState();
         if (!DecodeState(slot.GetState(), candidate) ||
             !NovelSnapshotValidation::Validate(candidate, candidateStory.View(), menu.runtime.definitions.View(), menu.runtime.speakers, menu.runtime.audio.paths))
         {
-            Error("Сохранение содержит недопустимое состояние или неподдерживаемую версию.");
-            return;
+            diagnostic = "Сохранение содержит недопустимое состояние или неподдерживаемую версию.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
         }
         recoveryTrace = slot.WasRecovered() ? "RECOVERED " + storageGroup + "/" + id : "CURRENT " + storageGroup + "/" + id;
+        SaveSystem::Instance().CloseSlot(storageGroup, id);
+        return true;
+    }
+
+    void BeginPreparedLoad()
+    {
         @staging = menu.novel.GetOrCreateChild("LoadCandidate");
         preparedView.Build(staging, menu.gameObject.GetComponent("Behaviour"));
         @preparedPresentation.view = preparedView;

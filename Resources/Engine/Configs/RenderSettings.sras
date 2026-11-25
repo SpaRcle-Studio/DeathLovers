@@ -216,6 +216,8 @@ use numeric depth: false
 								-b:false
 							-v:autoExposure
 								-b:false
+							-v:textureCompression
+								-b:true
 							-v:SSAO
 								-s:None
 							-v:shadowsQuality
