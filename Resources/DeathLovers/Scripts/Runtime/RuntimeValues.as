@@ -121,12 +121,12 @@ namespace RuntimeValues
         return result;
     }
 
-    String Text(JsonValue@ value, const String &in key)
+    String Text(JsonValueView@ value, const String &in key)
     {
         return value.Has(key) && value.Get(key).GetKind() == JsonValueKind::String ? value.Get(key).GetString() : "";
     }
 
-    Value@ FromJson(JsonValue@ source)
+    Value@ FromJson(JsonValueView@ source)
     {
         Value result;
         if (source.GetKind() == JsonValueKind::String)

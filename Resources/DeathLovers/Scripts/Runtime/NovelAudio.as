@@ -30,13 +30,13 @@ class NovelAudio
         return source;
     }
 
-    void Build(GameObject@ parent, JsonValue@ manifest)
+    void Build(GameObject@ parent, JsonValueView@ manifest)
     {
         paths.clear();
-        JsonValue@ assets = manifest.Get("assets");
+        JsonValueView@ assets = manifest.Get("assets");
         for (uint i = 0; i < assets.GetCount(); ++i)
         {
-            JsonValue@ asset = assets.At(i);
+            JsonValueView@ asset = assets.At(i);
             String path = asset.Get("target").GetString();
             paths.set(asset.Get("id").GetString(), path.substring(10, path.length() - 10));
         }
@@ -93,7 +93,7 @@ class NovelAudio
         return null;
     }
 
-    bool Command(NovelAudioState@ audio, JsonValue@ command)
+    bool Command(NovelAudioState@ audio, JsonValueView@ command)
     {
         String bus = command.Get("bus").GetString();
         NovelAudioSlot@ slot = Bus(bus);

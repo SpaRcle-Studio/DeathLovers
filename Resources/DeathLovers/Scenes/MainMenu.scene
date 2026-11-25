@@ -172,10 +172,7 @@ use numeric depth: false
 													-v:name
 														-s:listing
 													-v:scriptType
-														-s:JsonValue
-													-o:value
-														-v:json
-															-s:null
+														-s:JsonValue@
 												-k:property
 													-v:name
 														-s:grid
@@ -228,15 +225,14 @@ use numeric depth: false
 														-s:JsonValue
 													-o:value
 														-v:json
-															-s:null
+															-m:2
+null
+
 												-k:property
 													-v:name
 														-s:metadata
 													-v:scriptType
-														-s:JsonValue
-													-o:value
-														-v:json
-															-s:null
+														-s:JsonValue@
 												-k:property
 													-v:name
 														-s:candidate
@@ -249,10 +245,7 @@ use numeric depth: false
 													-v:name
 														-s:candidateStory
 													-v:scriptType
-														-s:JsonValue
-													-o:value
-														-v:json
-															-s:null
+														-s:JsonValue@
 												-k:property
 													-v:name
 														-s:preparedView

@@ -67,13 +67,27 @@ class EngineApiProbe : ScriptBehaviour
     {
         JsonValue document;
         Check(document.LoadResource("DeathLovers/Tests/engine-api.json"));
-        Check(document.Get("schemaVersion").GetInt() == 1);
-        JsonValue@ fixture = document.Get("state");
+        Check(document.View().Get("schemaVersion").GetInt() == 1);
+        JsonValueView@ fixture = document.View().Get("state");
         Check(fixture.Get("score").GetInt() == 7);
         Check(fixture.Get("enabled").GetBool());
         double fraction = fixture.Get("fraction").GetNumber();
         Check(fraction > 0.249999 && fraction < 0.250001);
         Check(fixture.Get("empty").GetKind() == JsonValueKind::Null);
+        Check(fixture.Get("empty").IsValid());
+        JsonValueView@ items = fixture.Get("items");
+        Check(items.GetCount() == 3);
+        Check(items.At(0).GetInt() == 1);
+        Check(items.At(2).Get("nested").At(0).GetBool());
+        Check(!items.At(2).Get("nested").At(1).GetBool());
+        JsonValueView missing;
+        Check(!missing.IsValid());
+        JsonValue@ independent = fixture.Clone();
+        JsonValue replacement;
+        replacement.SetInt(99);
+        Check(independent.Set("score", replacement));
+        Check(independent.View().Get("score").GetInt() == 99);
+        Check(fixture.Get("score").GetInt() == 7);
 
         NovelState source;
         source.core.schemaVersion = 2;

@@ -11,7 +11,7 @@ namespace NovelSnapshotValidation
         return value >= 0 && value <= 1.7976931348623157e308;
     }
 
-    bool Target(const String &in id, JsonValue@ commands)
+    bool Target(const String &in id, JsonValueView@ commands)
     {
         return id == "" || commands.Has(id);
     }
@@ -21,7 +21,7 @@ namespace NovelSnapshotValidation
         return id == "builtin:black" || id == "hidden" || (paths.contains(id) && !RuntimeValues::Starts(id, "audio/"));
     }
 
-    Value@ ConditionValue(JsonValue@ node, const Map<String, Value> &in variables, uint depth = 0)
+    Value@ ConditionValue(JsonValueView@ node, const Map<String, Value> &in variables, uint depth = 0)
     {
         Value invalid;
         if (depth > 64)
@@ -57,7 +57,7 @@ namespace NovelSnapshotValidation
         else if (op == "and" || op == "or")
         {
             result = op == "and";
-            JsonValue@ operands = node.Get("operands");
+            JsonValueView@ operands = node.Get("operands");
             for (uint i = 0; i < operands.GetCount(); ++i)
             {
                 Value@ value = ConditionValue(operands.At(i), variables, depth + 1);
@@ -99,7 +99,7 @@ namespace NovelSnapshotValidation
         return value;
     }
 
-    bool History(const Vector<NovelHistoryEntry> &in entries, JsonValue@ commands, const Map<String, NovelSpeaker> &in speakers)
+    bool History(const Vector<NovelHistoryEntry> &in entries, JsonValueView@ commands, const Map<String, NovelSpeaker> &in speakers)
     {
         for (uint i = 0; i < entries.size(); ++i)
         {
@@ -113,10 +113,10 @@ namespace NovelSnapshotValidation
         return true;
     }
 
-    bool Core(NovelCore@ s, JsonValue@ story, JsonValue@ definitions,
+    bool Core(NovelCore@ s, JsonValueView@ story, JsonValueView@ definitions,
         const Map<String, NovelSpeaker> &in speakers, const Map<String, String> &in paths, DialogueProgram@ program)
     {
-        JsonValue@ commands = story.Get("commands");
+        JsonValueView@ commands = story.Get("commands");
         if (s is null || s.schemaVersion != 1 || s.contentVersion != story.Get("contentVersion").GetString() ||
             !commands.Has(s.currentCommandId) || !Nonnegative(s.playTimeSeconds) ||
             !Target(s.rollbackBoundaryId, commands))
@@ -140,7 +140,7 @@ namespace NovelSnapshotValidation
         {
             return false;
         }
-        JsonValue@ registry = story.Get("variables");
+        JsonValueView@ registry = story.Get("variables");
         if (s.variables.size() != registry.GetCount() || s.history.size() > 250 || s.callStack.size() > 1000)
         {
             return false;
@@ -167,7 +167,7 @@ namespace NovelSnapshotValidation
             }
         }
         NovelPresentationState@ p = s.presentation;
-        JsonValue@ current = commands.Get(s.currentCommandId);
+        JsonValueView@ current = commands.Get(s.currentCommandId);
         if (phase == "WaitingText" && (p.text != current.Get("normalizedText").GetString() ||
             p.speakerId != current.Get("speakerId").GetString() || p.mode != current.Get("mode").GetString() ||
             p.autoWait != current.Get("autoWait").GetBool()))
@@ -208,7 +208,7 @@ namespace NovelSnapshotValidation
             }
             ++characterCount;
             const NovelCharacter@ character = p.characters.at(id);
-            JsonValue@ characters = definitions.Get("characters");
+            JsonValueView@ characters = definitions.Get("characters");
             if (!characters.Has(id) || !characters.Get(id).Get("stateResources").Has(character.state) ||
                 character.resourceId != characters.Get(id).Get("stateResources").Get(character.state).GetString() ||
                 !Resource(character.resourceId, paths) || !Resource(character.previousResource, paths) ||
@@ -238,11 +238,11 @@ namespace NovelSnapshotValidation
         }
         if (phase == "WaitingChoice")
         {
-            JsonValue@ original = current.Get("options");
+            JsonValueView@ original = current.Get("options");
             uint availableCount = 0;
             for (uint i = 0; i < original.GetCount(); ++i)
             {
-                JsonValue@ source = original.At(i);
+                JsonValueView@ source = original.At(i);
                 bool available = true;
                 if (source.Has("condition"))
                 {
@@ -292,7 +292,7 @@ namespace NovelSnapshotValidation
         return true;
     }
 
-    bool Validate(NovelState@ snapshot, JsonValue@ story, JsonValue@ definitions,
+    bool Validate(NovelState@ snapshot, JsonValueView@ story, JsonValueView@ definitions,
         const Map<String, NovelSpeaker> &in speakers, const Map<String, String> &in paths)
     {
         DialogueProgram program;

@@ -12,7 +12,7 @@ class NovelSaves
     String group = "manual";
     uint page = 1;
     bool saveMode = false;
-    JsonValue listing;
+    JsonValue@ listing;
     GameObject@ grid;
     String pendingAction;
     String pendingGroup;
@@ -20,9 +20,9 @@ class NovelSaves
     String queuedGroup;
     String queuedSlot;
     JsonValue payload;
-    JsonValue metadata;
+    JsonValue@ metadata;
     NovelState@ candidate;
-    JsonValue candidateStory;
+    JsonValue@ candidateStory;
     NovelView preparedView;
     NovelPresentation preparedPresentation;
     GameObject@ staging;
@@ -112,17 +112,16 @@ class NovelSaves
         cast<UIButton@>(object.GetOrCreateComponent("UIButton")).SetClickReceiver(menu.gameObject.GetComponent("Behaviour"), method);
     }
 
-    JsonValue@ Find(const String &in id)
+    JsonValueView@ Find(const String &in id)
     {
-        for (uint i = 0; i < listing.GetCount(); ++i)
+        for (uint i = 0; i < listing.View().GetCount(); ++i)
         {
-            if (listing.At(i).Get("slotId").GetString() == id)
+            if (listing.View().At(i).Get("slotId").GetString() == id)
             {
-                return listing.At(i);
+                return listing.View().At(i);
             }
         }
-        JsonValue empty;
-        empty.MakeObject();
+        JsonValueView empty;
         return empty;
     }
 
@@ -139,7 +138,7 @@ class NovelSaves
         {
             return;
         }
-        listing = SaveSystem::Instance().EnumerateSlots(group);
+        @listing = SaveSystem::Instance().EnumerateSlots(group);
         String listingError = SaveSystem::Instance().GetError();
         menu.Text(menu.load, "StorageStatus", listingError == "" ? "" : "Некоторые сохранения недоступны: " + listingError);
         menu.Text(menu.load, "Title", saveMode ? "Сохранить" : "Загрузить");
@@ -152,8 +151,8 @@ class NovelSaves
         for (uint i = 0; i < 6; ++i)
         {
             String id = SlotId(i);
-            JsonValue@ record = Find(id);
-            bool exists = record.Has("slotId");
+            JsonValueView@ record = Find(id);
+            bool exists = record.IsValid() && record.Has("slotId");
             GameObject@ slot = menu.Child(grid, "Slot" + RuntimeValues::Index(i));
             menu.Text(slot, "Caption", exists ? record.Get("displayTime").GetString() + "\n" + record.Get("sceneTitle").GetString() : "Пусто");
             cast<UIButton@>(slot.GetComponent("UIButton")).SetInteractable(!busy && (saveMode ? group == "manual" && CanSave() : exists));
@@ -179,18 +178,18 @@ class NovelSaves
         JsonValue@ entries = SaveSystem::Instance().EnumerateSlots(storageGroup);
         int64 sequence = -1;
         String id;
-        for (uint i = 0; i < entries.GetCount(); ++i)
+        for (uint i = 0; i < entries.View().GetCount(); ++i)
         {
-            if (entries.At(i).Get("sequence").GetInt() > sequence && Compatible(entries.At(i), storageGroup))
+            if (entries.View().At(i).Get("sequence").GetInt() > sequence && Compatible(entries.View().At(i), storageGroup))
             {
-                sequence = entries.At(i).Get("sequence").GetInt();
-                id = entries.At(i).Get("slotId").GetString();
+                sequence = entries.View().At(i).Get("sequence").GetInt();
+                id = entries.View().At(i).Get("slotId").GetString();
             }
         }
         return id;
     }
 
-    bool Compatible(JsonValue@ record, const String &in storageGroup)
+    bool Compatible(JsonValueView@ record, const String &in storageGroup)
     {
         if (!record.Has("schemaVersion") || record.Get("schemaVersion").GetInt() != 1)
         {
@@ -202,7 +201,7 @@ class NovelSaves
             return false;
         }
         JsonValue source;
-        if (!source.LoadResource(resource) || record.Get("contentVersion").GetString() != source.Get("contentVersion").GetString())
+        if (!source.LoadResource(resource) || record.Get("contentVersion").GetString() != source.View().Get("contentVersion").GetString())
         {
             return false;
         }
@@ -211,7 +210,7 @@ class NovelSaves
         SaveSlot@ slot = SaveSystem::Instance().OpenSlot(storageGroup, id);
         NovelState test;
         bool valid = slot !is null && slot.HasState() && ThumbnailValid(slot.GetFile("thumbnail.png")) && DecodeState(slot.GetState(), test) &&
-            NovelSnapshotValidation::Validate(test, source, menu.runtime.definitions, menu.runtime.speakers, menu.runtime.audio.paths);
+            NovelSnapshotValidation::Validate(test, source.View(), menu.runtime.definitions.View(), menu.runtime.speakers, menu.runtime.audio.paths);
         SaveSystem::Instance().CloseSlot(storageGroup, id);
         return valid;
     }
@@ -226,9 +225,9 @@ class NovelSaves
     {
         JsonValue@ entries = SaveSystem::Instance().EnumerateSlots(storageGroup);
         int64 sequence = 0;
-        for (uint i = 0; i < entries.GetCount(); ++i)
+        for (uint i = 0; i < entries.View().GetCount(); ++i)
         {
-            int64 value = entries.At(i).Get("sequence").GetInt();
+            int64 value = entries.View().At(i).Get("sequence").GetInt();
             sequence = value > sequence ? value : sequence;
         }
         return sequence + 1;
@@ -394,7 +393,7 @@ class NovelSaves
         object.Set(key, value);
     }
 
-    bool EqualTree(JsonValue@ left, JsonValue@ right, uint depth = 0)
+    bool EqualTree(JsonValueView@ left, JsonValueView@ right, uint depth = 0)
     {
         if (depth > 128 || left.GetKind() != right.GetKind() || left.GetCount() != right.GetCount())
         {
@@ -427,7 +426,7 @@ class NovelSaves
         return left.ToJson() == right.ToJson();
     }
 
-    bool DecodeState(JsonValue@ document, NovelState@ result)
+    bool DecodeState(JsonValueView@ document, NovelState@ result)
     {
         NovelState decoded;
         if (!DeserializeScriptValue(document.ToJson(), decoded))
@@ -435,7 +434,7 @@ class NovelSaves
             return false;
         }
         JsonValue canonical;
-        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical))
+        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical.View()))
         {
             return false;
         }
@@ -443,7 +442,7 @@ class NovelSaves
         return true;
     }
 
-    bool DecodeProfile(JsonValue@ document, MenuProfile@ result)
+    bool DecodeProfile(JsonValueView@ document, MenuProfile@ result)
     {
         MenuProfile decoded;
         if (!DeserializeScriptValue(document.ToJson(), decoded))
@@ -451,7 +450,7 @@ class NovelSaves
             return false;
         }
         JsonValue canonical;
-        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical))
+        if (!canonical.Parse(SerializeScriptValue(decoded)) || !EqualTree(document, canonical.View()))
         {
             return false;
         }
@@ -505,7 +504,7 @@ class NovelSaves
             Error("Не удалось сериализовать состояние игры.");
             return;
         }
-        metadata = Metadata(true, snapshot.core.contentVersion, snapshot.core.currentCommandId, snapshot.core.playTimeSeconds);
+        @metadata = Metadata(true, snapshot.core.contentVersion, snapshot.core.currentCommandId, snapshot.core.playTimeSeconds);
         TextField(metadata, "storyResource", menu.runtime.storyResource);
         autoStateKey = AutoKey();
         IntegerField(metadata, "sequence", NextSequence(queuedGroup));
@@ -627,19 +626,20 @@ class NovelSaves
             Error("Неизвестный источник сценария в сохранении.");
             return;
         }
+        @candidateStory = JsonValue();
         if (!candidateStory.LoadResource(candidateStoryResource))
         {
             Error("Не удалось загрузить реестр сценария.");
             return;
         }
-        if (slot.GetMetadata().Get("contentVersion").GetString() != candidateStory.Get("contentVersion").GetString())
+        if (slot.GetMetadata().Get("contentVersion").GetString() != candidateStory.View().Get("contentVersion").GetString())
         {
             Error("Сохранение несовместимо с этой версией сценария.");
             return;
         }
         @candidate = NovelState();
         if (!DecodeState(slot.GetState(), candidate) ||
-            !NovelSnapshotValidation::Validate(candidate, candidateStory, menu.runtime.definitions, menu.runtime.speakers, menu.runtime.audio.paths))
+            !NovelSnapshotValidation::Validate(candidate, candidateStory.View(), menu.runtime.definitions.View(), menu.runtime.speakers, menu.runtime.audio.paths))
         {
             Error("Сохранение содержит недопустимое состояние или неподдерживаемую версию.");
             return;
@@ -700,11 +700,11 @@ class NovelSaves
         staging.Destroy();
         @staging = null;
         menu.runtime.view = preparedView;
-        menu.runtime.story = candidateStory;
+        @menu.runtime.story = candidateStory;
         menu.runtime.storyResource = candidateStoryResource;
-        @menu.runtime.commands = menu.runtime.story.Get("commands");
+        @menu.runtime.commands = menu.runtime.story.View().Get("commands");
         menu.runtime.endingTargets.clear();
-        JsonValue@ labels = menu.runtime.story.Get("labels");
+        JsonValueView@ labels = menu.runtime.story.View().Get("labels");
         for (uint i = 0; i < labels.GetCount(); ++i)
         {
             String label = labels.GetKey(i);
@@ -784,7 +784,7 @@ class NovelSaves
             diagnostic = "Профиль не загружен: " + SaveSystem::Instance().GetError();
             return;
         }
-        if (entries.GetCount() > 0)
+        if (entries.View().GetCount() > 0)
         {
             MenuProfile candidateProfile;
             candidateProfile.schemaVersion = 0;
@@ -797,8 +797,8 @@ class NovelSaves
             }
             MenuSession::profile = candidateProfile;
         }
-        lastProfile = entries.GetCount() > 0 ? SerializeScriptValue(MenuSession::profile) : "";
-        if (entries.GetCount() == 0)
+        lastProfile = entries.View().GetCount() > 0 ? SerializeScriptValue(MenuSession::profile) : "";
+        if (entries.View().GetCount() == 0)
         {
             MarkProfile();
         }

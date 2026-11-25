@@ -15,8 +15,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     NovelAudio audio;
     NovelPresentation presentation;
     DialogueProgram program;
-    JsonValue story;
-    JsonValue@ commands;
+    JsonValue@ story = JsonValue();
+    JsonValueView@ commands;
     Map<String, String> endingTargets;
     JsonValue definitions;
     Map<String, NovelSpeaker> speakers;
@@ -52,10 +52,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         startupError = "Не удалось создать интерфейс или аудио новеллы. Подробности в журнале движка.";
         speakers.clear();
-        for (uint i = 0; i < speakerManifest.GetCount(); ++i)
+        for (uint i = 0; i < speakerManifest.View().GetCount(); ++i)
         {
-            String id = speakerManifest.GetKey(i);
-            JsonValue@ source = speakerManifest.Get(id);
+            String id = speakerManifest.View().GetKey(i);
+            JsonValueView@ source = speakerManifest.View().Get(id);
             NovelSpeaker speaker;
             speaker.name = source.Get("name").GetString();
             speaker.voice = source.Get("voice").GetString();
@@ -68,10 +68,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         @presentation.view = view;
         @presentation.audio = audio;
         view.Build(menu.novel, receiver);
-        audio.Build(menu.gameObject.GetOrCreateChild("RuntimeAudio"), manifest);
-        for (uint i = 0; i < speakerManifest.GetCount(); ++i)
+        audio.Build(menu.gameObject.GetOrCreateChild("RuntimeAudio"), manifest.View());
+        for (uint i = 0; i < speakerManifest.View().GetCount(); ++i)
         {
-            NovelSpeaker@ speaker = speakers.at(speakerManifest.GetKey(i));
+            NovelSpeaker@ speaker = speakers.at(speakerManifest.View().GetKey(i));
             speaker.voicePath = audio.Path(speaker.voice);
         }
         configured = true;
@@ -87,11 +87,13 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return false;
         }
         startupError = "Не удалось загрузить story.json или characters.json. Подробности в журнале движка.";
-        if (!story.LoadResource("DeathLovers/Story/story.json") ||
+        JsonValue nextStory;
+        if (!nextStory.LoadResource("DeathLovers/Story/story.json") ||
             !definitions.LoadResource("DeathLovers/Story/characters.json"))
         {
             return false;
         }
+        @story = nextStory;
         startupError = "Неверная версия Story или отсутствует начальная команда.";
         if (!NewGame())
         {
@@ -104,13 +106,15 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     bool StartFixture()
     {
         storyResource = "DeathLovers/Story/runtime-fixture.json";
-        if (!configured || !story.LoadResource("DeathLovers/Story/runtime-fixture.json"))
+        JsonValue nextStory;
+        if (!configured || !nextStory.LoadResource("DeathLovers/Story/runtime-fixture.json"))
         {
             return false;
         }
+        @story = nextStory;
         definitions.LoadResource("DeathLovers/Story/characters.json");
-        JsonValue@ characters = definitions.Get("characters");
-        JsonValue@ character = characters.Get("ch_p");
+        JsonValue@ characters = definitions.View().Get("characters").Clone();
+        JsonValue@ character = characters.View().Get("ch_p").Clone();
         JsonValue animation;
         animation.SetString("single_bounce_animation");
         character.Set("animation", animation);
@@ -133,17 +137,17 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         autoDelay = 0;
         rollbackCount = 0;
         rollbackLastCommand = "";
-        @commands = story.Get("commands");
-        if (story.Get("schemaVersion").GetInt() != 1) {
+        @commands = story.View().Get("commands");
+        if (story.View().Get("schemaVersion").GetInt() != 1) {
             Debug::Instance().Error("NovelSession::NewGame() : ivalid version!");
             return false;
         }
-        if (!commands.Has(story.Get("entryCommandId").GetString())) {
+        if (!commands.Has(story.View().Get("entryCommandId").GetString())) {
             Debug::Instance().Error("NovelSession::NewGame() : ivalid entry command!");
             return false;
         }
         endingTargets.clear();
-        JsonValue@ labels = story.Get("labels");
+        JsonValueView@ labels = story.View().Get("labels");
         for (uint i = 0; i < labels.GetCount(); ++i)
         {
             String label = labels.GetKey(i);
@@ -159,10 +163,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         state.core.callStack.reserve(16);
         state.core.presentation.choices.reserve(8);
         state.core.schemaVersion = 1;
-        state.core.contentVersion = story.Get("contentVersion").GetString();
-        state.core.currentCommandId = story.Get("entryCommandId").GetString();
+        state.core.contentVersion = story.View().Get("contentVersion").GetString();
+        state.core.currentCommandId = story.View().Get("entryCommandId").GetString();
         Phase("Ready");
-        JsonValue@ registry = story.Get("variables");
+        JsonValueView@ registry = story.View().Get("variables");
         for (uint i = 0; i < registry.GetCount(); ++i)
         {
             String id = registry.GetKey(i);
@@ -194,11 +198,13 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool StartSavesFixture()
     {
-        if (!configured || !story.LoadResource("DeathLovers/Story/saves-fixture.json") ||
+        JsonValue nextStory;
+        if (!configured || !nextStory.LoadResource("DeathLovers/Story/saves-fixture.json") ||
             !definitions.LoadResource("DeathLovers/Story/characters.json"))
         {
             return false;
         }
+        @story = nextStory;
         storyResource = "DeathLovers/Story/saves-fixture.json";
         traceEnabled = true;
         return NewGame();
@@ -219,14 +225,14 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return !menu.inGame || menu.gameMenuOpen || menu.modal !is null || menu.saves.busy || !Input::Instance().IsAppFocused();
     }
 
-    JsonValue@ Command()
+    JsonValueView@ Command()
     {
         return commands.Get(state.core.currentCommandId);
     }
 
     void Fail(const String &in message)
     {
-        JsonValue@ command = Command();
+        JsonValueView@ command = Command();
         String location = state.core.currentCommandId + " " + RuntimeValues::Text(command, "sourceFile");
         if (command.Has("sourceLine"))
         {
@@ -240,7 +246,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         audio.StopTyping();
     }
 
-    void Go(JsonValue@ target)
+    void Go(JsonValueView@ target)
     {
         GoId(target.GetString());
     }
@@ -265,7 +271,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         Phase("Ready");
     }
 
-    Value@ Evaluate(JsonValue@ node, uint depth = 0)
+    Value@ Evaluate(JsonValueView@ node, uint depth = 0)
     {
         Value result;
         bool boolean = false;
@@ -302,7 +308,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         else if (op == "and" || op == "or")
         {
-            JsonValue@ operands = node.Get("operands");
+            JsonValueView@ operands = node.Get("operands");
             boolean = op == "and";
             for (uint i = 0; i < operands.GetCount(); ++i)
             {
@@ -349,7 +355,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return result;
     }
 
-    bool Condition(JsonValue@ node)
+    bool Condition(JsonValueView@ node)
     {
         Value@ result = Evaluate(node);
         bool boolean = false;
@@ -360,7 +366,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return boolean;
     }
 
-    void Assign(JsonValue@ command)
+    void Assign(JsonValueView@ command)
     {
         String id = command.Get("variableId").GetString();
         Value@ value = RuntimeValues::FromJson(command.Get("value"));
@@ -402,7 +408,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         Go(command.Get("next"));
     }
 
-    float Duration(JsonValue@ transition)
+    float Duration(JsonValueView@ transition)
     {
         if (transition.Has("seconds"))
         {
@@ -414,7 +420,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return kind == "fade" ? 1.0f : kind == "dissolve" ? 0.5f : kind == "vpunch" ? 0.25f : 0;
     }
 
-    void Say(JsonValue@ command)
+    void Say(JsonValueView@ command)
     {
         String speakerId = command.Get("speakerId").GetString();
         if (!speakers.contains(speakerId))
@@ -458,18 +464,18 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         RememberInteraction();
     }
 
-    void Character(JsonValue@ command)
+    void Character(JsonValueView@ command)
     {
         String id = command.Get("characterId").GetString();
         String name = command.Get("state").GetString();
-        JsonValue@ registry = definitions.Get("characters");
+        JsonValueView@ registry = definitions.View().Get("characters");
         if (!registry.Has(id) || !registry.Get(id).Get("stateResources").Has(name))
         {
             Fail("Unknown character/state " + id + " " + name);
             return;
         }
         NovelPresentationState@ p = state.core.presentation;
-        JsonValue@ definition = registry.Get(id);
+        JsonValueView@ definition = registry.Get(id);
         NovelCharacter character;
         character.position.x = float(definition.Get("position").At(0).GetNumber());
         character.position.y = float(definition.Get("position").At(1).GetNumber());
@@ -492,7 +498,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         Go(command.Get("next"));
     }
 
-    void Execute(JsonValue@ command)
+    void Execute(JsonValueView@ command)
     {
         String type = command.Get("type").GetString();
         if (type == "Say")
@@ -551,10 +557,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         if (type == "Choice")
         {
             p.choices.clear();
-            JsonValue@ source = command.Get("options");
+            JsonValueView@ source = command.Get("options");
             for (uint i = 0; i < source.GetCount(); ++i)
             {
-                JsonValue@ option = source.At(i);
+                JsonValueView@ option = source.At(i);
                 if (!option.Has("condition") || Condition(option.Get("condition")))
                 {
                     NovelChoice choice;
@@ -672,7 +678,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             {
                 before = SerializeScriptValue(state.core);
             }
-            JsonValue@ command = Command();
+            JsonValueView@ command = Command();
             Execute(command);
             if (traceEnabled)
             {
@@ -1142,7 +1148,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool ValidateSnapshot(NovelState@ snapshot)
     {
-        return NovelSnapshotValidation::Validate(snapshot, story, definitions, speakers, audio.paths);
+        return NovelSnapshotValidation::Validate(snapshot, story.View(), definitions.View(), speakers, audio.paths);
     }
 
     NovelRestoreReport@ VerifyRestoreTwice()

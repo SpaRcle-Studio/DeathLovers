@@ -40,11 +40,11 @@ class StoryDebugPanel : ScriptBehaviour
         contentVersion = version;
         if (checkpointManifest !is null)
         {
-            @checkpoints = checkpointManifest.Clone();
+            @checkpoints = checkpointManifest;
         }
         if (assetManifest !is null)
         {
-            @resources = assetManifest.Clone();
+            @resources = assetManifest;
         }
         gameObject.SetEnabled(developmentBuild);
     }
@@ -81,7 +81,7 @@ class StoryDebugPanel : ScriptBehaviour
         {
             return;
         }
-        display.SetText(resources.ToJson());
+        display.SetText(resources.View().ToJson());
     }
 
     bool CompleteCheckpoint(NovelState@ state)
@@ -96,14 +96,14 @@ class StoryDebugPanel : ScriptBehaviour
         {
             return;
         }
-        if (!checkpoints.Has(selectedCheckpoint))
+        if (!checkpoints.View().Has(selectedCheckpoint))
         {
             diagnostic = "CHECKPOINT_UNKNOWN: label jumps are forbidden; select a complete fixture";
             Refresh();
             return;
         }
         NovelState state;
-        String encoded = checkpoints.Get(selectedCheckpoint).GetString();
+        String encoded = checkpoints.View().Get(selectedCheckpoint).GetString();
         if (encoded == "" || !DeserializeScriptValue(encoded, state))
         {
             diagnostic = "CHECKPOINT_INCOMPLETE: regenerate typed fixture for this contentVersion";
