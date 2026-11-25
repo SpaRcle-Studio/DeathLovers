@@ -81,6 +81,435 @@ use numeric depth: false
 									-v:behaviourName
 										-s:MenuNavigation
 									-o:data
+										-o:sessionStarter
+											-v:type
+												-s:AS_Gameplay_1::IMenuSessionStarter@
+											-v:scriptType
+												-s:IMenuSessionStarter@
+											-v:objectId
+												-i:0
+										-o:runtime
+											-v:type
+												-s:AS_Gameplay_1::NovelSession@
+											-v:scriptType
+												-s:NovelSession@
+											-v:objectId
+												-i:0
+										-o:saves
+											-v:type
+												-s:AS_Gameplay_1::NovelSaves
+											-v:scriptType
+												-s:NovelSaves
+											-v:objectId
+												-i:2
+											-v:definition
+												-b:true
+											-v:objectType
+												-s:NovelSaves
+											-a:properties
+												-k:property
+													-v:name
+														-s:menu
+													-v:scriptType
+														-s:MenuNavigation@
+													-o:value
+														-v:objectId
+															-i:0
+												-k:property
+													-v:name
+														-s:capture
+													-v:scriptType
+														-s:FrameCapture@
+												-k:property
+													-v:name
+														-s:busy
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
+												-k:property
+													-v:name
+														-s:configured
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
+												-k:property
+													-v:name
+														-s:operation
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:group
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:manual
+												-k:property
+													-v:name
+														-s:page
+													-v:scriptType
+														-s:uint
+													-o:value
+														-v:value
+															-i:1
+												-k:property
+													-v:name
+														-s:saveMode
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
+												-k:property
+													-v:name
+														-s:listing
+													-v:scriptType
+														-s:JsonValue
+													-o:value
+														-v:json
+															-s:null
+												-k:property
+													-v:name
+														-s:grid
+													-v:scriptType
+														-s:GameObject@
+												-k:property
+													-v:name
+														-s:pendingAction
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:pendingGroup
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:pendingSlot
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:queuedGroup
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:queuedSlot
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:payload
+													-v:scriptType
+														-s:JsonValue
+													-o:value
+														-v:json
+															-s:null
+												-k:property
+													-v:name
+														-s:metadata
+													-v:scriptType
+														-s:JsonValue
+													-o:value
+														-v:json
+															-s:null
+												-k:property
+													-v:name
+														-s:candidate
+													-v:scriptType
+														-s:NovelState@
+													-o:value
+														-v:objectId
+															-i:0
+												-k:property
+													-v:name
+														-s:candidateStory
+													-v:scriptType
+														-s:JsonValue
+													-o:value
+														-v:json
+															-s:null
+												-k:property
+													-v:name
+														-s:preparedView
+													-v:scriptType
+														-s:NovelView
+													-o:value
+														-v:objectId
+															-i:3
+														-v:definition
+															-b:true
+														-v:objectType
+															-s:NovelView
+														-a:properties
+															-k:property
+																-v:name
+																	-s:root
+																-v:scriptType
+																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:adv
+																-v:scriptType
+																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:nvl
+																-v:scriptType
+																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:choiceRoot
+																-v:scriptType
+																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:dialogue
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:speaker
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:indicator
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:background
+																-v:scriptType
+																	-s:NovelVisualSlot@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:backgroundOld
+																-v:scriptType
+																	-s:NovelVisualSlot@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:characters
+																-v:scriptType
+																	-s:NovelVisualSlot@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:choices
+																-v:scriptType
+																	-s:NovelVisualSlot@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:nvlEntries
+																-v:scriptType
+																	-s:NovelVisualSlot@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:nvlScroll
+																-v:scriptType
+																	-s:UIScrollRect@
+															-k:property
+																-v:name
+																	-s:advanceButton
+																-v:scriptType
+																	-s:UIButton@
+															-k:property
+																-v:name
+																	-s:choicesActive
+																-v:scriptType
+																	-s:bool
+																-o:value
+																	-v:value
+																		-b:false
+															-k:property
+																-v:name
+																	-s:nvlContent
+																-v:scriptType
+																	-s:GameObject@
+												-k:property
+													-v:name
+														-s:preparedPresentation
+													-v:scriptType
+														-s:NovelPresentation
+													-o:value
+														-v:objectId
+															-i:4
+														-v:definition
+															-b:true
+														-v:objectType
+															-s:NovelPresentation
+														-a:properties
+															-k:property
+																-v:name
+																	-s:view
+																-v:scriptType
+																	-s:NovelView@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:audio
+																-v:scriptType
+																	-s:NovelAudio@
+																-o:value
+																	-v:objectId
+																		-i:0
+															-k:property
+																-v:name
+																	-s:waitingTextures
+																-v:scriptType
+																	-s:bool
+																-o:value
+																	-v:value
+																		-b:false
+												-k:property
+													-v:name
+														-s:staging
+													-v:scriptType
+														-s:GameObject@
+												-k:property
+													-v:name
+														-s:elapsed
+													-v:scriptType
+														-s:float
+													-o:value
+														-v:value
+															-f:0
+												-k:property
+													-v:name
+														-s:frames
+													-v:scriptType
+														-s:uint
+													-o:value
+														-v:value
+															-i:0
+												-k:property
+													-v:name
+														-s:profileDelay
+													-v:scriptType
+														-s:float
+													-o:value
+														-v:value
+															-f:-1
+												-k:property
+													-v:name
+														-s:lastProfile
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:profileWritable
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:true
+												-k:property
+													-v:name
+														-s:autoPending
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
+												-k:property
+													-v:name
+														-s:lastAutoTime
+													-v:scriptType
+														-s:double
+													-o:value
+														-v:value
+															-d:0
+												-k:property
+													-v:name
+														-s:lastAutoState
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:diagnostic
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:recoveryTrace
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:candidateStoryResource
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:autoStateKey
+													-v:scriptType
+														-s:String
+													-o:value
+														-v:value
+															-s:
+												-k:property
+													-v:name
+														-s:openAfterYield
+													-v:scriptType
+														-s:bool
+													-o:value
+														-v:value
+															-b:false
 										-o:developmentRuntime
 											-v:type
 												-s:bool
@@ -88,6 +517,22 @@ use numeric depth: false
 												-s:bool
 											-v:value
 												-b:false
+										-a:__sr_script_properties
+											-k:property
+												-v:name
+													-s:sessionStarter
+												-v:scriptType
+													-s:IMenuSessionStarter@
+											-k:property
+												-v:name
+													-s:runtime
+												-v:scriptType
+													-s:NovelSession@
+											-k:property
+												-v:name
+													-s:saves
+												-v:scriptType
+													-s:NovelSaves
 						-k:i
 							-o:d
 								-v:type
@@ -8629,7 +9074,7 @@ use numeric depth: false
 																					-v:y
 																						-f:1
 																			-v:localPriority
-																				-i:10
+																				-i:20
 														-k:i
 															-o:d
 																-v:type
@@ -16426,9 +16871,9 @@ use numeric depth: false
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.940631
+													-f:0.951913
 												-v:y
-													-f:0.940631
+													-f:0.951913
 												-v:z
 													-f:1
 											-v:localPriority
@@ -16550,40 +16995,42 @@ use numeric depth: false
 												-v:y
 													-f:1
 											-v:localPriority
-												-i:500
+												-i:5000
+					-v:layer
+						-s:UI
 					-o:transform
 						-v:type
 							-s:TransformRect
 						-o:ptr
 							-o:translation
 								-v:x
-									-f:663
+									-f:679
 								-v:y
 									-f:421.5
 							-o:size
 								-v:x
-									-f:1806.01
+									-f:1827.67
 								-v:y
-									-f:1148.17
+									-f:1134.56
 							-o:offsetMin
 								-v:x
-									-f:-240.006
+									-f:-234.837
 								-v:y
-									-f:-152.583
+									-f:-145.779
 							-o:offsetMax
 								-v:x
-									-f:1566.01
+									-f:1592.84
 								-v:y
-									-f:995.583
+									-f:988.779
 							-o:anchors
 								-o:min
 								-o:max
 							-o:scale
 								-v:x
-									-f:0.734215
+									-f:0.743021
 								-v:y
-									-f:0.734215
+									-f:0.743021
 								-v:z
-									-f:0.734215
+									-f:0.743021
 							-v:localPriority
 								-i:0

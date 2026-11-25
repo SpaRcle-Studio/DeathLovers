@@ -18,14 +18,94 @@ namespace NovelSnapshotValidation
 
     bool Resource(const String &in id, const Map<String, String> &in paths)
     {
-        return id == "builtin:black" || id == "hidden" || paths.contains(id);
+        return id == "builtin:black" || id == "hidden" || (paths.contains(id) && !RuntimeValues::Starts(id, "audio/"));
+    }
+
+    Value@ ConditionValue(JsonValue@ node, const Map<String, Value> &in variables, uint depth = 0)
+    {
+        Value invalid;
+        if (depth > 64)
+        {
+            return invalid;
+        }
+        String op = node.Get("op").GetString();
+        if (op == "literal")
+        {
+            return RuntimeValues::FromJson(node.Get("value"));
+        }
+        if (op == "variable")
+        {
+            String id = node.Get("variableId").GetString();
+            if (!variables.contains(id))
+            {
+                return invalid;
+            }
+            Value copy;
+            copy = variables.at(id);
+            return copy;
+        }
+        bool result = false;
+        if (op == "not")
+        {
+            Value@ value = ConditionValue(node.Get("operand"), variables, depth + 1);
+            if (!value.get(result))
+            {
+                return invalid;
+            }
+            result = !result;
+        }
+        else if (op == "and" || op == "or")
+        {
+            result = op == "and";
+            JsonValue@ operands = node.Get("operands");
+            for (uint i = 0; i < operands.GetCount(); ++i)
+            {
+                Value@ value = ConditionValue(operands.At(i), variables, depth + 1);
+                if (!value.get(result))
+                {
+                    return invalid;
+                }
+                if (result == (op == "or"))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Value@ left = ConditionValue(node.Get("left"), variables, depth + 1);
+            Value@ right = ConditionValue(node.Get("right"), variables, depth + 1);
+            if (!RuntimeValues::SameType(left, right))
+            {
+                return invalid;
+            }
+            if (op == "eq" || op == "ne")
+            {
+                bool equal = RuntimeValues::Equal(left, right);
+                result = op == "eq" ? equal : !equal;
+            }
+            else
+            {
+                int64 a, b;
+                if (!left.get(a) || !right.get(b) || (op != "lt" && op != "le" && op != "gt" && op != "ge"))
+                {
+                    return invalid;
+                }
+                result = op == "lt" ? a < b : op == "le" ? a <= b : op == "gt" ? a > b : a >= b;
+            }
+        }
+        Value value;
+        value.set(result);
+        return value;
     }
 
     bool History(const Vector<NovelHistoryEntry> &in entries, JsonValue@ commands, const Map<String, NovelSpeaker> &in speakers)
     {
         for (uint i = 0; i < entries.size(); ++i)
         {
-            if (!commands.Has(entries[i].commandId) || !speakers.contains(entries[i].speakerId))
+            if (!commands.Has(entries[i].commandId) || !speakers.contains(entries[i].speakerId) ||
+                commands.Get(entries[i].commandId).Get("type").GetString() != "Say" ||
+                commands.Get(entries[i].commandId).Get("speakerId").GetString() != entries[i].speakerId)
             {
                 return false;
             }
@@ -37,13 +117,18 @@ namespace NovelSnapshotValidation
         const Map<String, NovelSpeaker> &in speakers, const Map<String, String> &in paths, DialogueProgram@ program)
     {
         JsonValue@ commands = story.Get("commands");
-        if (s is null || s.schemaVersion != 2 || s.contentVersion != story.Get("contentVersion").GetString() ||
+        if (s is null || s.schemaVersion != 1 || s.contentVersion != story.Get("contentVersion").GetString() ||
             !commands.Has(s.currentCommandId) || !Nonnegative(s.playTimeSeconds) ||
             !Target(s.rollbackBoundaryId, commands))
         {
             return false;
         }
         String phase = s.phase;
+        if (s.activeEndingId != "" && (!story.Get("labels").Has(s.activeEndingId) ||
+            s.activeEndingId.length() <= 7 || s.activeEndingId.substring(s.activeEndingId.length() - 7, 7) != "_ending"))
+        {
+            return false;
+        }
         if (phase != "Ready" && phase != "WaitingText" && phase != "WaitingChoice" &&
             phase != "WaitingTimer" && phase != "WaitingTransition" && phase != "Finished")
         {
@@ -82,6 +167,13 @@ namespace NovelSnapshotValidation
             }
         }
         NovelPresentationState@ p = s.presentation;
+        JsonValue@ current = commands.Get(s.currentCommandId);
+        if (phase == "WaitingText" && (p.text != current.Get("normalizedText").GetString() ||
+            p.speakerId != current.Get("speakerId").GetString() || p.mode != current.Get("mode").GetString() ||
+            p.autoWait != current.Get("autoWait").GetBool()))
+        {
+            return false;
+        }
         if (!Resource(p.background, paths) || (p.mode != "ADV" && p.mode != "NVL") ||
             !speakers.contains(p.speakerId) || !Nonnegative(p.remainingPause) || !Nonnegative(p.effectTime))
         {
@@ -143,25 +235,42 @@ namespace NovelSnapshotValidation
             {
                 return false;
             }
-            if (phase == "WaitingChoice")
+        }
+        if (phase == "WaitingChoice")
+        {
+            JsonValue@ original = current.Get("options");
+            uint availableCount = 0;
+            for (uint i = 0; i < original.GetCount(); ++i)
             {
-                JsonValue@ original = commands.Get(s.currentCommandId).Get("options");
-                bool found = false;
-                for (uint j = 0; j < original.GetCount(); ++j)
+                JsonValue@ source = original.At(i);
+                bool available = true;
+                if (source.Has("condition"))
                 {
-                    JsonValue@ candidate = original.At(j);
-                    if (candidate.Get("choiceId").GetString() == option.choiceId &&
-                        candidate.Get("normalizedText").GetString() == option.normalizedText &&
-                        candidate.Get("target").GetString() == option.target)
+                    Value@ condition = ConditionValue(source.Get("condition"), s.variables);
+                    if (!condition.get(available))
                     {
-                        found = true;
-                        break;
+                        return false;
                     }
                 }
-                if (!found)
+                if (!available)
+                {
+                    continue;
+                }
+                if (availableCount >= p.choices.size())
                 {
                     return false;
                 }
+                NovelChoice@ option = p.choices[availableCount++];
+                if (option.choiceId != source.Get("choiceId").GetString() ||
+                    option.normalizedText != source.Get("normalizedText").GetString() ||
+                    option.target != source.Get("target").GetString())
+                {
+                    return false;
+                }
+            }
+            if (availableCount != p.choices.size())
+            {
+                return false;
             }
         }
         NovelAudioState@ a = s.audio;
@@ -172,7 +281,7 @@ namespace NovelSnapshotValidation
         for (uint i = 0; i < 3; ++i)
         {
             NovelAudioChannel@ channel = a.Channel(i == 0 ? "Music" : i == 1 ? "Sfx" : "Voice");
-            if ((channel.resourceId != "" && !paths.contains(channel.resourceId)) ||
+            if ((channel.resourceId != "" && (!paths.contains(channel.resourceId) || !RuntimeValues::Starts(channel.resourceId, "audio/"))) ||
                 !Nonnegative(channel.position) || !Nonnegative(channel.gain) || !Nonnegative(channel.targetGain) ||
                 !Nonnegative(channel.fadeFrom) || !Nonnegative(channel.fadeRemaining) || !Nonnegative(channel.fadeDuration) ||
                 channel.fadeRemaining > channel.fadeDuration)

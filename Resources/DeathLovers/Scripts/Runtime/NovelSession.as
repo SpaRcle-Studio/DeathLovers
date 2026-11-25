@@ -34,6 +34,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     uint rollbackCount = 0;
     String rollbackLastCommand;
     NovelAudioState rollbackAudio;
+    String storyResource = "DeathLovers/Story/story.json";
+    bool restoreInputPending = false;
 
     void Configure(MenuNavigation@ navigation, Component@ receiver)
     {
@@ -78,6 +80,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool StartSession()
     {
+        storyResource = "DeathLovers/Story/story.json";
         traceEnabled = false;
         if (!configured)
         {
@@ -100,6 +103,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool StartFixture()
     {
+        storyResource = "DeathLovers/Story/runtime-fixture.json";
         if (!configured || !story.LoadResource("DeathLovers/Story/runtime-fixture.json"))
         {
             return false;
@@ -118,6 +122,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool NewGame()
     {
+        restoreInputPending = false;
+        menu.saves.autoPending = false;
+        menu.saves.lastAutoTime = 0;
+        menu.saves.lastAutoState = "";
+        menu.saves.queuedGroup = "";
+        menu.saves.openAfterYield = false;
         skipEnabled = false;
         autoEnabled = false;
         autoDelay = 0;
@@ -148,7 +158,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         state.core.history.reserve(250);
         state.core.callStack.reserve(16);
         state.core.presentation.choices.reserve(8);
-        state.core.schemaVersion = 2;
+        state.core.schemaVersion = 1;
         state.core.contentVersion = story.Get("contentVersion").GetString();
         state.core.currentCommandId = story.Get("entryCommandId").GetString();
         Phase("Ready");
@@ -182,6 +192,18 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return true;
     }
 
+    bool StartSavesFixture()
+    {
+        if (!configured || !story.LoadResource("DeathLovers/Story/saves-fixture.json") ||
+            !definitions.LoadResource("DeathLovers/Story/characters.json"))
+        {
+            return false;
+        }
+        storyResource = "DeathLovers/Story/saves-fixture.json";
+        traceEnabled = true;
+        return NewGame();
+    }
+
     String PhaseName()
     {
         return state is null ? "Finished" : state.core.phase;
@@ -194,7 +216,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool Paused()
     {
-        return !menu.inGame || menu.gameMenuOpen || menu.modal !is null || !Input::Instance().IsAppFocused();
+        return !menu.inGame || menu.gameMenuOpen || menu.modal !is null || menu.saves.busy || !Input::Instance().IsAppFocused();
     }
 
     JsonValue@ Command()
@@ -553,6 +575,13 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             }
 
             Phase("WaitingChoice");
+            if (!IsRead(state.core.currentCommandId))
+            {
+                MenuSession::profile.readCommandIds.pushBack(state.core.currentCommandId);
+                menu.saves.MarkProfile();
+            }
+            menu.saves.autoPending = true;
+            menu.saves.FlushProfile();
             RememberInteraction();
             if (!MenuSession::profile.settings.skip_after_choices)
             {
@@ -680,6 +709,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         if (!seen)
         {
             MenuSession::profile.readCommandIds.pushBack(id);
+            menu.saves.MarkProfile();
         }
         Go(Command().Get("next"));
     }
@@ -798,6 +828,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return;
         }
         String target = p.choices[index].target;
+        menu.saves.autoPending = true;
+        menu.saves.FlushProfile();
         p.choices.clear();
 
         view.Choices(p.choices, false);
@@ -970,6 +1002,18 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             dt = 0;
             wasPaused = false;
         }
+        if (restoreInputPending)
+        {
+            if (Input::Instance().GetKey(KeyCode::Space) || Input::Instance().GetKey(KeyCode::Enter) ||
+                Input::Instance().GetKey(KeyCode::LCtrl) || Input::Instance().GetKey(KeyCode::RCtrl) ||
+                Input::Instance().GetKey(KeyCode::MouseLeft))
+            {
+                return;
+            }
+            restoreInputPending = false;
+            inputBarrier = 0.1f;
+            return;
+        }
         state.core.playTimeSeconds = state.core.playTimeSeconds + dt;
         Animate(dt);
         if (presentation.waitingTextures)
@@ -1035,9 +1079,9 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             return null;
         }
-        audio.Update(state.core.audio, 0);
         NovelState snapshot;
         snapshot = state;
+        audio.Update(snapshot.core.audio, 0);
         return snapshot;
     }
 
@@ -1052,8 +1096,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             return "";
         }
-        audio.Update(state.core.audio, 0);
-        return SerializeScriptValue(state);
+        NovelState snapshot;
+        snapshot = state;
+        audio.Update(snapshot.core.audio, 0);
+        return SerializeScriptValue(snapshot);
     }
 
     bool LoadSnapshot(const String &in encoded)
@@ -1090,6 +1136,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         autoDelay = 0;
         inputBarrier = 0.1f;
         RestorePresentation();
+        restoreInputPending = true;
         view.FocusNarrative(PhaseName() == "WaitingChoice");
     }
 
@@ -1146,6 +1193,9 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     void End()
     {
+        menu.saves.queuedGroup = "";
+        menu.saves.openAfterYield = false;
+        menu.saves.autoPending = false;
         audio.Stop();
         if (configured)
         {

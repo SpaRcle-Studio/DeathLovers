@@ -222,14 +222,14 @@ class NovelAudio
         }
     }
 
-    bool Restore(NovelAudioState@ audio)
+    bool Restore(NovelAudioState@ audio, bool resumeOneShots = true)
     {
         StopTyping();
         for (NovelAudioSlot@ slot = buses; slot !is null; @slot = slot.next)
         {
             NovelAudioChannel@ channel = audio.Channel(slot.id);
             slot.source.Stop();
-            if (channel.completed || channel.resourceId == "")
+            if (channel.completed || channel.resourceId == "" || (!resumeOneShots && slot.id == "Sfx" && !channel.loop))
             {
                 continue;
             }

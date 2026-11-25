@@ -8,6 +8,7 @@ interface IMenuSessionStarter
 }
 
 #include "../Runtime/NovelSession.as"
+#include "../Runtime/NovelSaves.as"
 
 class MenuNavigation : ScriptBehaviour
 {
@@ -33,6 +34,7 @@ class MenuNavigation : ScriptBehaviour
     AudioSource@ music;
     IMenuSessionStarter@ sessionStarter;
     NovelSession@ runtime;
+    NovelSaves saves;
     bool gameMenuOpen = false;
     bool developmentRuntime = true;
     String runtimeProbeReport = "AWAITING_USER_RUN";
@@ -124,17 +126,24 @@ class MenuNavigation : ScriptBehaviour
         title.AddStyle(strike);
         @runtime = NovelSession();
         runtime.Configure(this, gameObject.GetComponent("Behaviour"));
+        saves.Configure(this);
+        ApplyAudio();
+        ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(MenuSession::profile.settings.fullscreen);
         @sessionStarter = runtime;
         if (developmentRuntime && runtime.configured)
         {
             BuildRuntimeProbe();
         }
         Button(Child(main, "Navigation"), "Start").Focus();
+        if (saves.diagnostic != "")
+        {
+            ShowNotify(saves.diagnostic, Button(Child(main, "Navigation"), "Start"));
+        }
     }
 
     bool CanNavigate()
     {
-        return inputBarrier <= 0 && fadingScreen is null;
+        return inputBarrier <= 0 && fadingScreen is null && !saves.busy;
     }
 
     void TabBackgroundOpacity(float opacity)
@@ -171,8 +180,43 @@ class MenuNavigation : ScriptBehaviour
 
     void OpenLoad()
     {
-        Open(load, "Load");
+        saves.Open(false);
     }
+
+    void OpenSave() { saves.Open(true); }
+    void QuickSave() { saves.QuickSave(); }
+    void QuickLoad() { saves.QuickLoad(); }
+    void ManualSaves() { saves.SelectGroup("manual"); }
+    void AutoSaves() { saves.SelectGroup("auto"); }
+    void QuickSaves() { saves.SelectGroup("quick"); }
+    void PreviousSavePage()
+    {
+        if (CanNavigate() && modal is null && saves.page > 1)
+        {
+            --saves.page;
+            saves.Refresh();
+        }
+    }
+    void NextSavePage()
+    {
+        if (CanNavigate() && modal is null && saves.page < 10)
+        {
+            ++saves.page;
+            saves.Refresh();
+        }
+    }
+    void SaveSlot0() { saves.Select(0, false); }
+    void SaveSlot1() { saves.Select(1, false); }
+    void SaveSlot2() { saves.Select(2, false); }
+    void SaveSlot3() { saves.Select(3, false); }
+    void SaveSlot4() { saves.Select(4, false); }
+    void SaveSlot5() { saves.Select(5, false); }
+    void DeleteSlot0() { saves.Select(0, true); }
+    void DeleteSlot1() { saves.Select(1, true); }
+    void DeleteSlot2() { saves.Select(2, true); }
+    void DeleteSlot3() { saves.Select(3, true); }
+    void DeleteSlot4() { saves.Select(4, true); }
+    void DeleteSlot5() { saves.Select(5, true); }
 
     void OpenPreferences()
     {
@@ -235,6 +279,7 @@ class MenuNavigation : ScriptBehaviour
             @modal = null;
             pendingQuit = false;
             pendingMainMenu = false;
+            saves.pendingAction = "";
             if (modalOrigin !is null)
             {
                 modalOrigin.Focus();
@@ -264,6 +309,7 @@ class MenuNavigation : ScriptBehaviour
         }
         if (!inGame)
         {
+            saves.FlushProfile();
             ApplicationManager::Instance().GetApplication().GetEngine().RequestQuit();
             return;
         }
@@ -288,6 +334,7 @@ class MenuNavigation : ScriptBehaviour
 
     void ReturnToMainMenu()
     {
+        saves.FlushProfile();
         if (runtime !is null)
         {
             runtime.End();
@@ -334,6 +381,11 @@ class MenuNavigation : ScriptBehaviour
 
     void ConfirmYes()
     {
+        if (CanNavigate() && modal is confirm && saves.pendingAction != "")
+        {
+            saves.ConfirmYes();
+            return;
+        }
         if (CanNavigate() && pendingMainMenu && modal is confirm)
         {
             pendingMainMenu = false;
@@ -342,6 +394,7 @@ class MenuNavigation : ScriptBehaviour
         }
         if (CanNavigate() && pendingQuit && modal is confirm)
         {
+            saves.FlushProfile();
             ApplicationManager::Instance().GetApplication().GetEngine().RequestQuit();
         }
     }
@@ -420,6 +473,7 @@ class MenuNavigation : ScriptBehaviour
         MenuSession::profile.settings.voice_volume = cast<UISlider@>(Child(PreferenceGroup("Voice"), "Voice").GetComponent("UISlider")).GetValue();
         MenuSession::profile.settings.text_cps = cast<UISlider@>(Child(PreferenceGroup("TextSpeed"), "TextSpeed").GetComponent("UISlider")).GetValue();
         MenuSession::profile.settings.afm_time = cast<UISlider@>(Child(PreferenceGroup("AutoSpeed"), "AutoSpeed").GetComponent("UISlider")).GetValue();
+        saves.MarkProfile();
         ApplyAudio();
     }
 
@@ -430,6 +484,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.pixel_voice = !MenuSession::profile.settings.pixel_voice;
+        saves.MarkProfile();
     }
 
     void ToggleMute()
@@ -439,6 +494,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.mute = !MenuSession::profile.settings.mute;
+        saves.MarkProfile();
         ApplyAudio();
     }
 
@@ -449,6 +505,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.skip_unseen = !MenuSession::profile.settings.skip_unseen;
+        saves.MarkProfile();
     }
 
     void ToggleSkipChoices()
@@ -458,6 +515,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.skip_after_choices = !MenuSession::profile.settings.skip_after_choices;
+        saves.MarkProfile();
     }
 
     void ToggleSkipTransitions()
@@ -467,6 +525,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.skip_transitions = !MenuSession::profile.settings.skip_transitions;
+        saves.MarkProfile();
     }
 
     void Windowed()
@@ -476,6 +535,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.fullscreen = false;
+        saves.MarkProfile();
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(false);
     }
 
@@ -486,6 +546,7 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         MenuSession::profile.settings.fullscreen = true;
+        saves.MarkProfile();
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(true);
     }
 
@@ -509,7 +570,7 @@ class MenuNavigation : ScriptBehaviour
 
     void UnavailableSave()
     {
-        ShowNotify("Сохранения пока недоступны.", Button(quickMenu, "Save"));
+        OpenSave();
     }
 
     void ReadingOptions()
@@ -579,7 +640,9 @@ class MenuNavigation : ScriptBehaviour
 
     void Update(float dt)
     {
-        quickMenu.SetEnabled(inGame && !gameMenuOpen && modal is null);
+        quickMenu.SetEnabled(inGame && !gameMenuOpen && modal is null && !saves.busy);
+        Button(quickMenu, "Save").SetInteractable(!saves.busy && saves.CanSave());
+        Button(quickMenu, "QuickSave").SetInteractable(saves.configured && !saves.busy && inGame);
         mainMenuButton.SetEnabled(inGame);
         if (runtime !is null && runtime.state !is null)
         {
@@ -646,6 +709,7 @@ class MenuNavigation : ScriptBehaviour
         {
             runtime.Update(dt);
         }
+        saves.Update(dt);
     }
 
     void ToggleGameMenu()
@@ -722,21 +786,63 @@ class MenuNavigation : ScriptBehaviour
 
     void BuildRuntimeProbe()
     {
-        GameObject@ probe = runtime.view.Rect(novel, "RuntimeProbe", 360, 0, 1170, 100);
-        for (uint i = 0; i < 3; ++i)
+        GameObject@ probe = runtime.view.Rect(novel, "RuntimeProbe", 360, 0, 1170, 205);
+        for (uint i = 0; i < 7; ++i)
         {
-            String name = i == 0 ? "Fixture" : i == 1 ? "RestoreTwice" : "Trace";
-            GameObject@ button = runtime.view.Rect(probe, name, float(i) * 350, 0, 340, 40);
+            String name = i == 0 ? "Fixture" : i == 1 ? "RestoreTwice" : i == 2 ? "Trace" :
+                i == 3 ? "StorageProbe" : i == 4 ? "PrepareRestart" : i == 5 ? "VerifyRestart" : "SavesFixture";
+            GameObject@ button = runtime.view.Rect(probe, name, float(i % 3) * 350, float(i / 3) * 45, 340, 40);
             runtime.view.Label(button, name);
             UIButton@ control = cast<UIButton@>(button.GetOrCreateComponent("UIButton"));
-            control.SetClickReceiver(gameObject.GetComponent("Behaviour"), i == 0 ? "StartRuntimeFixture" : i == 1 ? "VerifyRuntimeSnapshot" : "ShowRuntimeTrace");
+            control.SetClickReceiver(gameObject.GetComponent("Behaviour"), i == 0 ? "StartRuntimeFixture" :
+                i == 1 ? "VerifyRuntimeSnapshot" : i == 2 ? "ShowRuntimeTrace" :
+                i == 3 ? "RunStorageProbe" : i == 4 ? "PrepareStorageRestart" : i == 5 ? "VerifyStorageRestart" : "StartSavesFixture");
         }
-        @runtimeProbeText = runtime.view.Label(runtime.view.Rect(probe, "Result", 0, 45, 1170, 50), "AWAITING_USER_RUN");
+        @runtimeProbeText = runtime.view.Label(runtime.view.Rect(probe, "Result", 0, 140, 1170, 60), "AWAITING_USER_RUN");
+    }
+
+    void StartSavesFixture()
+    {
+        if (developmentRuntime && CanNavigate() && modal is null)
+        {
+            runtimeProbeText.SetText(runtime.StartSavesFixture() ? "Saves fixture started" : "Saves fixture load failed");
+        }
+    }
+
+    void RunStorageProbe()
+    {
+        if (developmentRuntime && CanNavigate() && modal is null)
+        {
+            SaveStorageProbe probe;
+            runtimeProbeReport = probe.Run();
+            runtimeProbeText.SetText(runtimeProbeReport);
+            saves.Refresh();
+        }
+    }
+
+    void PrepareStorageRestart()
+    {
+        if (developmentRuntime && CanNavigate() && modal is null)
+        {
+            SaveStorageProbe probe;
+            runtimeProbeReport = probe.PrepareRestart();
+            runtimeProbeText.SetText(runtimeProbeReport);
+        }
+    }
+
+    void VerifyStorageRestart()
+    {
+        if (developmentRuntime && CanNavigate() && modal is null)
+        {
+            SaveStorageProbe probe;
+            runtimeProbeReport = probe.VerifyRestart();
+            runtimeProbeText.SetText(runtimeProbeReport);
+        }
     }
 
     void StartRuntimeFixture()
     {
-        if (developmentRuntime)
+        if (developmentRuntime && CanNavigate() && modal is null)
         {
             runtimeProbeText.SetText(runtime.StartFixture() ? "Fixture started" : "Fixture load failed");
         }
@@ -767,6 +873,14 @@ class MenuNavigation : ScriptBehaviour
 
     void OnDestroy()
     {
+        if (saves.menu !is null)
+        {
+            saves.FlushProfile(false);
+            if (saves.capture !is null)
+            {
+                saves.capture.Cancel();
+            }
+        }
         if (runtime !is null)
         {
             runtime.End();
