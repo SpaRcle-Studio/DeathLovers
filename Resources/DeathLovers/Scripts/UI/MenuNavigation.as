@@ -76,6 +76,9 @@ class MenuNavigation : ScriptBehaviour
         @tabBackground = cast<Sprite@>(Child(novel, "TabBackground").GetComponent("Sprite"));
         TabBackgroundOpacity(0.0f);
         @main = Child(novel, "MainMenu");
+        PlatformType platform = ApplicationManager::Instance().GetApplication().GetPlatformType();
+        Child(Child(main, "Navigation"), "Quit").SetEnabled(
+            platform != PlatformType::Android && platform != PlatformType::Emscripten);
         @preferences = Child(novel, "Preferences");
         @load = Child(novel, "Load");
         @about = Child(novel, "About");

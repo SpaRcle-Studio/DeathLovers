@@ -16,6 +16,8 @@ class MenuParallax : ScriptBehaviour
     float elapsed = 0;
     float nx = 0.5f;
     float ny = 0.5f;
+    FVector2 neutralGravity;
+    bool tiltInitialized = false;
 
     TransformRect@ Layer(GameObject@ background, const String &in name)
     {
@@ -75,12 +77,36 @@ class MenuParallax : ScriptBehaviour
         }
         if (!Input::Instance().IsAppFocused())
         {
+            tiltInitialized = false;
             return;
         }
-        FVector2 point = canvas.CanvasToLayoutPoint(novel, canvas.ScreenToCanvasSpace(Input::Instance().GetMousePos()));
-        FRect rect = novel.layoutRect;
-        nx = Clamp01((point.x - rect.x) / size.x);
-        ny = Clamp01(1.0f - (point.y - rect.y) / size.y);
+        if (ApplicationManager::Instance().GetApplication().GetPlatformType() == PlatformType::Android)
+        {
+            nx = 0.5f;
+            ny = 0.5f;
+            if (Input::Instance().HasDeviceGravity())
+            {
+                FVector2 gravity = Input::Instance().GetDeviceGravity();
+                if (!tiltInitialized)
+                {
+                    neutralGravity = gravity;
+                    tiltInitialized = true;
+                }
+                nx = Clamp01(0.5f + (gravity.x - neutralGravity.x));
+                ny = Clamp01(0.5f - (gravity.y - neutralGravity.y));
+            }
+            else
+            {
+                tiltInitialized = false;
+            }
+        }
+        else
+        {
+            FVector2 point = canvas.CanvasToLayoutPoint(novel, canvas.ScreenToCanvasSpace(Input::Instance().GetMousePos()));
+            FRect rect = novel.layoutRect;
+            nx = Clamp01((point.x - rect.x) / size.x);
+            ny = Clamp01(1.0f - (point.y - rect.y) / size.y);
+        }
         Move(bg, 0, size.x, size.y);
         Move(bg1, -20, size.x, size.y);
         Move(bg2, 40, size.x, size.y);
