@@ -305,7 +305,7 @@ class MenuNavigation : ScriptBehaviour
             @submenu = null;
             ScreenOpacity(main, 0.0f);
             main.SetEnabled(true);
-            MenuSession::activeScreen = "MainMenu";
+            MenuSession::activeScreen = gameMenuOpen ? "GameMenu" : "MainMenu";
         }
     }
 
@@ -752,8 +752,6 @@ class MenuNavigation : ScriptBehaviour
 
     void AdvanceStory()
     {
-        runtime.skipEnabled = false;
-        runtime.autoEnabled = false;
         runtime.Advance();
     }
 

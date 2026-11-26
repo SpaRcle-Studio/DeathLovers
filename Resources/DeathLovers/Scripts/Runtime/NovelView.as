@@ -13,6 +13,7 @@ class NovelVisualSlot
     String resource;
     String caption;
     bool waitingTexture = false;
+    NovelVisualSlot@ hoverBackground;
     NovelVisualSlot@ next;
 }
 
@@ -192,9 +193,15 @@ class NovelView
         {
             NovelVisualSlot slot;
             @slot.object = Rect(choiceRoot, "Choice" + RuntimeValues::Index(i), 0, float(i) * 150, 1200, 117);
-            @slot.image = cast<Sprite@>(slot.object.GetOrCreateComponent("Sprite"));
-            slot.image.SetMaterial("Engine/Materials/UI/ui.mat");
+            NovelVisualSlot@ idleBackground = Image(slot.object, "IdleBackground");
+            @slot.image = idleBackground.image;
+            cast<TransformRect@>(idleBackground.object.GetTransform()).SetSize(Vec(1200, 117));
             slot.image.SetTexturePath("DeathLovers/UI/button/choice_idle_background.png");
+            slot.image.SetSubtreeOpacity(0);
+            @slot.hoverBackground = Image(slot.object, "HoverBackground");
+            slot.hoverBackground.image.SetTexturePath("DeathLovers/UI/button/choice_hover_background.png");
+            cast<TransformRect@>(slot.hoverBackground.object.GetTransform()).SetSize(Vec(1200, 117));
+            slot.hoverBackground.image.SetSubtreeOpacity(0);
             @slot.text = Label(Rect(slot.object, "Label", 90, 8, 1020, 101), "");
             slot.text.horizontalAlignment = TextAlignmentHorizontal::Center;
             slot.text.verticalAlignment = TextAlignmentVertical::Middle;
@@ -347,10 +354,12 @@ class NovelView
             {
                 UIControlState state = slot.button.GetState();
                 bool hovered = state == UIControlState::Hovered || state == UIControlState::Selected || state == UIControlState::Pressed;
+                hovered = hovered && slot.hoverBackground.image.IsTextureReady();
+                slot.image.SetSubtreeOpacity(!hovered && slot.image.IsTextureReady() ? 1 : 0);
+                slot.hoverBackground.image.SetSubtreeOpacity(hovered ? 1 : 0);
                 String texture = hovered ? "DeathLovers/UI/button/choice_hover_background.png" : "DeathLovers/UI/button/choice_idle_background.png";
                 if (slot.resource != texture)
                 {
-                    slot.image.SetTexturePath(texture);
                     slot.resource = texture;
                     DialogueProgram label;
                     label.Compile(slot.caption, false);
@@ -402,6 +411,8 @@ class NovelView
                 }
                 rect.SetAnchoredPosition(Vec(0, -totalHeight));
                 rect.SetSize(Vec(1200, height));
+                cast<TransformRect@>(slot.image.GetGameObject().GetTransform()).SetSize(Vec(1200, height));
+                cast<TransformRect@>(slot.hoverBackground.object.GetTransform()).SetSize(Vec(1200, height));
                 labelRect.SetSize(Vec(1020, height - 16));
                 totalHeight += height + 33;
             }

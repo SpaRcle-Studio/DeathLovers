@@ -188,6 +188,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         inputBarrier = 0.1f;
         menu.gameMenuOpen = false;
         menu.inGame = true;
+        MenuSession::activeScreen = "Story";
         menu.main.SetEnabled(false);
         menu.music.Stop();
         menu.novel.GetOrCreateChild("Background").SetEnabled(false);
@@ -796,7 +797,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return;
         }
         skipEnabled = false;
-        autoEnabled = false;
+        // Manual advance keeps auto reading active, including after an explicit {w}.
+        autoDelay = 0;
         inputBarrier = 0.1f;
         NovelPresentationState@ p = state.core.presentation;
         if (PhaseName() == "WaitingTimer" && p.inputWait)
@@ -938,11 +940,15 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     void ReadingTick(float dt)
     {
         bool skip = skipEnabled || Input::Instance().GetKey(KeyCode::LCtrl) || Input::Instance().GetKey(KeyCode::RCtrl);
+        if (skip)
+        {
+            autoEnabled = false;
+            autoDelay = 0;
+        }
         skipDelay -= dt;
         NovelPresentationState@ p = state.core.presentation;
         if (skip && PhaseName() == "WaitingText")
         {
-            autoEnabled = false;
             if (!MenuSession::profile.settings.skip_unseen && !IsRead(state.core.currentCommandId))
             {
                 skipEnabled = false;
@@ -973,10 +979,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             NovelTransition@ transition = p.transition;
             transition.elapsed = transition.duration;
         }
-        else if (autoEnabled && PhaseName() == "WaitingText" && p.fullyShown && !p.inputWait)
+        else if (autoEnabled && PhaseName() == "WaitingText" && p.fullyShown && !p.inputWait && p.remainingPause <= 0)
         {
             autoDelay += dt;
-            float delay = MenuSession::profile.settings.afm_time * (float(program.plain.graphemeCount()) / 250 + 1);
+            float delay = MenuSession::profile.settings.afm_time * (float(program.plain.graphemeCount()) + 25) / 250;
             if (autoDelay >= delay)
             {
                 autoDelay = 0;
