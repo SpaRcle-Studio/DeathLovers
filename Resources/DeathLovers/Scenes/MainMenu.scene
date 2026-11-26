@@ -357,6 +357,34 @@ null
 																	-s:nvlContent
 																-v:scriptType
 																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:skipIndicator
+																-v:scriptType
+																	-s:GameObject@
+															-k:property
+																-v:name
+																	-s:skipTriangle0
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:skipTriangle1
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:skipTriangle2
+																-v:scriptType
+																	-s:TextMesh@
+															-k:property
+																-v:name
+																	-s:skipTime
+																-v:scriptType
+																	-s:float
+																-o:value
+																	-v:value
+																		-f:0
 												-k:property
 													-v:name
 														-s:preparedPresentation

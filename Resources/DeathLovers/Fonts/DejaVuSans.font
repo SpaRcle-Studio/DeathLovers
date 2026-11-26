@@ -1,0 +1,29 @@
+sra format
+use tabs: true
+use numeric depth: false
+-r:Root
+	-o:asset
+		-v:type
+			-s:FontAsset
+		-o:ptr
+			-o:font
+				-v:id
+					-s:DeathLovers/Fonts/DejaVuSans.ttf
+			-v:samplingPointSize
+				-f:86
+			-v:sdfRange
+				-f:24
+			-o:atlasSize
+				-v:x
+					-i:2048
+				-v:y
+					-i:2048
+			-a:preloadGlyphRanges
+				-k:i
+					-o:d
+						-v:type
+							-s:ASCII
+				-k:i
+					-o:d
+						-v:type
+							-s:Cyrilic

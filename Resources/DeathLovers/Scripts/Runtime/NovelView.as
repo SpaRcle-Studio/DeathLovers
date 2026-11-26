@@ -34,6 +34,11 @@ class NovelView
     UIButton@ advanceButton;
     bool choicesActive = false;
     GameObject@ nvlContent;
+    GameObject@ skipIndicator;
+    TextMesh@ skipTriangle0;
+    TextMesh@ skipTriangle1;
+    TextMesh@ skipTriangle2;
+    float skipTime = 0;
 
     FVector2 Vec(float x, float y)
     {
@@ -166,6 +171,20 @@ class NovelView
         UIButton@ nvlButton = cast<UIButton@>(nvlAdvance.GetOrCreateComponent("UIButton"));
         nvlButton.focusable = false;
         nvlButton.SetClickReceiver(receiver, "AdvanceStory");
+        NovelVisualSlot@ skip = Image(root, "SkipIndicator");
+        @skipIndicator = skip.object;
+        Priority(skipIndicator, 100);
+        TransformRect@ skipRect = cast<TransformRect@>(skipIndicator.GetTransform());
+        skipRect.SetSize(Vec(303, 53));
+        skipRect.SetAnchoredPosition(Vec(0, -15));
+        skip.image.SetTexturePath("DeathLovers/UI/skip.png");
+        TextMesh@ skipLabel = Label(Rect(skipIndicator, "Label", 24, 8, 125, 37), "Пропускаю");
+        skipLabel.fontSize = 24;
+        skipLabel.characterSpacing = 0;
+        @skipTriangle0 = SkipTriangle(0);
+        @skipTriangle1 = SkipTriangle(1);
+        @skipTriangle2 = SkipTriangle(2);
+        skipIndicator.SetEnabled(false);
         @choiceRoot = Rect(root, "Choices", 360, 260, 1200, 600);
         Priority(choiceRoot, 50);
         @previous = null;
@@ -192,6 +211,41 @@ class NovelView
             @previous = slot;
         }
         root.SetEnabled(false);
+    }
+
+    TextMesh@ SkipTriangle(uint index)
+    {
+        TextMesh@ text = Label(Rect(skipIndicator, "Triangle" + RuntimeValues::Index(index), 157 + float(index) * 26, 8, 24, 37), "▸");
+        text.SetFontPath("DeathLovers/Fonts/DejaVuSans.font");
+        text.fontSize = 24;
+        text.characterSpacing = 0;
+        return text;
+    }
+
+    void BlinkSkipTriangle(TextMesh@ text, float delay)
+    {
+        float time = skipTime - delay;
+        float alpha = 0.5f;
+        if (time >= 0)
+        {
+            float cycle = time - float(int(time / 1.2f)) * 1.2f;
+            alpha = cycle < 0.2f ? 0.5f + cycle * 2.5f : cycle < 0.4f ? 1.0f : cycle < 0.6f ? 1.0f - (cycle - 0.4f) * 2.5f : 0.5f;
+        }
+        text.SetSubtreeOpacity(alpha);
+    }
+
+    void Skipping(bool active, float dt)
+    {
+        skipIndicator.SetEnabled(active);
+        if (!active)
+        {
+            skipTime = 0;
+            return;
+        }
+        skipTime += dt;
+        BlinkSkipTriangle(skipTriangle0, 0);
+        BlinkSkipTriangle(skipTriangle1, 0.2f);
+        BlinkSkipTriangle(skipTriangle2, 0.4f);
     }
 
     void PreservePrevious(NovelVisualSlot@ slot, NovelVisualSlot@ old, const String &in target, const String &in previous, int order)

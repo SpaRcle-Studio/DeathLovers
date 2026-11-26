@@ -659,6 +659,11 @@ class MenuNavigation : ScriptBehaviour
         MenuSession::skipActive = inGame && !gameMenuOpen && modal is null && runtime !is null &&
             (runtime.skipEnabled || Input::Instance().GetKey(KeyCode::LCtrl) || Input::Instance().GetKey(KeyCode::RCtrl));
         MenuSession::autoActive = inGame && runtime !is null && runtime.autoEnabled;
+        if (runtime !is null)
+        {
+            runtime.view.Skipping(MenuSession::skipActive && !runtime.Paused() && !runtime.restoreInputPending &&
+                runtime.PhaseName() != "WaitingChoice", dt);
+        }
         if (modal is readingHistory && CanNavigate() && Input::Instance().GetKeyDown(KeyCode::Escape))
         {
             CloseHistory();
