@@ -77,13 +77,18 @@ class MenuNavigation : ScriptBehaviour
         TabBackgroundOpacity(0.0f);
         @main = Child(novel, "MainMenu");
         PlatformType platform = ApplicationManager::Instance().GetApplication().GetPlatformType();
-        Child(Child(main, "Navigation"), "Quit").SetEnabled(
-            platform != PlatformType::Android && platform != PlatformType::Emscripten);
+        bool showQuit = platform != PlatformType::Android && platform != PlatformType::Emscripten;
+        Child(Child(main, "Navigation"), "Quit").SetEnabled(showQuit);
         @preferences = Child(novel, "Preferences");
         @load = Child(novel, "Load");
         @about = Child(novel, "About");
         @help = Child(novel, "Help");
         @sessionStart = Child(novel, "SessionStart");
+        Child(Child(preferences, "Navigation"), "Quit").SetEnabled(showQuit);
+        Child(Child(load, "Navigation"), "Quit").SetEnabled(showQuit);
+        Child(Child(about, "Navigation"), "Quit").SetEnabled(showQuit);
+        Child(Child(help, "Navigation"), "Quit").SetEnabled(showQuit);
+        Child(Child(sessionStart, "Navigation"), "Quit").SetEnabled(showQuit);
         @confirm = Child(novel, "Confirm");
         @notify = Child(novel, "Notify");
         @transitionBlocker = Child(novel, "TransitionBlocker");

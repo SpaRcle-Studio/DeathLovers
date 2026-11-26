@@ -16933,9 +16933,9 @@ null
 													-f:540
 											-o:scale
 												-v:x
-													-f:0.951913
+													-f:0.82919
 												-v:y
-													-f:0.951913
+													-f:0.82919
 												-v:z
 													-f:1
 											-v:localPriority
@@ -17064,9 +17064,35 @@ null
 						-v:type
 							-s:TransformRect
 						-o:ptr
+							-o:translation
+								-v:x
+									-f:679
+								-v:y
+									-f:555.5
 							-o:size
+								-v:x
+									-f:1592.05
+								-v:y
+									-f:1302.48
+							-o:offsetMin
+								-v:x
+									-f:-117.023
+								-v:y
+									-f:-95.7379
+							-o:offsetMax
+								-v:x
+									-f:1475.02
+								-v:y
+									-f:1206.74
 							-o:anchors
 								-o:min
 								-o:max
+							-o:scale
+								-v:x
+									-f:0.852991
+								-v:y
+									-f:0.852991
+								-v:z
+									-f:0.852991
 							-v:localPriority
 								-i:0

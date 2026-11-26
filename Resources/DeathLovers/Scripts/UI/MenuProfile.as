@@ -19,7 +19,6 @@ class MenuSettings
 
 class MenuProfile
 {
-    uint schemaVersion = 1;
     bool firstRun = false;
     MenuSettings settings;
     Vector<String> readCommandIds;

@@ -6,6 +6,7 @@
 #include "NovelAudio.as"
 #include "NovelPresentation.as"
 #include "NovelSnapshotValidation.as"
+#include "NovelSaveFormat.as"
 #include "../Debug/StoryDebugPanel.as"
 
 class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
@@ -1151,6 +1152,42 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return NovelSnapshotValidation::Validate(snapshot, story.View(), definitions.View(), speakers, audio.paths);
     }
 
+    bool VerifySaveFormat()
+    {
+        JsonValue@ encoded = NovelSaveFormat::State(state.core, story.View());
+        // Include the JSON text boundary used by disk storage in the round trip.
+        JsonValue disk;
+        if (!disk.Parse(encoded.View().ToJson())) return false;
+        NovelState decoded;
+        if (!NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded) ||
+            !ValidateSnapshot(decoded) || decoded.rollbackCheckpoints.size() != 0 ||
+            SerializeScriptValue(decoded.core.variables) != SerializeScriptValue(state.core.variables) ||
+            SerializeScriptValue(decoded.core.history) != SerializeScriptValue(state.core.history) ||
+            SerializeScriptValue(decoded.core.callStack) != SerializeScriptValue(state.core.callStack) ||
+            decoded.core.presentation.text != state.core.presentation.text ||
+            decoded.core.presentation.visibleIndex != state.core.presentation.visibleIndex ||
+            SerializeScriptValue(decoded.core.presentation.choices) != SerializeScriptValue(state.core.presentation.choices) ||
+            SerializeScriptValue(decoded.core.presentation.nvl) != SerializeScriptValue(state.core.presentation.nvl)) return false;
+        JsonValue@ roundTrip = NovelSaveFormat::State(decoded.core, story.View());
+        if (!disk.View().Equals(roundTrip.View())) return false;
+        NovelSaveFormat::Integer(disk, "schemaVersion", 1);
+        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+        NovelSaveFormat::Integer(disk, "schemaVersion", NovelSaveFormat::Version + 1);
+        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+        NovelSaveFormat::Integer(disk, "schemaVersion", NovelSaveFormat::Version);
+        NovelSaveFormat::Text(disk, "unexpected", "reject unknown fields");
+        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+
+        JsonValue@ profile = NovelSaveFormat::Profile(MenuSession::profile);
+        MenuProfile decodedProfile;
+        if (!disk.Parse(profile.View().ToJson()) ||
+            !NovelSaveFormat::ReadProfile(disk.View(), decodedProfile) ||
+            !menu.saves.ValidProfile(decodedProfile) ||
+            SerializeScriptValue(decodedProfile) != SerializeScriptValue(MenuSession::profile)) return false;
+        NovelSaveFormat::Integer(disk, "schemaVersion", 1);
+        return !NovelSaveFormat::ReadProfile(disk.View(), decodedProfile);
+    }
+
     NovelRestoreReport@ VerifyRestoreTwice()
     {
         NovelRestoreReport result;
@@ -1165,7 +1202,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         bool first = LoadSnapshot(encoded);
         bool second = first && LoadSnapshot(encoded);
         result.textRules = VerifyTextRules();
-        bool equal = result.textRules && second &&
+        bool equal = result.textRules && second && VerifySaveFormat() &&
             SerializeScriptValue(snapshot.core.variables) == SerializeScriptValue(state.core.variables) &&
             SerializeScriptValue(snapshot.core.history) == SerializeScriptValue(state.core.history) &&
             SerializeScriptValue(snapshot.core.callStack) == SerializeScriptValue(state.core.callStack) &&
