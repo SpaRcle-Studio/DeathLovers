@@ -400,8 +400,8 @@ class NovelView
                 TransformRect@ labelRect = cast<TransformRect@>(slot.text.GetGameObject().GetTransform());
                 slot.resource = "";
                 DialogueProgram label;
-                label.Compile(options[i].normalizedText, false);
-                slot.caption = options[i].normalizedText;
+                label.Compile(options[i].text, false);
+                slot.caption = options[i].text;
                 label.Paint(slot.text);
                 float textHeight = slot.text.GetTextBounds().h;
                 float height = textHeight + 24;

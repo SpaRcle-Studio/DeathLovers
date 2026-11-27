@@ -24,7 +24,6 @@ class NovelSaves
     JsonValue payload;
     JsonValue@ metadata;
     NovelState@ candidate;
-    JsonValue@ candidateStory;
     NovelView preparedView;
     NovelPresentation preparedPresentation;
     GameObject@ staging;
@@ -38,7 +37,7 @@ class NovelSaves
     String lastAutoState;
     String diagnostic;
     String recoveryTrace;
-    String candidateStoryResource;
+    String candidateEntry;
     String autoStateKey;
     bool openAfterYield = false;
     String listedGroup;
@@ -354,14 +353,13 @@ class NovelSaves
             checked.set(id, true);
         }
         @candidate = null;
-        @candidateStory = null;
         Error(newestError);
     }
 
-    bool AllowedStory(const String &in resource)
+    bool AllowedEntry(const String &in entry)
     {
-        return resource == "DeathLovers/Story/story.json" || (menu.developmentRuntime &&
-            (resource == "DeathLovers/Story/runtime-fixture.json" || resource == "DeathLovers/Story/saves-fixture.json"));
+        return entry == "Story::start" || (menu.developmentRuntime &&
+            (entry == "Story::fixture_runtime_start" || entry == "Story::fixture_saves_start"));
     }
 
     int64 NextSequence(const String &in storageGroup)
@@ -550,20 +548,34 @@ class NovelSaves
         object.Set(key, value);
     }
 
-    JsonValue@ Metadata(bool thumbnail, const String &in content, const String &in command, double time)
+    JsonValue@ Metadata(bool thumbnail, const String &in content, const String &in position, double time)
     {
         JsonValue result;
         result.MakeObject();
         IntegerField(result, "schemaVersion", NovelSaveFormat::Version);
         TextField(result, "contentVersion", content);
-        TextField(result, "currentCommandId", command);
-        TextField(result, "sceneTitle", command);
+        TextField(result, "position", position);
+        TextField(result, "sceneTitle", position);
         JsonValue value;
         value.SetNumber(time);
         result.Set("playTimeSeconds", value);
         value.SetBool(thumbnail);
         result.Set("hasThumbnail", value);
         return result;
+    }
+
+    /// "Story::label_canteen" -> "label_canteen"
+    String SceneTitle(const String &in label)
+    {
+        uint scope = 0;
+        for (uint i = 0; i + 1 < label.length(); ++i)
+        {
+            if (label.byteAt(i) == 58 && label.byteAt(i + 1) == 58)
+            {
+                scope = i + 2;
+            }
+        }
+        return label.substring(scope, label.length() - scope);
     }
 
     bool ThumbnailValid(const String &in png)
@@ -582,16 +594,13 @@ class NovelSaves
         NovelCore saved;
         saved = menu.runtime.state.core;
         menu.runtime.audio.Update(saved.audio, 0);
-        JsonValue@ document = NovelSaveFormat::State(saved, menu.runtime.story.View());
+        JsonValue@ document = NovelSaveFormat::State(saved);
         payload = document;
-        @metadata = Metadata(true, saved.contentVersion, saved.currentCommandId, saved.playTimeSeconds);
-        TextField(metadata, "storyResource", menu.runtime.storyResource);
+        @metadata = Metadata(true, saved.contentVersion, saved.position, saved.playTimeSeconds);
+        TextField(metadata, "storyEntry", menu.runtime.storyEntry);
         autoStateKey = AutoKey();
         IntegerField(metadata, "sequence", NextSequence(queuedGroup));
-        if (menu.runtime.Command().Has("sourceFile"))
-        {
-            TextField(metadata, "sceneTitle", menu.runtime.Command().Get("sourceFile").GetString());
-        }
+        TextField(metadata, "sceneTitle", SceneTitle(saved.Label()));
         busy = true;
         operation = "capture_frame";
         elapsed = 0;
@@ -681,7 +690,6 @@ class NovelSaves
         if (!ReadLoadCandidate(storageGroup, id))
         {
             @candidate = null;
-            @candidateStory = null;
             Error(diagnostic);
             return;
         }
@@ -706,31 +714,30 @@ class NovelSaves
             SaveSystem::Instance().CloseSlot(storageGroup, id);
             return false;
         }
-        candidateStoryResource = slot.GetMetadata().Get("storyResource").GetString();
-        if (!AllowedStory(candidateStoryResource))
+        candidateEntry = slot.GetMetadata().Get("storyEntry").GetString();
+        if (!AllowedEntry(candidateEntry) || FindCoroutineEntry(candidateEntry) is null)
         {
             diagnostic = "Неизвестный источник сценария в сохранении.";
             SaveSystem::Instance().CloseSlot(storageGroup, id);
             return false;
         }
-        @candidateStory = JsonValue();
-        if (!candidateStory.LoadResource(candidateStoryResource))
-        {
-            diagnostic = "Не удалось загрузить реестр сценария.";
-            SaveSystem::Instance().CloseSlot(storageGroup, id);
-            return false;
-        }
-        if (slot.GetMetadata().Get("contentVersion").GetString() != candidateStory.View().Get("contentVersion").GetString())
+        if (slot.GetMetadata().Get("contentVersion").GetString() != Story::Version)
         {
             diagnostic = "Сохранение несовместимо с этой версией сценария.";
             SaveSystem::Instance().CloseSlot(storageGroup, id);
             return false;
         }
         @candidate = NovelState();
-        if (!NovelSaveFormat::ReadState(slot.GetState(), candidateStory.View(), menu.runtime.definitions.View(), candidate) ||
-            !NovelSnapshotValidation::Validate(candidate, candidateStory.View(), menu.runtime.definitions.View(), menu.runtime.speakers, menu.runtime.audio.paths))
+        if (!NovelSaveFormat::ReadState(slot.GetState(), menu.runtime.definitions.View(), candidate))
         {
             diagnostic = "Сохранение содержит недопустимое состояние или неподдерживаемую версию.";
+            SaveSystem::Instance().CloseSlot(storageGroup, id);
+            return false;
+        }
+        // Includes a replay of the saved frames: a save whose position no longer exists in the script is rejected here.
+        if (!menu.runtime.ValidateSnapshot(candidate))
+        {
+            diagnostic = "Сохранение не совпадает с текущей версией сценария.";
             SaveSystem::Instance().CloseSlot(storageGroup, id);
             return false;
         }
@@ -796,19 +803,7 @@ class NovelSaves
         staging.Destroy();
         @staging = null;
         menu.runtime.view = preparedView;
-        @menu.runtime.story = candidateStory;
-        menu.runtime.storyResource = candidateStoryResource;
-        @menu.runtime.commands = menu.runtime.story.View().Get("commands");
-        menu.runtime.endingTargets.clear();
-        JsonValueView@ labels = menu.runtime.story.View().Get("labels");
-        for (uint i = 0; i < labels.GetCount(); ++i)
-        {
-            String label = labels.GetKey(i);
-            if (label.length() > 7 && label.substring(label.length() - 7, 7) == "_ending")
-            {
-                menu.runtime.endingTargets.set(labels.Get(label).GetString(), label);
-            }
-        }
+        menu.runtime.storyEntry = candidateEntry;
         @menu.runtime.state = candidate;
         menu.inGame = true;
         menu.gameMenuOpen = false;
@@ -844,14 +839,14 @@ class NovelSaves
         NovelCore core;
         core = menu.runtime.state.core;
         core.playTimeSeconds = 0;
-        JsonValue@ document = NovelSaveFormat::State(core, menu.runtime.story.View());
+        JsonValue@ document = NovelSaveFormat::State(core);
         return SaveSystem::Instance().ComputeSha256(document.View().ToJson());
     }
 
     bool ValidProfile(MenuProfile@ profile)
     {
         MenuSettings@ s = profile.settings;
-        if (!(profile.readCommandIds.size() <= 100000 &&
+        if (!(profile.readLines.size() <= 1000000 &&
             s.music_volume >= 0 && s.music_volume <= 1 && s.sfx_volume >= 0 && s.sfx_volume <= 1 &&
             s.voice_volume >= 0 && s.voice_volume <= 1 && s.text_cps >= 0 && s.text_cps <= 200 &&
             s.afm_time >= 0 && s.afm_time <= 60))
@@ -859,9 +854,9 @@ class NovelSaves
             return false;
         }
         Map<String, bool> seen;
-        for (uint i = 0; i < profile.readCommandIds.size(); ++i)
+        for (uint i = 0; i < profile.readLines.size(); ++i)
         {
-            String id = profile.readCommandIds[i];
+            String id = profile.readLines[i];
             if (id == "" || id.length() > 128 || seen.contains(id))
             {
                 return false;
@@ -923,7 +918,7 @@ class NovelSaves
             }
             return false;
         }
-        slot.SetMetadata(Metadata(false, "profile-v2", "", 0));
+        slot.SetMetadata(Metadata(false, "profile-v3", "", 0));
         if (!SaveSystem::Instance().FlushSlot("profile", "main"))
         {
             diagnostic = "Не удалось сохранить профиль: " + SaveSystem::Instance().GetError();

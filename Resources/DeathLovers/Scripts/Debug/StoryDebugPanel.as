@@ -3,12 +3,13 @@
 //
 
 #include "../Runtime/NovelState.as"
+#include "../Runtime/RuntimeValues.as"
 
 interface IStoryDebugRuntime
 {
     NovelState@ CaptureDebugState();
     bool RestoreDebugCheckpoint(NovelState@ state);
-    bool HasDebugCommand(const String &in commandId);
+    bool HasDebugLabel(const String &in label);
 }
 
 interface IStoryDebugSnapshotSink
@@ -67,10 +68,15 @@ class StoryDebugPanel : ScriptBehaviour
             display.SetText(diagnostic);
             return;
         }
-        String text = "ID: " + state.core.currentCommandId;
+        String text = "Label: " + state.core.Label() + " @" + state.core.position;
         text = text + "\nPhase: " + state.core.phase;
-        text = text + "\nStack: " + SerializeScriptValue(state.core.callStack);
-        text = text + "\nVariables: " + SerializeScriptValue(state.core.variables);
+        String stack;
+        for (uint i = 0; i < state.core.frames.size(); ++i)
+        {
+            stack = stack + (i == 0 ? "" : " > ") + state.core.frames[i].label + ":" + RuntimeValues::Index(state.core.frames[i].step);
+        }
+        text = text + "\nStack: " + stack;
+        text = text + "\nVariables: " + SerializeScriptValue(state.core.vars);
         text = text + "\n" + diagnostic;
         display.SetText(text);
     }
@@ -86,8 +92,8 @@ class StoryDebugPanel : ScriptBehaviour
 
     bool CompleteCheckpoint(NovelState@ state)
     {
-        return state !is null && state.core.schemaVersion == 2 && state.core.contentVersion == contentVersion &&
-            runtime.HasDebugCommand(state.core.currentCommandId);
+        return state !is null && state.core.schemaVersion == 1 && state.core.contentVersion == contentVersion &&
+            state.core.frames.size() > 0 && runtime.HasDebugLabel(state.core.frames[0].label);
     }
 
     void RestoreCheckpoint()

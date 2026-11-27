@@ -91,22 +91,16 @@ class EngineApiProbe : ScriptBehaviour
 
         NovelState source;
         source.core.schemaVersion = 2;
-        source.core.currentCommandId = "probe";
-        source.core.callStack.pushBack("return");
-        Value integer;
-        int64 score = 7;
-        integer.set(score);
-        source.core.variables.set("score", integer);
-        Value boolean;
-        bool enabled = true;
-        boolean.set(enabled);
-        source.core.variables.set("enabled", boolean);
-        Value text;
         String title = "Кириллица";
-        text.set(title);
-        source.core.variables.set("title", text);
+        source.core.position = title;
+        source.core.frames.resize(1);
+        source.core.frames[0].label = "return";
+        source.core.frames[0].picks.pushBack(2);
+        source.core.vars.roots = 7;
+        source.core.vars.canteen_visited = true;
+        source.core.frames[0].afterCall.pushBack(source.core.vars);
         NovelHistoryEntry entry;
-        entry.commandId = "probe";
+        entry.lineId = "probe";
         entry.text = "Original";
         source.core.history.pushBack(entry);
         NovelCharacter character;
@@ -116,29 +110,26 @@ class EngineApiProbe : ScriptBehaviour
 
         NovelState copy;
         copy = source;
-        score = 99;
-        copy.core.variables.at("score").set(score);
+        copy.core.vars.roots = 99;
+        copy.core.frames[0].afterCall[0].roots = 99;
         copy.core.history[0].text = "Changed";
         copy.core.presentation.characters.at("ch_p").resourceId = "changed";
-        copy.core.callStack[0] = "changed";
-        int64 originalScore = 0;
-        Check(source.core.variables.at("score").get(originalScore) && originalScore == 7);
+        copy.core.frames[0].label = "changed";
+        Check(source.core.vars.roots == 7 && source.core.frames[0].afterCall[0].roots == 7);
         Check(source.core.history[0].text == "Original");
         Check(source.core.presentation.characters.at("ch_p").resourceId == "original");
-        Check(source.core.callStack[0] == "return");
+        Check(source.core.frames[0].label == "return");
         Check(copy.rollbackCheckpoints[0].history[0].text == "Original");
 
         String encoded = SerializeScriptValue(source);
         NovelState restored;
         Check(DeserializeScriptValue(encoded, restored));
-        Check(restored.core.variables.at("score").get(originalScore) && originalScore == 7);
-        bool restoredBool = false;
-        String restoredTitle;
-        Check(restored.core.variables.at("enabled").get(restoredBool) && restoredBool);
-        Check(restored.core.variables.at("title").get(restoredTitle) && restoredTitle == title);
+        Check(restored.core.vars.roots == 7 && restored.core.vars.canteen_visited);
+        Check(restored.core.position == title);
+        Check(restored.core.frames.size() == 1 && restored.core.frames[0].picks.size() == 1 && restored.core.frames[0].picks[0] == 2);
         Check(restored.core.history.size() == 1 && restored.core.history[0].text == "Original");
         Check(restored.core.presentation.characters.at("ch_p").resourceId == "original");
-        Check(restored.rollbackCheckpoints.size() == 1 && restored.rollbackCheckpoints[0].callStack[0] == "return");
+        Check(restored.rollbackCheckpoints.size() == 1 && restored.rollbackCheckpoints[0].frames[0].label == "return");
         restored.core.history[0].text = "Changed";
         Check(DeserializeScriptValue(encoded, restored));
         Check(restored.core.history[0].text == "Original");
@@ -146,7 +137,7 @@ class EngineApiProbe : ScriptBehaviour
         Check(!DeserializeScriptValue("{broken", restored));
         NovelState empty;
         Check(DeserializeScriptValue(SerializeScriptValue(empty), restored));
-        Check(restored.core.variables.size() == 0 && restored.core.history.size() == 0 &&
+        Check(restored.core.frames.size() == 0 && restored.core.vars.roots == 0 && restored.core.history.size() == 0 &&
             restored.rollbackCheckpoints.size() == 0 && restored.core.presentation.characters.size() == 0);
         Check(RuntimeValues::Number("-1.25e2") < -124.999f && RuntimeValues::Number("-1.25e2") > -125.001f);
         Check(RuntimeValues::Number("invalid") > -0.000001f && RuntimeValues::Number("invalid") < 0.000001f);

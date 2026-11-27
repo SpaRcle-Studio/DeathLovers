@@ -7,18 +7,17 @@
 #include "NovelPresentation.as"
 #include "NovelSnapshotValidation.as"
 #include "NovelSaveFormat.as"
+#include "StoryApi.as"
 #include "../Debug/StoryDebugPanel.as"
 
-class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
+class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
 {
     MenuNavigation@ menu;
     NovelView view;
     NovelAudio audio;
     NovelPresentation presentation;
     DialogueProgram program;
-    JsonValue@ story = JsonValue();
-    JsonValueView@ commands;
-    Map<String, String> endingTargets;
+    StoryRunner runner;
     JsonValue definitions;
     Map<String, NovelSpeaker> speakers;
     NovelState@ state;
@@ -33,10 +32,12 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
     float autoDelay = 0;
     float skipDelay = 0;
     uint rollbackCount = 0;
-    String rollbackLastCommand;
+    uint rollbackLastInteraction = 0;
     NovelAudioState rollbackAudio;
-    String storyResource = "DeathLovers/Story/story.json";
+    String storyEntry = "Story::start";
     bool restoreInputPending = false;
+    Map<String, bool> readIndex;
+    uint readIndexCount = 0;
 
     void Configure(MenuNavigation@ navigation, Component@ receiver)
     {
@@ -81,22 +82,18 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool StartSession()
     {
-        storyResource = "DeathLovers/Story/story.json";
         traceEnabled = false;
         if (!configured)
         {
             return false;
         }
-        startupError = "Не удалось загрузить story.json или characters.json. Подробности в журнале движка.";
-        JsonValue nextStory;
-        if (!nextStory.LoadResource("DeathLovers/Story/story.json") ||
-            !definitions.LoadResource("DeathLovers/Story/characters.json"))
+        startupError = "Не удалось загрузить characters.json. Подробности в журнале движка.";
+        if (!definitions.LoadResource("DeathLovers/Story/characters.json"))
         {
             return false;
         }
-        @story = nextStory;
-        startupError = "Неверная версия Story или отсутствует начальная команда.";
-        if (!NewGame())
+        startupError = "Сценарий не найден или не запустился. Подробности в журнале движка.";
+        if (!NewGame("Story::start"))
         {
             return false;
         }
@@ -106,14 +103,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
     bool StartFixture()
     {
-        storyResource = "DeathLovers/Story/runtime-fixture.json";
-        JsonValue nextStory;
-        if (!configured || !nextStory.LoadResource("DeathLovers/Story/runtime-fixture.json"))
+        if (!configured || !definitions.LoadResource("DeathLovers/Story/characters.json"))
         {
             return false;
         }
-        @story = nextStory;
-        definitions.LoadResource("DeathLovers/Story/characters.json");
         JsonValue@ characters = definitions.View().Get("characters").Clone();
         JsonValue@ character = characters.View().Get("ch_p").Clone();
         JsonValue animation;
@@ -122,11 +115,27 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         characters.Set("ch_p", character);
         definitions.Set("characters", characters);
         traceEnabled = true;
-        return NewGame();
+        return NewGame("Story::fixture_runtime_start");
     }
 
-    bool NewGame()
+    bool StartSavesFixture()
     {
+        if (!configured || !definitions.LoadResource("DeathLovers/Story/characters.json"))
+        {
+            return false;
+        }
+        traceEnabled = true;
+        return NewGame("Story::fixture_saves_start");
+    }
+
+    bool NewGame(const String &in entry)
+    {
+        if (FindCoroutineEntry(entry) is null)
+        {
+            Debug::Instance().Error("NovelSession::NewGame() : unknown story entry " + entry);
+            return false;
+        }
+        storyEntry = entry;
         restoreInputPending = false;
         menu.saves.autoPending = false;
         menu.saves.lastAutoTime = 0;
@@ -137,54 +146,25 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         autoEnabled = false;
         autoDelay = 0;
         rollbackCount = 0;
-        rollbackLastCommand = "";
-        @commands = story.View().Get("commands");
-        if (story.View().Get("schemaVersion").GetInt() != 1) {
-            Debug::Instance().Error("NovelSession::NewGame() : ivalid version!");
-            return false;
-        }
-        if (!commands.Has(story.View().Get("entryCommandId").GetString())) {
-            Debug::Instance().Error("NovelSession::NewGame() : ivalid entry command!");
-            return false;
-        }
-        endingTargets.clear();
-        JsonValueView@ labels = story.View().Get("labels");
-        for (uint i = 0; i < labels.GetCount(); ++i)
-        {
-            String label = labels.GetKey(i);
-            if (label.length() > 7 && label.substring(label.length() - 7, 7) == "_ending")
-            {
-                endingTargets.set(labels.Get(label).GetString(), label);
-            }
-        }
+        rollbackLastInteraction = 0;
+        runner.Abort();
         audio.Stop();
         @state = NovelState();
         state.rollbackCheckpoints.reserve(100);
         state.core.history.reserve(250);
-        state.core.callStack.reserve(16);
+        state.core.frames.reserve(16);
         state.core.presentation.choices.reserve(8);
         state.core.schemaVersion = 1;
-        state.core.contentVersion = story.View().Get("contentVersion").GetString();
-        state.core.currentCommandId = story.View().Get("entryCommandId").GetString();
+        state.core.contentVersion = Story::Version;
         Phase("Ready");
-        JsonValueView@ registry = story.View().Get("variables");
-        for (uint i = 0; i < registry.GetCount(); ++i)
-        {
-            String id = registry.GetKey(i);
-            Value@ initial = RuntimeValues::FromJson(registry.Get(id).Get("initial"));
-            if (!initial.hasValue())
-            {
-                Debug::Instance().Error("NovelSession::NewGame() : ivalid initial value!");
-                return false;
-            }
-            state.core.variables.set(id, initial);
-        }
         state.rollbackCheckpoints.clear();
-        state.core.rollbackBoundaryId = "";
         state.core.activeEndingId = "";
         state.core.diagnostic = "";
         state.core.playTimeSeconds = 0;
         trace.clear();
+        RefreshReadIndex(true);
+        runner.Bind(this, state.core);
+        runner.Start(storyEntry);
         inputBarrier = 0.1f;
         menu.gameMenuOpen = false;
         menu.inGame = true;
@@ -196,20 +176,6 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         RestorePresentation();
         view.FocusNarrative(false);
         return true;
-    }
-
-    bool StartSavesFixture()
-    {
-        JsonValue nextStory;
-        if (!configured || !nextStory.LoadResource("DeathLovers/Story/saves-fixture.json") ||
-            !definitions.LoadResource("DeathLovers/Story/characters.json"))
-        {
-            return false;
-        }
-        @story = nextStory;
-        storyResource = "DeathLovers/Story/saves-fixture.json";
-        traceEnabled = true;
-        return NewGame();
     }
 
     String PhaseName()
@@ -227,219 +193,53 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return !menu.inGame || menu.gameMenuOpen || menu.modal !is null || menu.saves.busy || !Input::Instance().IsAppFocused();
     }
 
-    JsonValueView@ Command()
-    {
-        return commands.Get(state.core.currentCommandId);
-    }
-
     void Fail(const String &in message)
     {
-        JsonValueView@ command = Command();
-        String location = state.core.currentCommandId + " " + RuntimeValues::Text(command, "sourceFile");
-        if (command.Has("sourceLine"))
+        String location = state.core.Label();
+        if (state.core.position != "")
         {
-            location = location + ":" + RuntimeValues::Index(uint(command.Get("sourceLine").GetInt()));
+            location = location + " @" + state.core.position;
         }
         state.core.diagnostic = "NovelSession : " + location + " : " + message;
+        Debug::Instance().Error(state.core.diagnostic);
         Phase("Finished");
+        runner.Abort();
         view.adv.SetEnabled(true);
         view.dialogue.SetText(state.core.diagnostic);
         view.dialogue.SetVisibleGraphemeCount(1000000);
         audio.StopTyping();
     }
 
-    void Go(JsonValueView@ target)
+    float Duration(const String &in kind, float seconds)
     {
-        GoId(target.GetString());
-    }
-
-    void GoId(const String &in id)
-    {
-        if (id == "")
+        if (seconds >= 0)
         {
-            Phase("Finished");
-            return;
+            return seconds;
         }
-        if (!commands.Has(id))
-        {
-            Fail("Unknown command " + id);
-            return;
-        }
-        state.core.currentCommandId = id;
-        if (endingTargets.contains(id))
-        {
-            state.core.activeEndingId = endingTargets.at(id);
-        }
-        Phase("Ready");
-    }
-
-    Value@ Evaluate(JsonValueView@ node, uint depth = 0)
-    {
-        Value result;
-        bool boolean = false;
-        if (depth > 64)
-        {
-            Fail("Condition nesting limit");
-            result.set(boolean);
-            return result;
-        }
-        String op = node.Get("op").GetString();
-        if (op == "literal")
-        {
-            return RuntimeValues::FromJson(node.Get("value"));
-        }
-        if (op == "variable")
-        {
-            String id = node.Get("variableId").GetString();
-            if (!state.core.variables.contains(id))
-            {
-                Fail("Unknown variable " + id);
-                result.set(boolean);
-                return result;
-            }
-            return state.core.variables.at(id);
-        }
-        if (op == "not")
-        {
-            Value@ operand = Evaluate(node.Get("operand"), depth + 1);
-            if (!operand.get(boolean))
-            {
-                Fail("not requires bool");
-            }
-            boolean = !boolean;
-        }
-        else if (op == "and" || op == "or")
-        {
-            JsonValueView@ operands = node.Get("operands");
-            boolean = op == "and";
-            for (uint i = 0; i < operands.GetCount(); ++i)
-            {
-                Value@ value = Evaluate(operands.At(i), depth + 1);
-                if (!value.get(boolean))
-                {
-                    Fail("Boolean operator requires bool");
-                    boolean = false;
-                    break;
-                }
-                if (PhaseName() == "Finished" || boolean == (op == "or"))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Value@ left = Evaluate(node.Get("left"), depth + 1);
-            Value@ right = Evaluate(node.Get("right"), depth + 1);
-            if (!RuntimeValues::SameType(left, right))
-            {
-                Fail("Comparison type mismatch");
-            }
-            else if (op == "eq" || op == "ne")
-            {
-                bool equal = RuntimeValues::Equal(left, right);
-                boolean = op == "eq" ? equal : !equal;
-            }
-            else
-            {
-                int64 a, b;
-                if (!left.get(a) || !right.get(b) || (op != "lt" && op != "le" && op != "gt" && op != "ge"))
-                {
-                    Fail("Invalid comparison operator/type " + op);
-                }
-                else
-                {
-                    boolean = op == "lt" ? a < b : op == "le" ? a <= b : op == "gt" ? a > b : a >= b;
-                }
-            }
-        }
-        result.set(boolean);
-        return result;
-    }
-
-    bool Condition(JsonValueView@ node)
-    {
-        Value@ result = Evaluate(node);
-        bool boolean = false;
-        if (!result.get(boolean))
-        {
-            Fail("Condition requires bool");
-        }
-        return boolean;
-    }
-
-    void Assign(JsonValueView@ command)
-    {
-        String id = command.Get("variableId").GetString();
-        Value@ value = RuntimeValues::FromJson(command.Get("value"));
-        if (!state.core.variables.contains(id) || !RuntimeValues::SameType(state.core.variables.at(id), value))
-        {
-            Fail("Invalid variable assignment " + id);
-            return;
-        }
-        String operation = command.Get("operation").GetString();
-        int64 integer = 0;
-        bool isInteger = value.get(integer);
-        if (isInteger && (integer < -2147483648 || integer > 2147483647))
-        {
-            Fail("int32 assignment overflow " + id);
-            return;
-        }
-        if (operation == "add")
-        {
-            int64 current = 0;
-            if (!isInteger || !state.core.variables.at(id).get(current))
-            {
-                Fail("add requires int");
-                return;
-            }
-            integer += current;
-            if (integer < -2147483648 || integer > 2147483647)
-            {
-                Fail("int32 assignment overflow " + id);
-                return;
-            }
-            value.set(integer);
-        }
-        else if (operation != "set")
-        {
-            Fail("Unknown assignment operation");
-            return;
-        }
-        state.core.variables.set(id, value);
-        Go(command.Get("next"));
-    }
-
-    float Duration(JsonValueView@ transition)
-    {
-        if (transition.Has("seconds"))
-        {
-            return float(transition.Get("seconds").GetNumber());
-        }
-        String kind = transition.Get("kind").GetString();
         // Ren'Py common transitions: fade=.5 out + .0 hold + .5 in;
         // dissolve=.5; vpunch=.25. Explicit durations always take priority.
         return kind == "fade" ? 1.0f : kind == "dissolve" ? 0.5f : kind == "vpunch" ? 0.25f : 0;
     }
 
-    void Say(JsonValueView@ command)
+    // ---- IStoryHost ----------------------------------------------------------------------------
+
+    void StorySay(const String &in lineId, const String &in speakerId, const String &in mode, const String &in text, bool autoWait)
     {
-        String speakerId = command.Get("speakerId").GetString();
         if (!speakers.contains(speakerId))
         {
             Fail("Unknown speaker " + speakerId);
             return;
         }
-        program.Compile(command.Get("normalizedText").GetString(), command.Get("autoWait").GetBool());
+        program.Compile(text, autoWait);
         if (program.diagnostic != "")
         {
-            state.core.diagnostic = command.Get("id").GetString() + " : " + program.diagnostic;
+            state.core.diagnostic = lineId + " : " + program.diagnostic;
         }
         NovelPresentationState@ p = state.core.presentation;
-        p.mode = command.Get("mode").GetString();
-        p.speakerId = command.Get("speakerId").GetString();
-        p.text = command.Get("normalizedText").GetString();
-        p.autoWait = command.Get("autoWait").GetBool();
+        p.mode = mode;
+        p.speakerId = speakerId;
+        p.text = text;
+        p.autoWait = autoWait;
         p.visibleIndex = 0;
         p.tokenIndex = 0;
         p.remainingPause = 0;
@@ -447,15 +247,15 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         p.fullyShown = false;
         p.dialogueVisible = true;
         NovelHistoryEntry entry;
-        entry.commandId = command.Get("id").GetString();
-        entry.speakerId = command.Get("speakerId").GetString();
-        entry.text = p.autoWait ? program.AutoWaits(p.text) : p.text;
+        entry.lineId = lineId;
+        entry.speakerId = speakerId;
+        entry.text = autoWait ? program.AutoWaits(text) : text;
         if (state.core.history.size() >= 250)
         {
             state.core.history.erase(0);
         }
         state.core.history.pushBack(entry);
-        if (command.Get("mode").GetString() == "NVL")
+        if (mode == "NVL")
         {
             p.nvl.pushBack(entry);
         }
@@ -466,10 +266,53 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         RememberInteraction();
     }
 
-    void Character(JsonValueView@ command)
+    void StoryMenu(const String &in menuId, const Vector<NovelChoice> &in choices)
     {
-        String id = command.Get("characterId").GetString();
-        String name = command.Get("state").GetString();
+        NovelPresentationState@ p = state.core.presentation;
+        p.choices = choices;
+        Phase("WaitingChoice");
+        MarkRead(menuId);
+        menu.saves.autoPending = true;
+        menu.saves.FlushProfile();
+        RememberInteraction();
+        if (!MenuSession::profile.settings.skip_after_choices)
+        {
+            skipEnabled = false;
+        }
+        view.Choices(p.choices, true);
+        inputBarrier = 0.1f;
+    }
+
+    void StoryScene(const String &in resourceId, const String &in kind, float seconds)
+    {
+        if (resourceId != "builtin:black" && audio.Path(resourceId) == "")
+        {
+            Fail("Unknown background " + resourceId);
+            return;
+        }
+        if (kind != "none" && kind != "fade" && kind != "dissolve" && kind != "vpunch")
+        {
+            Fail("Unknown transition " + kind);
+            return;
+        }
+        NovelPresentationState@ p = state.core.presentation;
+        NovelTransition@ transition = p.transition;
+        transition.kind = kind;
+        transition.from = p.background;
+        transition.target = resourceId;
+        transition.elapsed = 0;
+        transition.duration = Duration(kind, seconds);
+        p.background = resourceId;
+
+        presentation.PaintBackground(p);
+        if (transition.duration > 0)
+        {
+            Phase("WaitingTransition");
+        }
+    }
+
+    void StoryCharacter(const String &in id, const String &in name, const String &in kind, float seconds)
+    {
         JsonValueView@ registry = definitions.View().Get("characters");
         if (!registry.Has(id) || !registry.Get(id).Get("stateResources").Has(name))
         {
@@ -487,208 +330,101 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         character.flipY = definition.Get("flip").At(1).GetBool();
         character.animation = RuntimeValues::Text(definition, "animation");
         String previous = p.characters.contains(id) ? p.characters.at(id).resourceId : "hidden";
-        character.state = command.Get("state").GetString();
+        character.state = name;
         character.resourceId = definition.Get("stateResources").Get(name).GetString();
         character.previousResource = previous;
-        character.transitionDuration = Duration(command.Get("transition"));
+        character.transitionDuration = Duration(kind, seconds);
         character.transitionElapsed = 0;
         character.bounceElapsed = 0;
         character.bounceActive = character.animation == "single_bounce_animation";
         p.characters.set(id, character);
 
         presentation.PaintCharacters(p);
-        Go(command.Get("next"));
     }
 
-    void Execute(JsonValueView@ command)
+    void StoryAudio(const String &in bus, bool play, const String &in resourceId, bool loop, float fade)
     {
-        String type = command.Get("type").GetString();
-        if (type == "Say")
+        if (!audio.Command(state.core.audio, bus, play, resourceId, loop, fade))
         {
-            Say(command);
-            return;
+            Fail(audio.diagnostic);
         }
-        if (type == "Assign")
-        {
-            Assign(command);
-            return;
-        }
-        if (type == "Character")
-        {
-            Character(command);
-            return;
-        }
-        if (type == "Jump")
-        {
-            Go(command.Get("target"));
-            return;
-        }
-        if (type == "Call")
-        {
-            if (state.core.callStack.size() >= 1000)
-            {
-                Fail("Call stack limit");
-                return;
-            }
-            state.core.callStack.pushBack(command.Get("returnTarget").GetString());
-            Go(command.Get("target"));
-            return;
-        }
-        if (type == "Return")
-        {
-            if (state.core.callStack.size() == 0)
-            {
-                Phase("Finished");
-                return;
-            }
-            String target = state.core.callStack[state.core.callStack.size() - 1];
-            state.core.callStack.resize(state.core.callStack.size() - 1);
-            GoId(target);
-            return;
-        }
-        if (type == "Branch")
-        {
-            bool result = Condition(command.Get("condition"));
-            if (PhaseName() != "Finished")
-            {
-                Go(command.Get(result ? "trueTarget" : "falseTarget"));
-            }
-            return;
-        }
-        NovelPresentationState@ p = state.core.presentation;
-        if (type == "Choice")
-        {
-            p.choices.clear();
-            JsonValueView@ source = command.Get("options");
-            for (uint i = 0; i < source.GetCount(); ++i)
-            {
-                JsonValueView@ option = source.At(i);
-                if (!option.Has("condition") || Condition(option.Get("condition")))
-                {
-                    NovelChoice choice;
-                    choice.choiceId = option.Get("choiceId").GetString();
-                    choice.normalizedText = option.Get("normalizedText").GetString();
-                    choice.target = option.Get("target").GetString();
-                    p.choices.pushBack(choice);
-                }
-            }
-            if (PhaseName() == "Finished")
-            {
-                return;
-            }
-            if (p.choices.size() == 0 || p.choices.size() > 8)
-            {
-                Fail("Choice has zero or more than eight available options");
-                return;
-            }
-
-            Phase("WaitingChoice");
-            if (!IsRead(state.core.currentCommandId))
-            {
-                MenuSession::profile.readCommandIds.pushBack(state.core.currentCommandId);
-                menu.saves.MarkProfile();
-            }
-            menu.saves.autoPending = true;
-            menu.saves.FlushProfile();
-            RememberInteraction();
-            if (!MenuSession::profile.settings.skip_after_choices)
-            {
-                skipEnabled = false;
-            }
-            view.Choices(p.choices, true);
-            inputBarrier = 0.1f;
-            return;
-        }
-        if (type == "Scene")
-        {
-            String id = command.Get("resourceId").GetString();
-            if (id != "builtin:black" && audio.Path(id) == "")
-            {
-                Fail("Unknown background " + id);
-                return;
-            }
-            NovelTransition@ transition = p.transition;
-            transition.kind = command.Get("transition").Get("kind").GetString();
-            transition.from = p.background;
-            transition.target = command.Get("resourceId").GetString();
-            transition.elapsed = 0;
-            transition.duration = Duration(command.Get("transition"));
-            p.background = command.Get("resourceId").GetString();
-
-            presentation.PaintBackground(p);
-            if (transition.duration > 0)
-            {
-                Phase("WaitingTransition");
-            }
-            else
-            {
-                Go(command.Get("next"));
-            }
-            return;
-        }
-        if (type == "NvlClear")
-        {
-            p.nvl.clear();
-            p.dialogueVisible = false;
-
-            view.nvl.SetEnabled(false);
-        }
-        else if (type == "Audio")
-        {
-            NovelAudioState@ channels = state.core.audio;
-            if (!audio.Command(channels, command))
-            {
-                Fail(audio.diagnostic);
-                return;
-            }
-        }
-        else if (type == "Wait")
-        {
-            p.remainingPause = command.Has("seconds") ? command.Get("seconds").GetNumber() : 0;
-            p.inputWait = command.Has("waitForInput") && command.Get("waitForInput").GetBool();
-
-            Phase("WaitingTimer");
-            return;
-        }
-        else if (type == "RollbackBarrier")
-        {
-            rollbackCount = 0;
-            rollbackLastCommand = "";
-            state.core.rollbackBoundaryId = command.Get("id").GetString();
-            state.rollbackCheckpoints.clear();
-        }
-        else if (type == "RestartToMenu")
-        {
-            Phase("Finished");
-            menu.ReturnToMainMenu();
-            return;
-        }
-        else
-        {
-            Fail("Unknown command type " + type);
-            return;
-        }
-        Go(command.Get("next"));
     }
+
+    void StoryNvlClear()
+    {
+        NovelPresentationState@ p = state.core.presentation;
+        p.nvl.clear();
+        p.dialogueVisible = false;
+
+        view.nvl.SetEnabled(false);
+    }
+
+    void StoryPause(float seconds, bool waitForInput)
+    {
+        NovelPresentationState@ p = state.core.presentation;
+        p.remainingPause = seconds > 0 ? seconds : 0;
+        p.inputWait = waitForInput;
+
+        Phase("WaitingTimer");
+    }
+
+    void StoryBarrier()
+    {
+        rollbackCount = 0;
+        rollbackLastInteraction = 0;
+        state.rollbackCheckpoints.clear();
+    }
+
+    void StoryRestartToMenu()
+    {
+        Phase("Finished");
+        menu.ReturnToMainMenu();
+    }
+
+    bool StoryNeedsFrame()
+    {
+        presentation.Prepare(state.core.presentation);
+        return presentation.waitingTextures;
+    }
+
+    // ---- execution -----------------------------------------------------------------------------
 
     void RunReady()
     {
+        if (state is null)
+        {
+            return;
+        }
         for (uint count = 0; count < 1000 && PhaseName() == "Ready"; ++count)
         {
+            if (!runner.IsRunning())
+            {
+                // The root label returned: the story ended without restart_to_menu().
+                Phase("Finished");
+                return;
+            }
             String before;
             if (traceEnabled)
             {
                 before = SerializeScriptValue(state.core);
             }
-            JsonValueView@ command = Command();
-            Execute(command);
+            if (!runner.Resume())
+            {
+                Fail(runner.error);
+                return;
+            }
             if (traceEnabled)
             {
                 NovelTraceEvent event;
-                event.commandId = command.Get("id").GetString();
+                event.label = state.core.Label();
+                event.position = state.core.position;
                 event.before = before;
                 event.after = SerializeScriptValue(state.core);
                 trace.pushBack(event);
+            }
+            if (state is null)
+            {
+                return;
             }
             presentation.Prepare(state.core.presentation);
             if (presentation.waitingTextures)
@@ -698,28 +434,14 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         if (PhaseName() == "Ready")
         {
-            Fail("1000 commands in one frame: probable cycle");
+            Fail("1000 story resumes in one frame: probable cycle");
         }
     }
 
     void FinishSay()
     {
-        String id = state.core.currentCommandId;
-        bool seen = false;
-        for (uint i = 0; i < MenuSession::profile.readCommandIds.size(); ++i)
-        {
-            if (MenuSession::profile.readCommandIds[i] == id)
-            {
-                seen = true;
-                break;
-            }
-        }
-        if (!seen)
-        {
-            MenuSession::profile.readCommandIds.pushBack(id);
-            menu.saves.MarkProfile();
-        }
-        Go(Command().Get("next"));
+        MarkRead(state.core.position);
+        Phase("Ready");
     }
 
     void TextTick(float dt, bool fast)
@@ -805,7 +527,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             p.inputWait = false;
 
-            Go(Command().Get("next"));
+            Phase("Ready");
         }
         else if (PhaseName() == "WaitingText")
         {
@@ -836,18 +558,20 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         {
             return;
         }
-        String target = p.choices[index].target;
+        uint declared = p.choices[index].index;
         menu.saves.autoPending = true;
         menu.saves.FlushProfile();
         p.choices.clear();
 
         view.Choices(p.choices, false);
         inputBarrier = 0.1f;
-        GoId(target);
+        runner.Pick(declared);
+        Phase("Ready");
     }
 
     void RememberInteraction()
     {
+        state.core.interaction = state.core.interaction + 1;
         if (state.rollbackCheckpoints.size() >= 100)
         {
             state.rollbackCheckpoints.erase(0);
@@ -865,7 +589,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             core.presentation.remainingPause = 0;
         }
         rollbackCount = state.rollbackCheckpoints.size();
-        rollbackLastCommand = state.core.currentCommandId;
+        rollbackLastInteraction = state.core.interaction;
     }
 
     bool CanRollback()
@@ -875,7 +599,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return false;
         }
         uint count = rollbackCount;
-        if (count > 0 && rollbackLastCommand == state.core.currentCommandId)
+        if (count > 0 && rollbackLastInteraction == state.core.interaction)
         {
             --count;
         }
@@ -889,7 +613,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return;
         }
         uint count = state.rollbackCheckpoints.size();
-        if (state.rollbackCheckpoints[count - 1].currentCommandId == state.core.currentCommandId)
+        if (state.rollbackCheckpoints[count - 1].interaction == state.core.interaction)
         {
             --count;
         }
@@ -925,16 +649,37 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         FinishRestore();
     }
 
+    void RefreshReadIndex(bool force = false)
+    {
+        uint count = MenuSession::profile.readLines.size();
+        if (!force && readIndexCount == count)
+        {
+            return;
+        }
+        readIndex.clear();
+        for (uint i = 0; i < count; ++i)
+        {
+            readIndex.set(MenuSession::profile.readLines[i], true);
+        }
+        readIndexCount = count;
+    }
+
     bool IsRead(const String &in id)
     {
-        for (uint i = 0; i < MenuSession::profile.readCommandIds.size(); ++i)
+        RefreshReadIndex();
+        return readIndex.contains(id);
+    }
+
+    void MarkRead(const String &in id)
+    {
+        if (id == "" || IsRead(id))
         {
-            if (MenuSession::profile.readCommandIds[i] == id)
-            {
-                return true;
-            }
+            return;
         }
-        return false;
+        MenuSession::profile.readLines.pushBack(id);
+        readIndex.set(id, true);
+        readIndexCount = MenuSession::profile.readLines.size();
+        menu.saves.MarkProfile();
     }
 
     void ReadingTick(float dt)
@@ -949,7 +694,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         NovelPresentationState@ p = state.core.presentation;
         if (skip && PhaseName() == "WaitingText")
         {
-            if (!MenuSession::profile.settings.skip_unseen && !IsRead(state.core.currentCommandId))
+            if (!MenuSession::profile.settings.skip_unseen && !IsRead(state.core.position))
             {
                 skipEnabled = false;
                 return;
@@ -972,7 +717,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         }
         else if (skip && PhaseName() == "WaitingTimer" && !p.inputWait)
         {
-            Go(Command().Get("next"));
+            Phase("Ready");
         }
         else if (skip && PhaseName() == "WaitingTransition" && MenuSession::profile.settings.skip_transitions)
         {
@@ -996,6 +741,16 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         if (state is null || !menu.inGame)
         {
             return;
+        }
+        if (PhaseName() != "Finished" && !runner.IsRunning() && state.core.frames.size() > 0)
+        {
+            // The coroutine is not part of the script object graph: after a hot reload it is rebuilt from the frames.
+            runner.Bind(this, state.core);
+            if (!runner.Restore())
+            {
+                Fail("Не удалось продолжить сценарий после перезагрузки скриптов: " + runner.error);
+                return;
+            }
         }
         if (inputBarrier > 0)
         {
@@ -1059,13 +814,13 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
 
                 if (remaining <= 0)
                 {
-                    Go(Command().Get("next"));
+                    Phase("Ready");
                 }
             }
         }
         else if (phase == "WaitingTransition" && state.core.presentation.transition.elapsed >= state.core.presentation.transition.duration)
         {
-            Go(Command().Get("next"));
+            Phase("Ready");
         }
         RunReady();
     }
@@ -1098,9 +853,9 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         return snapshot;
     }
 
-    bool HasDebugCommand(const String &in commandId)
+    bool HasDebugLabel(const String &in label)
     {
-        return commands !is null && commands.Has(commandId);
+        return FindCoroutineEntry(label) !is null;
     }
 
     String SaveSnapshot()
@@ -1136,53 +891,75 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             return false;
         }
         @state = candidate;
-        FinishRestore();
-        return true;
+        return FinishRestore();
     }
 
-    void FinishRestore()
+    bool FinishRestore()
     {
         rollbackCount = state.rollbackCheckpoints.size();
-        rollbackLastCommand = rollbackCount > 0 ? state.rollbackCheckpoints[rollbackCount - 1].currentCommandId : "";
+        rollbackLastInteraction = rollbackCount > 0 ? state.rollbackCheckpoints[rollbackCount - 1].interaction : 0;
         skipEnabled = false;
         autoEnabled = false;
         autoDelay = 0;
         inputBarrier = 0.1f;
+        runner.Bind(this, state.core);
+        bool restored = runner.Restore();
         RestorePresentation();
         restoreInputPending = true;
         view.FocusNarrative(PhaseName() == "WaitingChoice");
+        if (!restored)
+        {
+            Fail("Не удалось восстановить позицию сценария: " + runner.error);
+        }
+        return restored;
     }
 
+    /// Checks fields and replays the story frames without touching the screen.
     bool ValidateSnapshot(NovelState@ snapshot)
     {
-        return NovelSnapshotValidation::Validate(snapshot, story.View(), definitions.View(), speakers, audio.paths);
+        if (!NovelSnapshotValidation::Validate(snapshot, definitions.View(), speakers, audio.paths))
+        {
+            return false;
+        }
+        NovelCore probeCore;
+        probeCore = snapshot.core;
+        StoryRunner probe;
+        probe.Bind(null, probeCore);
+        bool replayed = probe.Restore();
+        probe.Abort();
+        if (!replayed)
+        {
+            Debug::Instance().Error("NovelSession::ValidateSnapshot() : " + probe.error);
+        }
+        return replayed;
     }
 
     bool VerifySaveFormat()
     {
-        JsonValue@ encoded = NovelSaveFormat::State(state.core, story.View());
+        JsonValue@ encoded = NovelSaveFormat::State(state.core);
         // Include the JSON text boundary used by disk storage in the round trip.
         JsonValue disk;
         if (!disk.Parse(encoded.View().ToJson())) return false;
         NovelState decoded;
-        if (!NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded) ||
+        if (!NovelSaveFormat::ReadState(disk.View(), definitions.View(), decoded) ||
             !ValidateSnapshot(decoded) || decoded.rollbackCheckpoints.size() != 0 ||
-            SerializeScriptValue(decoded.core.variables) != SerializeScriptValue(state.core.variables) ||
+            SerializeScriptValue(decoded.core.vars) != SerializeScriptValue(state.core.vars) ||
+            SerializeScriptValue(decoded.core.frames) != SerializeScriptValue(state.core.frames) ||
             SerializeScriptValue(decoded.core.history) != SerializeScriptValue(state.core.history) ||
-            SerializeScriptValue(decoded.core.callStack) != SerializeScriptValue(state.core.callStack) ||
+            decoded.core.position != state.core.position ||
             decoded.core.presentation.text != state.core.presentation.text ||
             decoded.core.presentation.visibleIndex != state.core.presentation.visibleIndex ||
             SerializeScriptValue(decoded.core.presentation.choices) != SerializeScriptValue(state.core.presentation.choices) ||
             SerializeScriptValue(decoded.core.presentation.nvl) != SerializeScriptValue(state.core.presentation.nvl)) return false;
-        JsonValue@ roundTrip = NovelSaveFormat::State(decoded.core, story.View());
+        JsonValue@ roundTrip = NovelSaveFormat::State(decoded.core);
         if (!disk.View().Equals(roundTrip.View())) return false;
-        NovelSaveFormat::Integer(disk, "schemaVersion", 1);
-        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+        NovelSaveFormat::Integer(disk, "schemaVersion", 2);
+        if (NovelSaveFormat::ReadState(disk.View(), definitions.View(), decoded)) return false;
         NovelSaveFormat::Integer(disk, "schemaVersion", NovelSaveFormat::Version + 1);
-        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+        if (NovelSaveFormat::ReadState(disk.View(), definitions.View(), decoded)) return false;
         NovelSaveFormat::Integer(disk, "schemaVersion", NovelSaveFormat::Version);
         NovelSaveFormat::Text(disk, "unexpected", "reject unknown fields");
-        if (NovelSaveFormat::ReadState(disk.View(), story.View(), definitions.View(), decoded)) return false;
+        if (NovelSaveFormat::ReadState(disk.View(), definitions.View(), decoded)) return false;
 
         JsonValue@ profile = NovelSaveFormat::Profile(MenuSession::profile);
         MenuProfile decodedProfile;
@@ -1190,7 +967,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             !NovelSaveFormat::ReadProfile(disk.View(), decodedProfile) ||
             !menu.saves.ValidProfile(decodedProfile) ||
             SerializeScriptValue(decodedProfile) != SerializeScriptValue(MenuSession::profile)) return false;
-        NovelSaveFormat::Integer(disk, "schemaVersion", 1);
+        NovelSaveFormat::Integer(disk, "schemaVersion", 2);
         return !NovelSaveFormat::ReadProfile(disk.View(), decodedProfile);
     }
 
@@ -1209,9 +986,9 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         bool second = first && LoadSnapshot(encoded);
         result.textRules = VerifyTextRules();
         bool equal = result.textRules && second && VerifySaveFormat() &&
-            SerializeScriptValue(snapshot.core.variables) == SerializeScriptValue(state.core.variables) &&
+            SerializeScriptValue(snapshot.core.vars) == SerializeScriptValue(state.core.vars) &&
+            SerializeScriptValue(snapshot.core.frames) == SerializeScriptValue(state.core.frames) &&
             SerializeScriptValue(snapshot.core.history) == SerializeScriptValue(state.core.history) &&
-            SerializeScriptValue(snapshot.core.callStack) == SerializeScriptValue(state.core.callStack) &&
             SerializeScriptValue(snapshot.core.presentation) == SerializeScriptValue(state.core.presentation);
         result.objectsAfter = menu.gameObject.GetHierarchyObjectCount();
         equal = equal && result.objectsBefore == result.objectsAfter;
@@ -1231,7 +1008,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
             test.AutoWaits("1.25") == "1.25" &&
             test.AutoWaits("А!{i} {/i}{w} Б") == "А!{i} {/i}{w} Б" &&
             test.AutoWaits("{shader=shake:u__speed=50.0}А{/shader}.") == "{shader=shake:u__speed=50.0}А{/shader}.";
-        test.Compile("ё{w}Б{w=0.2}{nw}", false);
+        test.Compile("ё{w}Б{w=0.2}{nw}", false);
         correct = correct && test.plain.graphemeCount() == 2 && test.tokenCount == 4 &&
             test.tokens[1].kind == "input" && test.noWait;
         test.Compile("{size=+10}А{size=-5}Б{/size}В{/size}", false);
@@ -1245,6 +1022,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime
         menu.saves.queuedGroup = "";
         menu.saves.openAfterYield = false;
         menu.saves.autoPending = false;
+        runner.Abort();
         audio.Stop();
         if (configured)
         {

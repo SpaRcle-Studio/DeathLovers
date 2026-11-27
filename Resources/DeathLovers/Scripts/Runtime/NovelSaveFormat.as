@@ -5,10 +5,11 @@
 #include "NovelSnapshotValidation.as"
 #include "../UI/MenuProfile.as"
 
-// Disk data is independent of script reflection and the in-memory rollback cache.
+// Disk data is independent of the in-memory rollback cache.
+// Version 3: the story position is the stack of story frames (StoryFrame), variables are Story::StoryVars.
 namespace NovelSaveFormat
 {
-    const uint Version = 2;
+    const uint Version = 3;
 
     void Text(JsonValue@ object, const String &in key, const String &in text)
     {
@@ -62,42 +63,122 @@ namespace NovelSaveFormat
         return true;
     }
 
-    JsonValue@ History(const Vector<NovelHistoryEntry> &in entries)
+    JsonValue@ Variables(const Story::StoryVars &in vars)
     {
-        Vector<String> ids;
-        for (uint i = 0; i < entries.size(); ++i) ids.pushBack(entries[i].commandId);
-        return Strings(ids);
+        JsonValue result;
+        if (!result.Parse(SerializeScriptValue(vars)))
+        {
+            result.MakeObject();
+        }
+        return result;
     }
 
-    bool ReadHistory(JsonValueView@ source, JsonValueView@ commands, Vector<NovelHistoryEntry> &out entries)
+    bool ReadVariables(JsonValueView@ source, Story::StoryVars &out vars)
     {
-        Vector<String> ids;
-        if (!ReadStrings(source, ids, 250)) return false;
-        DialogueProgram program;
-        for (uint i = 0; i < ids.size(); ++i)
+        return source.GetKind() == JsonValueKind::Object && DeserializeScriptValue(source.ToJson(), vars);
+    }
+
+    JsonValue@ Frames(const Vector<StoryFrame> &in frames)
+    {
+        JsonValue result;
+        result.MakeArray();
+        for (uint i = 0; i < frames.size(); ++i)
         {
-            JsonValueView@ command = commands.Get(ids[i]);
-            if (command.Get("type").GetString() != "Say") return false;
-            NovelHistoryEntry entry;
-            entry.commandId = ids[i];
-            entry.speakerId = command.Get("speakerId").GetString();
-            entry.text = command.Get("normalizedText").GetString();
-            if (command.Get("autoWait").GetBool()) entry.text = program.AutoWaits(entry.text);
-            entries.pushBack(entry);
+            const StoryFrame@ frame = frames[i];
+            JsonValue saved;
+            saved.MakeObject();
+            Text(saved, "label", frame.label);
+            saved.Set("entry", Variables(frame.entry));
+            Integer(saved, "step", frame.step);
+            JsonValue picks;
+            picks.MakeArray();
+            for (uint j = 0; j < frame.picks.size(); ++j)
+            {
+                JsonValue pick;
+                pick.SetInt(frame.picks[j]);
+                picks.Append(pick);
+            }
+            saved.Set("picks", picks);
+            JsonValue calls;
+            calls.MakeArray();
+            for (uint j = 0; j < frame.afterCall.size(); ++j)
+            {
+                calls.Append(Variables(frame.afterCall[j]));
+            }
+            saved.Set("afterCall", calls);
+            result.Append(saved);
+        }
+        return result;
+    }
+
+    bool ReadFrames(JsonValueView@ source, Vector<StoryFrame> &out frames)
+    {
+        if (source.GetKind() != JsonValueKind::Array || source.GetCount() > 1000) return false;
+        frames.resize(source.GetCount());
+        for (uint i = 0; i < source.GetCount(); ++i)
+        {
+            JsonValueView@ saved = source.At(i);
+            StoryFrame@ frame = frames[i];
+            JsonValueView@ picks = saved.Get("picks");
+            JsonValueView@ calls = saved.Get("afterCall");
+            if (saved.Get("label").GetKind() != JsonValueKind::String || saved.Get("step").GetKind() != JsonValueKind::Integer ||
+                saved.Get("step").GetInt() < 0 || saved.Get("step").GetInt() > 100000000 ||
+                picks.GetKind() != JsonValueKind::Array || calls.GetKind() != JsonValueKind::Array ||
+                !ReadVariables(saved.Get("entry"), frame.entry)) return false;
+            frame.label = saved.Get("label").GetString();
+            frame.step = uint(saved.Get("step").GetInt());
+            for (uint j = 0; j < picks.GetCount(); ++j)
+            {
+                if (picks.At(j).GetKind() != JsonValueKind::Integer || picks.At(j).GetInt() < 0 || picks.At(j).GetInt() >= 64) return false;
+                frame.picks.pushBack(uint(picks.At(j).GetInt()));
+            }
+            frame.afterCall.resize(calls.GetCount());
+            for (uint j = 0; j < calls.GetCount(); ++j)
+            {
+                if (!ReadVariables(calls.At(j), frame.afterCall[j])) return false;
+            }
         }
         return true;
     }
 
-    JsonValue@ Primitive(Value@ source)
+    JsonValue@ Lines(const Vector<NovelHistoryEntry> &in entries)
     {
-        JsonValue value;
-        bool boolean;
-        int64 integer;
-        String text;
-        if (source.get(boolean)) value.SetBool(boolean);
-        else if (source.get(integer)) value.SetInt(integer);
-        else if (source.get(text)) value.SetString(text);
-        return value;
+        JsonValue result;
+        result.MakeArray();
+        for (uint i = 0; i < entries.size(); ++i)
+        {
+            JsonValue item;
+            item.MakeArray();
+            JsonValue value;
+            value.SetString(entries[i].lineId);
+            item.Append(value);
+            value.SetString(entries[i].speakerId);
+            item.Append(value);
+            value.SetString(entries[i].text);
+            item.Append(value);
+            result.Append(item);
+        }
+        return result;
+    }
+
+    bool ReadLines(JsonValueView@ source, Vector<NovelHistoryEntry> &out entries)
+    {
+        if (source.GetKind() != JsonValueKind::Array || source.GetCount() > 250) return false;
+        for (uint i = 0; i < source.GetCount(); ++i)
+        {
+            JsonValueView@ item = source.At(i);
+            if (item.GetKind() != JsonValueKind::Array || item.GetCount() != 3) return false;
+            for (uint j = 0; j < 3; ++j)
+            {
+                if (item.At(j).GetKind() != JsonValueKind::String) return false;
+            }
+            NovelHistoryEntry entry;
+            entry.lineId = item.At(0).GetString();
+            entry.speakerId = item.At(1).GetString();
+            entry.text = item.At(2).GetString();
+            entries.pushBack(entry);
+        }
+        return true;
     }
 
     JsonValue@ Audio(NovelAudioChannel@ channel)
@@ -141,42 +222,50 @@ namespace NovelSaveFormat
         }
     }
 
-    JsonValue@ State(NovelCore@ core, JsonValueView@ story)
+    JsonValue@ State(NovelCore@ core)
     {
         JsonValue result;
         result.MakeObject();
         Integer(result, "schemaVersion", Version);
         Text(result, "contentVersion", core.contentVersion);
-        Text(result, "command", core.currentCommandId);
         Text(result, "phase", core.phase);
+        Text(result, "position", core.position);
         Number(result, "playTimeSeconds", core.playTimeSeconds);
-        result.Set("callStack", Strings(core.callStack));
         Text(result, "ending", core.activeEndingId);
-        JsonValue variables;
-        variables.MakeObject();
-        JsonValueView@ registry = story.Get("variables");
-        for (uint i = 0; i < registry.GetCount(); ++i)
-        {
-            String id = registry.GetKey(i);
-            Value@ initial = RuntimeValues::FromJson(registry.Get(id).Get("initial"));
-            if (!RuntimeValues::Equal(core.variables.at(id), initial)) variables.Set(id, Primitive(core.variables.at(id)));
-        }
-        result.Set("variables", variables);
-        result.Set("history", History(core.history));
+        result.Set("variables", Variables(core.vars));
+        result.Set("frames", Frames(core.frames));
+        result.Set("history", Lines(core.history));
 
         NovelPresentationState@ p = core.presentation;
         JsonValue screen;
         screen.MakeObject();
         Text(screen, "background", p.background);
         Boolean(screen, "dialogueVisible", p.dialogueVisible);
-        // The last Say remains the displayed dialogue through choices, waits and transitions.
-        Text(screen, "dialogue", core.history.size() > 0 ? core.history[core.history.size() - 1].commandId : "");
+        // The last line remains the displayed dialogue through choices, waits and transitions.
+        JsonValue dialogue;
+        dialogue.MakeObject();
+        Text(dialogue, "speaker", p.speakerId);
+        Text(dialogue, "mode", p.mode);
+        Text(dialogue, "text", p.text);
+        Boolean(dialogue, "autoWait", p.autoWait);
+        screen.Set("dialogue", dialogue);
         Integer(screen, "token", p.tokenIndex);
         Number(screen, "pause", p.remainingPause);
         Boolean(screen, "inputWait", p.inputWait);
         Boolean(screen, "fullyShown", p.fullyShown);
         Number(screen, "effectTime", p.effectTime);
-        screen.Set("nvl", History(p.nvl));
+        screen.Set("nvl", Lines(p.nvl));
+        JsonValue choices;
+        choices.MakeArray();
+        for (uint i = 0; i < p.choices.size(); ++i)
+        {
+            JsonValue choice;
+            choice.MakeObject();
+            Integer(choice, "index", p.choices[i].index);
+            Text(choice, "text", p.choices[i].text);
+            choices.Append(choice);
+        }
+        screen.Set("choices", choices);
         if (p.transition.elapsed < p.transition.duration)
         {
             JsonValue transition;
@@ -220,7 +309,7 @@ namespace NovelSaveFormat
         return result;
     }
 
-    bool ReadState(JsonValueView@ source, JsonValueView@ story, JsonValueView@ definitions, NovelState@ result)
+    bool ReadState(JsonValueView@ source, JsonValueView@ definitions, NovelState@ result)
     {
         if (source.Get("schemaVersion").GetKind() != JsonValueKind::Integer ||
             source.Get("schemaVersion").GetInt() != int64(Version)) return false;
@@ -228,41 +317,23 @@ namespace NovelSaveFormat
         NovelCore@ core = decoded.core;
         core.schemaVersion = 1; // Runtime invariant, independent of the disk format version.
         core.contentVersion = source.Get("contentVersion").GetString();
-        core.currentCommandId = source.Get("command").GetString();
         core.phase = source.Get("phase").GetString();
+        core.position = source.Get("position").GetString();
         core.playTimeSeconds = source.Get("playTimeSeconds").GetNumber();
         core.activeEndingId = source.Get("ending").GetString();
-        if (!ReadStrings(source.Get("callStack"), core.callStack, 1000)) return false;
-        JsonValueView@ registry = story.Get("variables");
-        JsonValueView@ variables = source.Get("variables");
-        if (variables.GetKind() != JsonValueKind::Object) return false;
-        for (uint i = 0; i < variables.GetCount(); ++i)
-            if (!registry.Has(variables.GetKey(i))) return false;
-        for (uint i = 0; i < registry.GetCount(); ++i)
-        {
-            String id = registry.GetKey(i);
-            Value@ initial = RuntimeValues::FromJson(registry.Get(id).Get("initial"));
-            Value@ value = variables.Has(id) ? RuntimeValues::FromJson(variables.Get(id)) : initial;
-            if (!RuntimeValues::SameType(initial, value)) return false;
-            core.variables.set(id, value);
-        }
-        JsonValueView@ commands = story.Get("commands");
-        if (!ReadHistory(source.Get("history"), commands, core.history)) return false;
+        if (!ReadVariables(source.Get("variables"), core.vars) ||
+            !ReadFrames(source.Get("frames"), core.frames) ||
+            !ReadLines(source.Get("history"), core.history)) return false;
         JsonValueView@ screen = source.Get("screen");
         NovelPresentationState@ p = core.presentation;
         p.background = screen.Get("background").GetString();
         p.dialogueVisible = screen.Get("dialogueVisible").GetBool();
-        String dialogue = screen.Get("dialogue").GetString();
+        JsonValueView@ dialogue = screen.Get("dialogue");
+        p.speakerId = dialogue.Get("speaker").GetString();
+        p.mode = dialogue.Get("mode").GetString();
+        p.text = dialogue.Get("text").GetString();
+        p.autoWait = dialogue.Get("autoWait").GetBool();
         DialogueProgram program;
-        if (dialogue != "")
-        {
-            JsonValueView@ command = commands.Get(dialogue);
-            if (command.Get("type").GetString() != "Say") return false;
-            p.text = command.Get("normalizedText").GetString();
-            p.speakerId = command.Get("speakerId").GetString();
-            p.mode = command.Get("mode").GetString();
-            p.autoWait = command.Get("autoWait").GetBool();
-        }
         program.Compile(p.text, p.autoWait);
         int64 token = screen.Get("token").GetInt();
         if (token < 0 || token > int64(program.tokenCount)) return false;
@@ -272,26 +343,18 @@ namespace NovelSaveFormat
         p.inputWait = screen.Get("inputWait").GetBool();
         p.fullyShown = screen.Get("fullyShown").GetBool();
         p.effectTime = float(screen.Get("effectTime").GetNumber());
-        if (!ReadHistory(screen.Get("nvl"), commands, p.nvl)) return false;
-        if (core.phase == "WaitingChoice")
+        if (!ReadLines(screen.Get("nvl"), p.nvl)) return false;
+        JsonValueView@ choices = screen.Get("choices");
+        if (choices.GetKind() != JsonValueKind::Array || choices.GetCount() > 8) return false;
+        for (uint i = 0; i < choices.GetCount(); ++i)
         {
-            JsonValueView@ options = commands.Get(core.currentCommandId).Get("options");
-            for (uint i = 0; i < options.GetCount(); ++i)
-            {
-                JsonValueView@ option = options.At(i);
-                bool available = true;
-                if (option.Has("condition"))
-                {
-                    Value@ condition = NovelSnapshotValidation::ConditionValue(option.Get("condition"), core.variables);
-                    if (!condition.get(available)) return false;
-                }
-                if (!available) continue;
-                NovelChoice choice;
-                choice.choiceId = option.Get("choiceId").GetString();
-                choice.normalizedText = option.Get("normalizedText").GetString();
-                choice.target = option.Get("target").GetString();
-                p.choices.pushBack(choice);
-            }
+            JsonValueView@ option = choices.At(i);
+            if (option.Get("index").GetKind() != JsonValueKind::Integer || option.Get("index").GetInt() < 0 ||
+                option.Get("text").GetKind() != JsonValueKind::String) return false;
+            NovelChoice choice;
+            choice.index = uint(option.Get("index").GetInt());
+            choice.text = option.Get("text").GetString();
+            p.choices.pushBack(choice);
         }
         p.transition.from = p.background;
         p.transition.target = p.background;
@@ -345,7 +408,7 @@ namespace NovelSaveFormat
             ReadAudio(audio.Get(audio.GetKey(i)), channel);
         }
         // Strict shape/types: missing, unknown or lossy fields cannot silently become defaults.
-        JsonValue@ canonical = State(core, story);
+        JsonValue@ canonical = State(core);
         if (!source.Equals(canonical.View())) return false;
         result = decoded;
         return true;
@@ -357,7 +420,7 @@ namespace NovelSaveFormat
         result.MakeObject();
         Integer(result, "schemaVersion", Version);
         Boolean(result, "firstRun", profile.firstRun);
-        result.Set("readCommandIds", Strings(profile.readCommandIds));
+        result.Set("readLines", Strings(profile.readLines));
         JsonValue settings;
         settings.MakeObject();
         MenuSettings@ s = profile.settings;
@@ -381,7 +444,7 @@ namespace NovelSaveFormat
         if (source.Get("schemaVersion").GetInt() != int64(Version)) return false;
         MenuProfile decoded;
         decoded.firstRun = source.Get("firstRun").GetBool();
-        if (!ReadStrings(source.Get("readCommandIds"), decoded.readCommandIds, 100000)) return false;
+        if (!ReadStrings(source.Get("readLines"), decoded.readLines, 1000000)) return false;
         JsonValueView@ settings = source.Get("settings");
         MenuSettings@ s = decoded.settings;
         s.music_volume = float(settings.Get("music_volume").GetNumber());

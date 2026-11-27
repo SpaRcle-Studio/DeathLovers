@@ -93,9 +93,8 @@ class NovelAudio
         return null;
     }
 
-    bool Command(NovelAudioState@ audio, JsonValueView@ command)
+    bool Command(NovelAudioState@ audio, const String &in bus, bool play, const String &in id, bool loop, float duration)
     {
-        String bus = command.Get("bus").GetString();
         NovelAudioSlot@ slot = Bus(bus);
         if (slot is null)
         {
@@ -103,11 +102,9 @@ class NovelAudio
             return false;
         }
         NovelAudioChannel@ channel = audio.Channel(bus);
-        float duration = float(command.Get("fadeSeconds").GetNumber());
-        bool stop = command.Get("action").GetString() == "stop";
+        bool stop = !play;
         if (!stop)
         {
-            String id = command.Get("resourceId").GetString();
             String path = Path(id);
             if (path == "")
             {
@@ -115,7 +112,7 @@ class NovelAudio
             }
             slot.source.Stop();
             slot.source.SetPath(path);
-            slot.source.SetLoop(command.Get("loop").GetBool());
+            slot.source.SetLoop(loop);
             slot.source.SetVolume(duration > 0 ? 0 : 1);
             if (!slot.source.Play())
             {
@@ -123,7 +120,7 @@ class NovelAudio
                 return false;
             }
             channel.resourceId = id;
-            channel.loop = command.Get("loop").GetBool();
+            channel.loop = loop;
             channel.position = 0;
             channel.gain = duration > 0 ? 0 : 1;
             channel.completed = false;

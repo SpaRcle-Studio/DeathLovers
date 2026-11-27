@@ -2,6 +2,8 @@
 // Created by Codex on 21.11.2026.
 //
 
+#include "../../Story/Script/Vars.as"
+
 class DialogueToken
 {
     String kind;
@@ -31,16 +33,29 @@ class NovelSpeaker
 
 class NovelHistoryEntry
 {
-    String commandId;
+    String lineId;
     String speakerId;
     String text;
 }
 
 class NovelChoice
 {
-    String choiceId;
-    String normalizedText;
-    String target;
+    /// index of the option as declared in the story code (stable regardless of conditions)
+    uint index = 0;
+    String text;
+}
+
+/// One active story function on the coroutine stack. The stack itself is not serialized:
+/// a frame is re-entered by replaying its function from the start with `entry` variables,
+/// skipping `step` operations, answering menus from `picks` and skipping completed calls
+/// by restoring the variables they returned with (`afterCall`).
+class StoryFrame
+{
+    String label;
+    Story::StoryVars entry;
+    uint step = 0;
+    Vector<uint> picks;
+    Vector<Story::StoryVars> afterCall;
 }
 
 class NovelTransition
@@ -132,17 +147,24 @@ class NovelCore
 {
     uint schemaVersion = 0;
     String contentVersion;
-    String currentCommandId;
     String phase = "Ready";
-    Vector<String> callStack;
-    Map<String, Value> variables;
+    /// id of the operation the story waits on: line id, menu id, "scene:<resource>" or "pause"
+    String position;
+    Vector<StoryFrame> frames;
+    Story::StoryVars vars;
     NovelPresentationState presentation;
     NovelAudioState audio;
     Vector<NovelHistoryEntry> history;
-    String rollbackBoundaryId;
+    /// increments on every rollback checkpoint; identifies the interaction a checkpoint belongs to
+    uint interaction = 0;
     String activeEndingId;
     String diagnostic;
     double playTimeSeconds = 0;
+
+    String Label() const
+    {
+        return frames.size() == 0 ? "" : frames[frames.size() - 1].label;
+    }
 }
 
 class NovelState
@@ -153,7 +175,8 @@ class NovelState
 
 class NovelTraceEvent
 {
-    String commandId;
+    String label;
+    String position;
     String before;
     String after;
 }

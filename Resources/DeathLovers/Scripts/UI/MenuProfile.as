@@ -21,7 +21,8 @@ class MenuProfile
 {
     bool firstRun = false;
     MenuSettings settings;
-    Vector<String> readCommandIds;
+    /// ids of read lines and seen menus (StoryRunner line ids)
+    Vector<String> readLines;
 }
 
 namespace MenuSession

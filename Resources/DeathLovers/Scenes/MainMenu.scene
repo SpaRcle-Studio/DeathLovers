@@ -243,11 +243,6 @@ null
 															-i:0
 												-k:property
 													-v:name
-														-s:candidateStory
-													-v:scriptType
-														-s:JsonValue@
-												-k:property
-													-v:name
 														-s:preparedView
 													-v:scriptType
 														-s:NovelView
@@ -509,7 +504,7 @@ null
 															-s:
 												-k:property
 													-v:name
-														-s:candidateStoryResource
+														-s:candidateEntry
 													-v:scriptType
 														-s:String
 													-o:value
