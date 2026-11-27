@@ -29,6 +29,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
     bool wasPaused = false;
     bool skipEnabled = false;
     bool autoEnabled = false;
+    /// The dialogue window, NVL page, choices and quick menu are hidden (H / middle mouse button).
+    bool uiHidden = false;
     float autoDelay = 0;
     float skipDelay = 0;
     uint rollbackCount = 0;
@@ -144,6 +146,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         menu.saves.openAfterYield = false;
         skipEnabled = false;
         autoEnabled = false;
+        uiHidden = false;
+        view.hidden = false;
         autoDelay = 0;
         rollbackCount = 0;
         rollbackLastInteraction = 0;
@@ -261,6 +265,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         }
 
         Phase("WaitingText");
+        uiHidden = false;
+        view.hidden = false;
         view.Dialogue(p, program, speakers.at(speakerId));
         autoDelay = 0;
         RememberInteraction();
@@ -279,6 +285,7 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         {
             skipEnabled = false;
         }
+        SetUiHidden(false);
         view.Choices(p.choices, true);
         inputBarrier = 0.1f;
     }
@@ -377,8 +384,27 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
 
     void StoryRestartToMenu()
     {
+        RememberEnding(state.core.activeEndingId);
         Phase("Finished");
         menu.ReturnToMainMenu();
+    }
+
+    /// Endings are kept in the profile: the main menu shows the silhouettes of the characters whose ending was reached.
+    void RememberEnding(const String &in id)
+    {
+        if (id == "" || traceEnabled)
+        {
+            return;
+        }
+        for (uint i = 0; i < MenuSession::profile.endings.size(); ++i)
+        {
+            if (MenuSession::profile.endings[i] == id)
+            {
+                return;
+            }
+        }
+        MenuSession::profile.endings.pushBack(id);
+        menu.saves.MarkProfile();
     }
 
     bool StoryNeedsFrame()
@@ -518,6 +544,17 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         {
             return;
         }
+        if (Input::Instance().GetKey(KeyCode::LAlt) || Input::Instance().GetKey(KeyCode::RAlt))
+        {
+            // Alt+Enter toggles fullscreen and must not advance the story.
+            return;
+        }
+        if (uiHidden)
+        {
+            // The first input after hiding only brings the interface back.
+            SetUiHidden(false);
+            return;
+        }
         skipEnabled = false;
         // Manual advance keeps auto reading active, including after an explicit {w}.
         autoDelay = 0;
@@ -549,7 +586,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
 
     void Choose(uint index)
     {
-        if (state is null || Paused() || inputBarrier > 0 || presentation.waitingTextures || PhaseName() != "WaitingChoice")
+        if (state is null || Paused() || inputBarrier > 0 || presentation.waitingTextures || PhaseName() != "WaitingChoice" ||
+            uiHidden || Input::Instance().GetKey(KeyCode::LAlt) || Input::Instance().GetKey(KeyCode::RAlt))
         {
             return;
         }
@@ -567,6 +605,17 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         inputBarrier = 0.1f;
         runner.Pick(declared);
         Phase("Ready");
+    }
+
+    void SetUiHidden(bool value)
+    {
+        if (state is null || uiHidden == value)
+        {
+            return;
+        }
+        uiHidden = value;
+        view.SetHidden(value, state.core.presentation);
+        inputBarrier = 0.1f;
     }
 
     void RememberInteraction()
@@ -767,8 +816,10 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         }
         if (wasPaused)
         {
+            // Returning from a menu or focus loss: the input that ended the pause must not advance the story.
             dt = 0;
             wasPaused = false;
+            inputBarrier = inputBarrier > 0.1f ? inputBarrier : 0.1f;
         }
         if (restoreInputPending)
         {
@@ -789,12 +840,20 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
             audio.StopTyping();
             return;
         }
+        if (Input::Instance().GetKeyDown(KeyCode::H) || Input::Instance().GetMouseDown(MouseCode::MouseMiddle))
+        {
+            SetUiHidden(!uiHidden);
+            return;
+        }
         if (Input::Instance().GetKeyDown(KeyCode::PageUp) || Input::Instance().GetMouseWheel() > 0)
         {
             Rollback();
             return;
         }
-        ReadingTick(dt);
+        if (!uiHidden)
+        {
+            ReadingTick(dt);
+        }
         if (!menu.gameObject.GetScene().IsUIInputConsumed() && (Input::Instance().GetKeyDown(KeyCode::Space) || Input::Instance().GetKeyDown(KeyCode::Enter)))
         {
             Advance();
@@ -900,6 +959,8 @@ class NovelSession : IMenuSessionStarter, IStoryDebugRuntime, IStoryHost
         rollbackLastInteraction = rollbackCount > 0 ? state.rollbackCheckpoints[rollbackCount - 1].interaction : 0;
         skipEnabled = false;
         autoEnabled = false;
+        uiHidden = false;
+        view.hidden = false;
         autoDelay = 0;
         inputBarrier = 0.1f;
         runner.Bind(this, state.core);

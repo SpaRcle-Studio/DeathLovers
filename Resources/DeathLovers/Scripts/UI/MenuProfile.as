@@ -23,6 +23,8 @@ class MenuProfile
     MenuSettings settings;
     /// ids of read lines and seen menus (StoryRunner line ids)
     Vector<String> readLines;
+    /// reached ending labels (e.g. "war_ending"): unlock character silhouettes in the main menu
+    Vector<String> endings;
 }
 
 namespace MenuSession

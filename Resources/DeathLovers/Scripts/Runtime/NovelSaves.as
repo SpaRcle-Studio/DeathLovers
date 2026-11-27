@@ -390,10 +390,9 @@ class NovelSaves
             openAfterYield = true;
             return;
         }
-        if (menu.inGame && !menu.gameMenuOpen)
+        if (menu.inGame && !menu.gameMenuOpen && !menu.OpenGameMenuFromQuick())
         {
-            menu.ToggleGameMenu();
-            menu.inputBarrier = 0;
+            return;
         }
         saveMode = saving;
         InvalidateListings(false);
@@ -623,11 +622,12 @@ class NovelSaves
         capture.Cancel();
         busy = false;
         operation = "";
-        menu.runtime.view.root.SetEnabled(!menu.gameMenuOpen);
-        menu.main.SetEnabled(menu.gameMenuOpen && menu.submenu is null);
+        // In game the menus are drawn over the story frame: the main menu parallax stays off.
+        menu.runtime.view.root.SetEnabled(true);
+        menu.main.SetEnabled(menu.gameMenuOpen && menu.submenu is null && !menu.quickSubmenu);
         menu.load.SetEnabled(menu.submenu is menu.load);
-        menu.Child(menu.novel, "Background").SetEnabled(menu.gameMenuOpen);
-        menu.TabBackgroundOpacity(menu.submenu is null ? 0 : 1);
+        menu.Child(menu.novel, "Background").SetEnabled(false);
+        menu.TabBackgroundOpacity(menu.submenu !is null || menu.GameMenuBackdrop() ? 1 : 0);
         menu.inputBarrier = 0.1f;
         menu.runtime.inputBarrier = 0.1f;
         if (menu.developmentRuntime)
@@ -807,6 +807,8 @@ class NovelSaves
         @menu.runtime.state = candidate;
         menu.inGame = true;
         menu.gameMenuOpen = false;
+        menu.quickSubmenu = false;
+        menu.gameMenuFading = false;
         menu.main.SetEnabled(false);
         menu.load.SetEnabled(false);
         @menu.submenu = null;
@@ -862,6 +864,20 @@ class NovelSaves
                 return false;
             }
             seen.set(id, true);
+        }
+        if (profile.endings.size() > 16)
+        {
+            return false;
+        }
+        Map<String, bool> endings;
+        for (uint i = 0; i < profile.endings.size(); ++i)
+        {
+            String id = profile.endings[i];
+            if (id.length() <= 7 || id.length() > 64 || id.substring(id.length() - 7, 7) != "_ending" || endings.contains(id))
+            {
+                return false;
+            }
+            endings.set(id, true);
         }
         return true;
     }

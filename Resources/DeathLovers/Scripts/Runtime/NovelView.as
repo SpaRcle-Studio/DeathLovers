@@ -13,6 +13,7 @@ class NovelVisualSlot
     String resource;
     String caption;
     bool waitingTexture = false;
+    float height = -1;
     NovelVisualSlot@ hoverBackground;
     NovelVisualSlot@ next;
 }
@@ -34,6 +35,8 @@ class NovelView
     UIScrollRect@ nvlScroll;
     UIButton@ advanceButton;
     bool choicesActive = false;
+    uint choiceCount = 0;
+    bool hidden = false;
     GameObject@ nvlContent;
     GameObject@ skipIndicator;
     TextMesh@ skipTriangle0;
@@ -289,8 +292,8 @@ class NovelView
     void Dialogue(NovelPresentationState@ p, DialogueProgram@ program, NovelSpeaker@ definition)
     {
         bool isNvl = p.mode == "NVL";
-        adv.SetEnabled(!isNvl && p.dialogueVisible);
-        nvl.SetEnabled(isNvl && p.dialogueVisible);
+        adv.SetEnabled(!hidden && !isNvl && p.dialogueVisible);
+        nvl.SetEnabled(!hidden && isNvl && p.dialogueVisible);
         if (!isNvl)
         {
             program.Paint(dialogue);
@@ -350,6 +353,7 @@ class NovelView
     {
         if (choicesActive)
         {
+            LayoutChoices();
             for (NovelVisualSlot@ slot = choices; slot !is null; @slot = slot.next)
             {
                 UIControlState state = slot.button.GetState();
@@ -387,41 +391,87 @@ class NovelView
     void Choices(const Vector<NovelChoice> &in options, bool active)
     {
         choicesActive = active;
-        advanceButton.SetInteractable(!active);
-        choiceRoot.SetEnabled(active);
-        float totalHeight = 0;
+        choiceCount = active ? options.size() : 0;
+        advanceButton.SetInteractable(!active || hidden);
+        choiceRoot.SetEnabled(active && !hidden);
         for (uint i = 0; i < 8; ++i)
         {
             NovelVisualSlot@ slot = At(choices, i);
-            slot.object.SetEnabled(active && i < options.size());
-            if (active && i < options.size())
+            slot.object.SetEnabled(i < choiceCount);
+            slot.height = -1;
+            if (i < choiceCount)
             {
-                TransformRect@ rect = cast<TransformRect@>(slot.object.GetTransform());
-                TransformRect@ labelRect = cast<TransformRect@>(slot.text.GetGameObject().GetTransform());
                 slot.resource = "";
                 DialogueProgram label;
                 label.Compile(options[i].text, false);
                 slot.caption = options[i].text;
                 label.Paint(slot.text);
-                float textHeight = slot.text.GetTextBounds().h;
-                float height = textHeight + 24;
-                if (height < 70)
-                {
-                    height = 70;
-                }
-                rect.SetAnchoredPosition(Vec(0, -totalHeight));
-                rect.SetSize(Vec(1200, height));
-                cast<TransformRect@>(slot.image.GetGameObject().GetTransform()).SetSize(Vec(1200, height));
-                cast<TransformRect@>(slot.hoverBackground.object.GetTransform()).SetSize(Vec(1200, height));
-                labelRect.SetSize(Vec(1020, height - 16));
-                totalHeight += height + 33;
             }
+        }
+        LayoutChoices();
+        if (active && options.size() > 0 && !hidden)
+        {
+            choices.button.Focus();
+        }
+    }
+
+    /// Text bounds of freshly built or just enabled labels are known only after a layout pass
+    /// (for example right after a save is loaded), so the plates are re-measured every frame.
+    void LayoutChoices()
+    {
+        bool changed = false;
+        for (uint i = 0; i < choiceCount; ++i)
+        {
+            NovelVisualSlot@ slot = At(choices, i);
+            float height = slot.text.GetTextBounds().h + 24;
+            if (height < 70)
+            {
+                height = 70;
+            }
+            float delta = height - slot.height;
+            if (slot.height < 0 || delta > 0.5f || delta < -0.5f)
+            {
+                slot.height = height;
+                changed = true;
+            }
+        }
+        if (!changed)
+        {
+            return;
+        }
+        float totalHeight = 0;
+        for (uint i = 0; i < choiceCount; ++i)
+        {
+            NovelVisualSlot@ slot = At(choices, i);
+            float height = slot.height;
+            TransformRect@ rect = cast<TransformRect@>(slot.object.GetTransform());
+            rect.SetAnchoredPosition(Vec(0, -totalHeight));
+            rect.SetSize(Vec(1200, height));
+            cast<TransformRect@>(slot.image.GetGameObject().GetTransform()).SetSize(Vec(1200, height));
+            cast<TransformRect@>(slot.hoverBackground.object.GetTransform()).SetSize(Vec(1200, height));
+            cast<TransformRect@>(slot.text.GetGameObject().GetTransform()).SetSize(Vec(1020, height - 16));
+            totalHeight += height + 33;
         }
         totalHeight = totalHeight > 0 ? totalHeight - 33 : 0;
         cast<TransformRect@>(choiceRoot.GetTransform()).SetAnchoredPosition(Vec(360, -(540 - totalHeight * 0.5f)));
-        if (active && options.size() > 0)
+    }
+
+    /// Hides the dialogue window, NVL page and choices (H / middle mouse button); the state is kept.
+    void SetHidden(bool value, NovelPresentationState@ p)
+    {
+        hidden = value;
+        bool isNvl = p.mode == "NVL";
+        adv.SetEnabled(!hidden && !isNvl && p.dialogueVisible);
+        nvl.SetEnabled(!hidden && isNvl && p.dialogueVisible);
+        choiceRoot.SetEnabled(!hidden && choicesActive);
+        advanceButton.SetInteractable(!choicesActive || hidden);
+        if (hidden)
         {
-            choices.button.Focus();
+            advanceButton.Focus();
+        }
+        else
+        {
+            FocusNarrative(choicesActive);
         }
     }
 

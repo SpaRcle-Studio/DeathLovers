@@ -49,6 +49,20 @@ class MenuNavigation : ScriptBehaviour
     GameObject@ fadingFrom;
     float fadeTime = 0;
     bool fadeClosing = false;
+    bool altEnterLatched = false;
+    /// The in-game menu fades in/out over the paused story frame.
+    bool gameMenuFading = false;
+    bool gameMenuFadeOpening = false;
+    float gameMenuFade = 0;
+    /// The submenu was opened from the quick menu: the game menu stays invisible and Back returns to the story.
+    bool quickSubmenu = false;
+    GameObject@ plagueSilhouette;
+    GameObject@ hungerSilhouette;
+    GameObject@ warSilhouette;
+    GameObject@ plagueCharacter;
+    GameObject@ hungerCharacter;
+    GameObject@ warCharacter;
+    Map<String, bool> menuTextures;
 
     GameObject@ Child(GameObject@ parent, const String &in name)
     {
@@ -76,6 +90,8 @@ class MenuNavigation : ScriptBehaviour
         @tabBackground = cast<Sprite@>(Child(novel, "TabBackground").GetComponent("Sprite"));
         TabBackgroundOpacity(0.0f);
         @main = Child(novel, "MainMenu");
+        // Above TabBackground (90), below the submenus (100): in game the menu is drawn over the dark backdrop.
+        cast<TransformRect@>(main.GetTransform()).localPriority = 95;
         PlatformType platform = ApplicationManager::Instance().GetApplication().GetPlatformType();
         bool showQuit = platform != PlatformType::Android && platform != PlatformType::Emscripten;
         Child(Child(main, "Navigation"), "Quit").SetEnabled(showQuit);
@@ -135,6 +151,8 @@ class MenuNavigation : ScriptBehaviour
         @runtime = NovelSession();
         runtime.Configure(this, gameObject.GetComponent("Behaviour"));
         saves.Configure(this);
+        BuildMenuCharacters();
+        RefreshMenuCharacters();
         ApplyAudio();
         ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(MenuSession::profile.settings.fullscreen);
         @sessionStarter = runtime;
@@ -151,7 +169,15 @@ class MenuNavigation : ScriptBehaviour
 
     bool CanNavigate()
     {
-        return inputBarrier <= 0 && fadingScreen is null && !saves.busy;
+        // Alt+Enter toggles fullscreen: Enter must not also activate the focused button.
+        bool alt = Input::Instance().GetKey(KeyCode::LAlt) || Input::Instance().GetKey(KeyCode::RAlt);
+        return inputBarrier <= 0 && fadingScreen is null && !gameMenuFading && !saves.busy && !alt;
+    }
+
+    /// In the game menu (not opened from the quick menu) the dark backdrop stays under the navigation and the submenus.
+    bool GameMenuBackdrop()
+    {
+        return gameMenuOpen && !quickSubmenu;
     }
 
     void TabBackgroundOpacity(float opacity)
@@ -171,11 +197,11 @@ class MenuNavigation : ScriptBehaviour
             return;
         }
         @fadingFrom = submenu is null ? main : submenu;
-        TabBackgroundOpacity(submenu is null ? 0.0f : 1.0f);
+        TabBackgroundOpacity(submenu is null && !GameMenuBackdrop() ? 0.0f : 1.0f);
         @fadingScreen = cast<TextMesh@>(screen.GetComponent("TextMesh"));
         fadeTime = 0;
         fadeClosing = false;
-        ScreenOpacity(fadingFrom, 1.0f);
+        ScreenOpacity(fadingFrom, quickSubmenu && fadingFrom is main ? 0.0f : 1.0f);
         fadingScreen.SetSubtreeOpacity(0.0f);
         transitionBlocker.SetEnabled(true);
         @submenuOrigin = Button(Child(main, "Navigation"), origin);
@@ -304,7 +330,7 @@ class MenuNavigation : ScriptBehaviour
             inputBarrier = 0.5f;
             @submenu = null;
             ScreenOpacity(main, 0.0f);
-            main.SetEnabled(true);
+            main.SetEnabled(!quickSubmenu);
             MenuSession::activeScreen = gameMenuOpen ? "GameMenu" : "MainMenu";
         }
     }
@@ -376,6 +402,9 @@ class MenuNavigation : ScriptBehaviour
         }
         pendingQuit = false;
         inGame = false;
+        quickSubmenu = false;
+        gameMenuFading = false;
+        RefreshMenuCharacters();
         MenuSession::activeScreen = "MainMenu";
         ScreenOpacity(main, 1.0f);
         main.SetEnabled(true);
@@ -542,9 +571,7 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
-        MenuSession::profile.settings.fullscreen = false;
-        saves.MarkProfile();
-        ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(false);
+        SetFullscreenMode(false);
     }
 
     void Fullscreen()
@@ -553,9 +580,135 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
-        MenuSession::profile.settings.fullscreen = true;
+        SetFullscreenMode(true);
+    }
+
+    void SetFullscreenMode(bool fullscreen)
+    {
+        MenuSession::profile.settings.fullscreen = fullscreen;
         saves.MarkProfile();
-        ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(true);
+        ApplicationManager::Instance().GetApplication().GetEngine().SetFullscreen(fullscreen);
+    }
+
+    // ---- main menu characters -----------------------------------------------------------------
+
+    /// prlx_fg holds all three silhouettes; each one is cut out by its own RectMask2D column inside the Fg layer,
+    /// so the parallax offset of the layer still moves them together.
+    GameObject@ MenuSilhouette(GameObject@ layer, const String &in name, float left, float right)
+    {
+        GameObject@ column = layer.GetOrCreateChild(name + "Silhouette");
+        @column.transform = TransformRect();
+        TransformRect@ rect = cast<TransformRect@>(column.GetTransform());
+        // The vertical margin keeps the part of the image enlarged by the 1.1 scale.
+        float bottom = -0.1f;
+        float top = 1.1f;
+        RectAnchors anchors;
+        anchors.min = runtime.view.Vec(left, bottom);
+        anchors.max = runtime.view.Vec(right, top);
+        rect.SetAnchors(anchors);
+        rect.SetPivot(runtime.view.Vec(0.5f, 0.5f));
+        rect.SetSize(runtime.view.Vec(0, 0));
+        rect.SetAnchoredPosition(runtime.view.Vec(0, 0));
+        rect.localPriority = 1;
+        column.GetOrCreateComponent("RectMask2D");
+        // Stretch the image back over the whole layer: anchors are relative to the column.
+        RectAnchors full;
+        full.min = runtime.view.Vec(-left / (right - left), -bottom / (top - bottom));
+        full.max = runtime.view.Vec((1 - left) / (right - left), (1 - bottom) / (top - bottom));
+        MenuImage(column, "Image", full, "DeathLovers/UI/parallax/prlx_fg.png", 0);
+        return column;
+    }
+
+    GameObject@ MenuImage(GameObject@ parent, const String &in name, const RectAnchors &in anchors, const String &in texture, int priority)
+    {
+        GameObject@ image = parent.GetOrCreateChild(name);
+        @image.transform = TransformRect();
+        TransformRect@ rect = cast<TransformRect@>(image.GetTransform());
+        rect.SetAnchors(anchors);
+        rect.SetPivot(runtime.view.Vec(0.5f, 0.5f));
+        rect.SetSize(runtime.view.Vec(0, 0));
+        rect.SetAnchoredPosition(runtime.view.Vec(0, 0));
+        rect.localPriority = priority;
+        FVector3 scale;
+        scale.x = 1.1f;
+        scale.y = 1.1f;
+        scale.z = 1;
+        rect.SetScale(scale);
+        Sprite@ sprite = cast<Sprite@>(image.GetOrCreateComponent("Sprite"));
+        sprite.SetMaterial("Engine/Materials/UI/ui.mat");
+        sprite.spriteMode = SpriteMode::Simple;
+        if (texture != "")
+        {
+            sprite.SetTexturePath(texture);
+        }
+        return image;
+    }
+
+    /// The unlocked character sprite covers its silhouette. Placement is given in prlx_fg pixels (2594x1080):
+    /// left/top of the sprite and its scale, fitted so the head matches the silhouette and the bottom reaches the frame edge.
+    /// The texture is assigned only when the character is unlocked: these sprites are 4000-4800 px wide.
+    GameObject@ MenuCharacterSprite(GameObject@ layer, const String &in name, float left, float top, float width, float height,
+        float scale, int priority)
+    {
+        RectAnchors anchors;
+        anchors.min = runtime.view.Vec(left / 2594.0f, 1.0f - (top + height * scale) / 1080.0f);
+        anchors.max = runtime.view.Vec((left + width * scale) / 2594.0f, 1.0f - top / 1080.0f);
+        GameObject@ image = MenuImage(layer, name + "Character", anchors, "", priority);
+        image.SetEnabled(false);
+        return image;
+    }
+
+    void BuildMenuCharacters()
+    {
+        GameObject@ layer = Child(Child(novel, "Background"), "Fg");
+        // The full original layer is replaced by three silhouette columns, each replaced by its character after an ending.
+        Child(layer, "Image").SetEnabled(false);
+        @plagueSilhouette = MenuSilhouette(layer, "Plague", -0.1f, 0.36f);
+        @hungerSilhouette = MenuSilhouette(layer, "Hunger", 0.36f, 0.59f);
+        @warSilhouette = MenuSilhouette(layer, "War", 0.59f, 1.1f);
+        // Hunger stands behind the side characters where the sprites overlap.
+        @hungerCharacter = MenuCharacterSprite(layer, "Hunger", 676, 61, 4000, 4000, 0.255f, 2);
+        @plagueCharacter = MenuCharacterSprite(layer, "Plague", -10, 129, 4800, 4000, 0.238f, 3);
+        @warCharacter = MenuCharacterSprite(layer, "War", 1321, 125, 4800, 4000, 0.239f, 4);
+    }
+
+    bool EndingReached(const String &in id)
+    {
+        for (uint i = 0; i < MenuSession::profile.endings.size(); ++i)
+        {
+            if (MenuSession::profile.endings[i] == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void ShowMenuCharacter(GameObject@ silhouette, GameObject@ character, const String &in texture, bool unlocked)
+    {
+        silhouette.SetEnabled(!unlocked);
+        character.SetEnabled(unlocked);
+        Sprite@ sprite = cast<Sprite@>(character.GetComponent("Sprite"));
+        if (unlocked && !menuTextures.contains(texture))
+        {
+            sprite.SetTexturePath(texture);
+            menuTextures.set(texture, true);
+        }
+    }
+
+    void RefreshMenuCharacters()
+    {
+        if (plagueSilhouette is null)
+        {
+            return;
+        }
+        bool harem = EndingReached("harem_ending");
+        ShowMenuCharacter(plagueSilhouette, plagueCharacter, "DeathLovers/Images/plague/conq_normal.png",
+            harem || EndingReached("plague_ending") || EndingReached("plaguewar_ending") || EndingReached("plaguehunger_ending"));
+        ShowMenuCharacter(warSilhouette, warCharacter, "DeathLovers/Images/war/war_headsup.png",
+            harem || EndingReached("war_ending") || EndingReached("plaguewar_ending") || EndingReached("warhunger_ending"));
+        ShowMenuCharacter(hungerSilhouette, hungerCharacter, "DeathLovers/Images/hunger/normal.png",
+            harem || EndingReached("hunger_ending") || EndingReached("plaguehunger_ending") || EndingReached("warhunger_ending"));
     }
 
     void RollbackStory()
@@ -583,9 +736,35 @@ class MenuNavigation : ScriptBehaviour
 
     void ReadingOptions()
     {
-        ToggleGameMenu();
-        inputBarrier = 0;
+        if (!OpenGameMenuFromQuick())
+        {
+            return;
+        }
         OpenPreferences();
+        if (submenu !is preferences && quickSubmenu)
+        {
+            SetGameMenu(false, false);
+        }
+    }
+
+    /// Quick menu -> submenu: opens the game menu without showing its navigation, so it does not flash.
+    bool OpenGameMenuFromQuick()
+    {
+        if (!inGame || gameMenuOpen)
+        {
+            return inGame;
+        }
+        if (!CanNavigate() || modal !is null || submenu !is null)
+        {
+            return false;
+        }
+        SetGameMenu(true, false);
+        quickSubmenu = true;
+        // Only the submenu fades in over the paused story frame: no game menu navigation, no backdrop yet.
+        ApplyGameMenuFade(0);
+        main.SetEnabled(false);
+        inputBarrier = 0;
+        return true;
     }
 
     void OpenHistory()
@@ -594,16 +773,28 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
-        runtime.skipEnabled = false;
-        runtime.autoEnabled = false;
+        // Skip/auto are paused by the modal (NovelSession::Paused), not cancelled.
         String content;
+        Vector<TextStyle> names;
         for (uint i = 0; i < runtime.state.core.history.size(); ++i)
         {
             NovelHistoryEntry@ entry = runtime.state.core.history[i];
             DialogueProgram line;
             line.Compile(entry.text, false);
-            String name = runtime.speakers.at(entry.speakerId).name;
-            content = content + (name == "" ? "" : name + ":\n") + line.plain + "\n\n";
+            NovelSpeaker@ speaker = runtime.speakers.at(entry.speakerId);
+            if (speaker.name != "")
+            {
+                TextStyle style;
+                style.begin = content.graphemeCount();
+                content = content + speaker.name + ":";
+                style.end = content.graphemeCount();
+                style.color.x = float(speaker.color.x);
+                style.color.y = float(speaker.color.y);
+                style.color.z = float(speaker.color.z);
+                names.pushBack(style);
+                content = content + "\n";
+            }
+            content = content + line.plain + "\n\n";
         }
         GameObject@ viewport = Child(readingHistory, "Viewport");
         GameObject@ body = Child(viewport, "Content");
@@ -612,10 +803,15 @@ class MenuNavigation : ScriptBehaviour
         text.verticalAlignment = TextAlignmentVertical::Top;
         text.SetMaterial("DeathLovers/Materials/RuntimeText.mat");
         text.SetText(content);
+        for (uint i = 0; i < names.size(); ++i)
+        {
+            text.AddStyle(names[i]);
+        }
         readingHistory.SetEnabled(true);
         float height = text.GetTextBounds().h + 60;
         cast<TransformRect@>(body.GetTransform()).SetSize(runtime.view.Vec(1200, height > 850 ? height : 850));
-        cast<UIScrollRect@>(viewport.GetComponent("UIScrollRect")).SetNormalizedPosition(runtime.view.Vec(0, 1));
+        // Unity convention: 0 is the bottom, so the history opens on the latest line.
+        cast<UIScrollRect@>(viewport.GetComponent("UIScrollRect")).SetNormalizedPosition(runtime.view.Vec(0, 0));
         @modal = readingHistory;
         Button(readingHistory, "Back").Focus();
         inputBarrier = 0.1f;
@@ -648,7 +844,18 @@ class MenuNavigation : ScriptBehaviour
 
     void Update(float dt)
     {
-        quickMenu.SetEnabled(inGame && !gameMenuOpen && modal is null && !saves.busy);
+        // Latched on the held state, not GetKeyDown: after the window switch the next frames can run several updates
+        // with the same input state, and a second "down" would switch the window straight back.
+        bool altEnter = (Input::Instance().GetKey(KeyCode::LAlt) || Input::Instance().GetKey(KeyCode::RAlt)) &&
+            Input::Instance().GetKey(KeyCode::Enter);
+        if (altEnter && !altEnterLatched)
+        {
+            SetFullscreenMode(!MenuSession::profile.settings.fullscreen);
+        }
+        altEnterLatched = altEnter;
+        UpdateGameMenuFade(dt);
+        bool uiHidden = runtime !is null && runtime.uiHidden;
+        quickMenu.SetEnabled(inGame && !gameMenuOpen && modal is null && !saves.busy && !uiHidden);
         Button(quickMenu, "Save").SetInteractable(!saves.busy && saves.CanSave());
         Button(quickMenu, "QuickSave").SetInteractable(saves.configured && !saves.busy && inGame);
         mainMenuButton.SetEnabled(inGame);
@@ -661,10 +868,11 @@ class MenuNavigation : ScriptBehaviour
         MenuSession::autoActive = inGame && runtime !is null && runtime.autoEnabled;
         if (runtime !is null)
         {
-            runtime.view.Skipping(MenuSession::skipActive && !runtime.Paused() && !runtime.restoreInputPending &&
+            runtime.view.Skipping(MenuSession::skipActive && !uiHidden && !runtime.Paused() && !runtime.restoreInputPending &&
                 runtime.PhaseName() != "WaitingChoice", dt);
         }
-        if (modal is readingHistory && CanNavigate() && Input::Instance().GetKeyDown(KeyCode::Escape))
+        if (modal is readingHistory && CanNavigate() &&
+            (Input::Instance().GetKeyDown(KeyCode::Escape) || Input::Instance().GetMouseDown(MouseCode::MouseRight)))
         {
             CloseHistory();
             return;
@@ -674,15 +882,20 @@ class MenuNavigation : ScriptBehaviour
             fadeTime += dt;
             float progress = fadeTime < 0.5f ? fadeTime / 0.5f : 1.0f;
             fadingScreen.SetSubtreeOpacity(fadeClosing ? 1.0f - progress : progress);
-            ScreenOpacity(fadeClosing ? main : fadingFrom, fadeClosing ? progress : 1.0f - progress);
-            TabBackgroundOpacity(fadeClosing ? 1.0f - progress : fadingFrom is main ? progress : 1.0f);
+            ScreenOpacity(fadeClosing ? main : fadingFrom, quickSubmenu && (fadeClosing || fadingFrom is main) ? 0.0f :
+                fadeClosing ? progress : 1.0f - progress);
+            TabBackgroundOpacity(GameMenuBackdrop() ? 1.0f : fadeClosing ? 1.0f - progress : fadingFrom is main ? progress : 1.0f);
             if (progress >= 1.0f)
             {
                 fadingFrom.SetEnabled(false);
                 @fadingFrom = null;
                 @fadingScreen = null;
                 transitionBlocker.SetEnabled(false);
-                if (fadeClosing)
+                if (fadeClosing && quickSubmenu)
+                {
+                    SetGameMenu(false, false);
+                }
+                else if (fadeClosing)
                 {
                     if (submenuOrigin !is null)
                     {
@@ -707,11 +920,17 @@ class MenuNavigation : ScriptBehaviour
                 Back();
             }
         }
-        if (modal is null && CanNavigate() && Input::Instance().GetKeyDown(KeyCode::Escape))
+        if (modal is null && CanNavigate() &&
+            (Input::Instance().GetKeyDown(KeyCode::Escape) || Input::Instance().GetMouseDown(MouseCode::MouseRight)))
         {
-            if (inGame && submenu is null)
+            if (inGame && submenu is null && gameMenuOpen)
             {
                 ToggleGameMenu();
+            }
+            else if (inGame && submenu is null)
+            {
+                // Escape / right mouse button in the story open the preferences over the paused frame.
+                ReadingOptions();
             }
             else
             {
@@ -731,22 +950,78 @@ class MenuNavigation : ScriptBehaviour
         {
             return;
         }
-        gameMenuOpen = !gameMenuOpen;
-        ScreenOpacity(main, gameMenuOpen ? 1.0f : 0.0f);
-        main.SetEnabled(gameMenuOpen);
+        SetGameMenu(!gameMenuOpen);
+    }
+
+    /// The game menu is drawn over the paused story frame (the main menu parallax is not shown in game).
+    /// animate=false switches instantly: used when the quick-menu submenu has already faded the backdrop itself.
+    void SetGameMenu(bool open, bool animate = true)
+    {
+        quickSubmenu = false;
+        if (open && runtime.uiHidden)
+        {
+            runtime.SetUiHidden(false);
+        }
         Text(Child(main, "Navigation"), "Start", "Продолжить");
-        Child(novel, "Background").SetEnabled(gameMenuOpen);
-        runtime.view.root.SetEnabled(!gameMenuOpen);
-        MenuSession::activeScreen = gameMenuOpen ? "GameMenu" : "Story";
+        Child(novel, "Background").SetEnabled(false);
+        runtime.view.root.SetEnabled(true);
+        MenuSession::activeScreen = open ? "GameMenu" : "Story";
         inputBarrier = 0.1f;
         runtime.inputBarrier = 0.1f;
-        if (gameMenuOpen)
+        if (open)
         {
+            // Paused from the first frame of the fade.
+            gameMenuOpen = true;
+            main.SetEnabled(true);
             Button(Child(main, "Navigation"), "Preferences").Focus();
         }
-        else
+        if (animate)
         {
-            runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");
+            gameMenuFading = true;
+            gameMenuFadeOpening = open;
+            gameMenuFade = 0;
+            ApplyGameMenuFade(0);
+            return;
+        }
+        gameMenuFading = false;
+        ApplyGameMenuFade(open ? 1.0f : 0.0f);
+        if (!open)
+        {
+            FinishGameMenuClose();
+        }
+    }
+
+    void ApplyGameMenuFade(float opacity)
+    {
+        ScreenOpacity(main, opacity);
+        TabBackgroundOpacity(opacity);
+    }
+
+    void FinishGameMenuClose()
+    {
+        main.SetEnabled(false);
+        gameMenuOpen = false;
+        runtime.inputBarrier = 0.1f;
+        runtime.view.FocusNarrative(runtime.PhaseName() == "WaitingChoice");
+    }
+
+    void UpdateGameMenuFade(float dt)
+    {
+        if (!gameMenuFading)
+        {
+            return;
+        }
+        gameMenuFade += dt / 0.25f;
+        float progress = gameMenuFade < 1.0f ? gameMenuFade : 1.0f;
+        ApplyGameMenuFade(gameMenuFadeOpening ? progress : 1.0f - progress);
+        if (progress < 1.0f)
+        {
+            return;
+        }
+        gameMenuFading = false;
+        if (!gameMenuFadeOpening)
+        {
+            FinishGameMenuClose();
         }
     }
 

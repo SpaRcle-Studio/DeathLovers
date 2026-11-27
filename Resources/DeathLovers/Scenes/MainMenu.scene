@@ -349,6 +349,22 @@ null
 																		-b:false
 															-k:property
 																-v:name
+																	-s:choiceCount
+																-v:scriptType
+																	-s:uint
+																-o:value
+																	-v:value
+																		-i:0
+															-k:property
+																-v:name
+																	-s:hidden
+																-v:scriptType
+																	-s:bool
+																-o:value
+																	-v:value
+																		-b:false
+															-k:property
+																-v:name
 																	-s:nvlContent
 																-v:scriptType
 																	-s:GameObject@
@@ -14063,7 +14079,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Tab / Shift+Tab: следующая / предыдущая кнопка.
+																																		-s:ЛКМ / Enter / Space: дальше; Tab, стрелки — выбор кнопки.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment
@@ -14140,7 +14156,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Стрелки: перемещение по кнопкам; в настройках — изменение ползунка.
+																																		-s:Escape / ПКМ: настройки или возврат назад.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment
@@ -14217,7 +14233,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Enter / Space: активация выбранной кнопки.
+																																		-s:Колесо вверх / PageUp: откат к предыдущей реплике.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment
@@ -14294,7 +14310,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Escape: вернуться; в главном меню ничего не делает.
+																																		-s:Ctrl (удерживать): пропуск прочитанного текста.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment
@@ -14371,7 +14387,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Колесо мыши: прокрутка настроек и сведений об игре.
+																																		-s:H / колесо (нажатие): скрыть или показать интерфейс.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment
@@ -14448,7 +14464,7 @@ null
 																																		-v:id
 																																			-s:DeathLovers/Fonts/Pangolin.font
 																																	-v:text
-																																		-s:Оконный / Полный: переключение режима экрана в настройках.
+																																		-s:Alt+Enter: полноэкранный / оконный режим.
 																																	-v:fontSize
 																																		-f:33
 																																	-v:verticalAlignment

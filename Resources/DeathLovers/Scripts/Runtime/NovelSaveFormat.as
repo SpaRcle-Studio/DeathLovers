@@ -414,13 +414,18 @@ namespace NovelSaveFormat
         return true;
     }
 
-    JsonValue@ Profile(MenuProfile@ profile)
+    /// withEndings=false reproduces profiles written before endings were tracked (for strict comparison only).
+    JsonValue@ Profile(MenuProfile@ profile, bool withEndings = true)
     {
         JsonValue result;
         result.MakeObject();
         Integer(result, "schemaVersion", Version);
         Boolean(result, "firstRun", profile.firstRun);
         result.Set("readLines", Strings(profile.readLines));
+        if (withEndings)
+        {
+            result.Set("endings", Strings(profile.endings));
+        }
         JsonValue settings;
         settings.MakeObject();
         MenuSettings@ s = profile.settings;
@@ -445,6 +450,8 @@ namespace NovelSaveFormat
         MenuProfile decoded;
         decoded.firstRun = source.Get("firstRun").GetBool();
         if (!ReadStrings(source.Get("readLines"), decoded.readLines, 1000000)) return false;
+        bool withEndings = source.Has("endings");
+        if (withEndings && !ReadStrings(source.Get("endings"), decoded.endings, 16)) return false;
         JsonValueView@ settings = source.Get("settings");
         MenuSettings@ s = decoded.settings;
         s.music_volume = float(settings.Get("music_volume").GetNumber());
@@ -458,7 +465,7 @@ namespace NovelSaveFormat
         s.skip_unseen = settings.Get("skip_unseen").GetBool();
         s.skip_after_choices = settings.Get("skip_after_choices").GetBool();
         s.skip_transitions = settings.Get("skip_transitions").GetBool();
-        JsonValue@ canonical = Profile(decoded);
+        JsonValue@ canonical = Profile(decoded, withEndings);
         if (!source.Equals(canonical.View())) return false;
         result = decoded;
         return true;
